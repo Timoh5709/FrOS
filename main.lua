@@ -12,6 +12,7 @@ if fs.exists("apps/update.lua") then
 end
 local lines = 0
 local dossier
+shell.setPath("/apps")
 
 local criticalFiles = {
   ["startup.lua"] = true,
@@ -219,7 +220,10 @@ local function exec(filename)
   end
 
   local path = fs.combine(shell.dir(), filename)
+  local path2 = shell.resolveProgram(filename)
   if fs.exists(path) and not fs.isDir(path) then
+    shell.run(path)
+  elseif fs.exists(path2) then
     shell.run(path)
   else
     print("Erreur : Fichier introuvable ou non valide.")
