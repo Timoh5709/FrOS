@@ -1,6 +1,5 @@
 local running = true
 term.clear()
-local currentDir = "/"
 local history = {}
 local speaker = peripheral.find("speaker")
 local textViewer
@@ -36,7 +35,7 @@ local function drawStatusBar()
   term.setBackgroundColor(colors.gray)
   term.setTextColor(colors.white)
   term.clearLine()
-  dossier = (currentDir == "" or currentDir == "/") and "root" or currentDir
+  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
   term.write(string.format("%-45s %5s","Dossier actuel : " .. dossier, textutils.formatTime(os.time())))
   term.setBackgroundColor(colors.black)
 end
@@ -59,7 +58,7 @@ local function containsCriticalFiles(path)
 end
 
 local function listFiles()
-  local files = fs.list(currentDir)
+  local files = fs.list(shell.dir())
   
   if #files == 0 then
     print("Le repertoire est vide.")
@@ -72,7 +71,7 @@ local function listFiles()
   local regularFiles = {}
   
   for _, file in ipairs(files) do
-    local path = fs.combine(currentDir, file)
+    local path = fs.combine(shell.dir(), file)
     
     if fs.isDir(path) then
       if string.match(file, "^disk%d*$") then
@@ -115,9 +114,9 @@ end
 
 
 local function changeDir(dir)
-  local newDir = fs.combine(currentDir, dir)
+  local newDir = fs.combine(shell.dir(), dir)
   if fs.exists(newDir) and fs.isDir(newDir) then
-    currentDir = newDir
+    shell.setDir(newDir)
   else
     print("Erreur : Dossier introuvable.")
     playErrorSound()
@@ -125,7 +124,7 @@ local function changeDir(dir)
 end
 
 local function makeDir(dir)
-  local newDir = fs.combine(currentDir, dir)
+  local newDir = fs.combine(shell.dir(), dir)
   if not fs.exists(newDir) then
     fs.makeDir(newDir)
     print("Dossier cree : " .. newDir)
@@ -136,7 +135,7 @@ local function makeDir(dir)
 end
 
 local function removeFileOrDir(target)
-  local path = fs.combine(currentDir, target)
+  local path = fs.combine(shell.dir(), target)
 
   if fs.exists(path) then
     if criticalFiles[target] or containsCriticalFiles(path) then
@@ -176,7 +175,7 @@ end
 
 local function readAllText(path)
     local lignes = {}
-    local file = fs.combine(currentDir, path)
+    local file = fs.combine(shell.dir(), path)
     local handle = fs.open(file, "r")
     if not handle then
         print("Erreur : Fichier illisible.")
@@ -198,7 +197,7 @@ local function mkfile(filename)
     return
   end
 
-  local path = fs.combine(currentDir, filename)
+  local path = fs.combine(shell.dir(), filename)
   if fs.exists(path) then
     print("Erreur : Le fichier '" .. filename .. "' existe deja.")
     return
@@ -219,7 +218,7 @@ local function exec(filename)
     return
   end
 
-  local path = fs.combine(currentDir, filename)
+  local path = fs.combine(shell.dir(), filename)
   if fs.exists(path) and not fs.isDir(path) then
     shell.run(path)
   else
@@ -284,7 +283,7 @@ while running do
       print("Nom de l'ordinateur : " .. os.getComputerLabel())
     end
     
-    local freeSpace = fs.getFreeSpace(currentDir) or 0
+    local freeSpace = fs.getFreeSpace(shell.dir()) or 0
     print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
     
     print("Heure actuelle : " .. textutils.formatTime(os.time(), true))    
