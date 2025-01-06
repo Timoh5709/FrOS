@@ -224,7 +224,7 @@ local function exec(filename)
   if fs.exists(path) and not fs.isDir(path) then
     shell.run(path)
   elseif fs.exists(path2) then
-    shell.run(path)
+    shell.run(path2)
   else
     print("Erreur : Fichier introuvable ou non valide.")
   end
