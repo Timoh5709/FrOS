@@ -4,6 +4,8 @@ term.setCursorPos(1,1)
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
+local toRepair = {}
+local repair
 
 print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
@@ -16,6 +18,7 @@ if fs.exists("main.lua") then
     if not fs.exists("apps/textViewer.lua") then 
         term.setTextColor(colors.red)
         print("Erreur : le fichier 'apps/textViewer.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        table.insert(toRepair, "textViewer")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
@@ -27,6 +30,7 @@ if fs.exists("main.lua") then
     if not fs.exists("apps/update.lua") then 
         term.setTextColor(colors.red)
         print("Erreur : le fichier 'apps/update.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        table.insert(toRepair, "update")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
@@ -51,6 +55,7 @@ if fs.exists("main.lua") then
         else
             term.setTextColor(colors.red)
             print("Erreur : le fichier 'media/startup.dfpwm' est introuvable. Le systeme peut être endommage.")
+            table.insert(toRepair, "startupdfpwm")
             sleep(0.1)
             term.setTextColor(colors.white)
         end
@@ -66,11 +71,36 @@ if fs.exists("main.lua") then
         sleep(0.1)
         term.setTextColor(colors.white)
     end
+    if not fs.exists("apps/repair.lua") then 
+        term.setTextColor(colors.red)
+        print("Erreur : le fichier 'apps/repair.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        sleep(0.1)
+        term.setTextColor(colors.white)
+    else
+        term.setTextColor(colors.green)
+        print("'apps/repair.lua' present.")
+        sleep(0.1)
+        term.setTextColor(colors.white)
+        repair = require("apps/repair")
+        if #toRepair > 0 then
+            print("Il y a un ou plusieurs fichiers manquants, voulez-vous les reparer ? (oui/non)")
+            write("? ")
+            local confirmation = read()
+            if confirmation == "oui" then
+                for i = 1, #toRepair do
+                    repair.file(toRepair[i])
+                end
+            else
+              print("Reparation annulee. Le systeme peut etre instable.")
+            end
+        end
+    end
     textutils.slowPrint("-------------------------------------------------")
     shell.run("main.lua")
 else
     term.setTextColor(colors.red)
     print("Erreur : le fichier 'main.lua' est introuvable. Veuillez reinstaller le systeme en executant 'pastebin run Nur35FnH' sur CraftOS.")
+    table.insert(toRepair, "main")
     sleep(0.1)
     term.setTextColor(colors.white)
 end
