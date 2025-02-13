@@ -18,7 +18,7 @@ if fs.exists("main.lua") then
     if not fs.exists("apps/textViewer.lua") then 
         term.setTextColor(colors.red)
         print("Erreur : le fichier 'apps/textViewer.lua' est introuvable. Le systeme peut etre instable et endommage.")
-        table.insert(toRepair, "textViewer")
+        table.insert(toRepair, "apps/textViewer.lua")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
@@ -30,7 +30,7 @@ if fs.exists("main.lua") then
     if not fs.exists("apps/update.lua") then 
         term.setTextColor(colors.red)
         print("Erreur : le fichier 'apps/update.lua' est introuvable. Le systeme peut etre instable et endommage.")
-        table.insert(toRepair, "update")
+        table.insert(toRepair, "apps/update.lua")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
@@ -55,7 +55,7 @@ if fs.exists("main.lua") then
         else
             term.setTextColor(colors.red)
             print("Erreur : le fichier 'media/startup.dfpwm' est introuvable. Le systeme peut être endommage.")
-            table.insert(toRepair, "startupdfpwm")
+            table.insert(toRepair, "media/startup.dfpwm")
             sleep(0.1)
             term.setTextColor(colors.white)
         end
@@ -90,6 +90,8 @@ if fs.exists("main.lua") then
                 for i = 1, #toRepair do
                     repair.file(toRepair[i])
                 end
+                term.setBackgroundColor(colors.black)
+                term.clear()
             else
               print("Reparation annulee. Le systeme peut etre instable.")
             end
@@ -100,7 +102,7 @@ if fs.exists("main.lua") then
 else
     term.setTextColor(colors.red)
     print("Erreur : le fichier 'main.lua' est introuvable. Veuillez reinstaller le systeme en executant 'pastebin run Nur35FnH' sur CraftOS.")
-    table.insert(toRepair, "main")
+    table.insert(toRepair, "main.lua")
     sleep(0.1)
     term.setTextColor(colors.white)
 end
