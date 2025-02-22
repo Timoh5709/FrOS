@@ -15,27 +15,27 @@ if fs.exists("main.lua") then
     print("'main.lua' present.")
     sleep(0.1)
     term.setTextColor(colors.white)
-    if not fs.exists("apps/textViewer.lua") then 
+    if not fs.exists("sys/textViewer.lua") then 
         term.setTextColor(colors.red)
-        print("Erreur : le fichier 'apps/textViewer.lua' est introuvable. Le systeme peut etre instable et endommage.")
-        table.insert(toRepair, "apps/textViewer.lua")
+        print("Erreur : le fichier 'sys/textViewer.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        table.insert(toRepair, "sys/textViewer.lua")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
         term.setTextColor(colors.green)
-        print("'apps/textViewer.lua' present.")
+        print("'sys/textViewer.lua' present.")
         sleep(0.1)
         term.setTextColor(colors.white)
     end
-    if not fs.exists("apps/update.lua") then 
+    if not fs.exists("sys/update.lua") then 
         term.setTextColor(colors.red)
-        print("Erreur : le fichier 'apps/update.lua' est introuvable. Le systeme peut etre instable et endommage.")
-        table.insert(toRepair, "apps/update.lua")
+        print("Erreur : le fichier 'sys/update.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        table.insert(toRepair, "sys/update.lua")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
         term.setTextColor(colors.green)
-        print("'apps/update.lua' present.")
+        print("'sys/update.lua' present.")
         sleep(0.1)
         term.setTextColor(colors.white)
     end
@@ -71,17 +71,17 @@ if fs.exists("main.lua") then
         sleep(0.1)
         term.setTextColor(colors.white)
     end
-    if not fs.exists("apps/repair.lua") then 
+    if not fs.exists("sys/repair.lua") then 
         term.setTextColor(colors.red)
-        print("Erreur : le fichier 'apps/repair.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        print("Erreur : le fichier 'sys/repair.lua' est introuvable. Le systeme peut etre instable et endommage.")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
         term.setTextColor(colors.green)
-        print("'apps/repair.lua' present.")
+        print("'sys/repair.lua' present.")
         sleep(0.1)
         term.setTextColor(colors.white)
-        repair = require("apps/repair")
+        repair = require("sys/repair")
         if #toRepair > 0 then
             print("Il y a un ou plusieurs fichiers manquants, voulez-vous les reparer ? (oui/non)")
             write("? ")
