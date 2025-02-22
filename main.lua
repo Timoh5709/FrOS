@@ -4,11 +4,11 @@ local history = {}
 local speaker = peripheral.find("speaker")
 local textViewer
 local update
-if fs.exists("apps/textViewer.lua") then
-    textViewer = require("apps/textViewer")
+if fs.exists("sys/textViewer.lua") then
+    textViewer = require("sys/textViewer")
 end
-if fs.exists("apps/update.lua") then
-    update = require("apps/update")
+if fs.exists("sys/update.lua") then
+    update = require("sys/update")
 end
 local lines = 0
 local dossier
@@ -17,7 +17,7 @@ shell.setPath(shell.path() .. ":/apps")
 local criticalFiles = {
   ["startup.lua"] = true,
   ["main.lua"] = true,
-  ["apps"] = true,
+  ["sys"] = true,
   ["textViewer.lua"] = true,
   ["update.lua"] = true,
   ["media"] = true,
