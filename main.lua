@@ -12,7 +12,7 @@ if fs.exists("apps/update.lua") then
 end
 local lines = 0
 local dossier
-shell.setPath(shell.path .. ":/apps")
+shell.setPath(shell.path() .. ":/apps")
 
 local criticalFiles = {
   ["startup.lua"] = true,
