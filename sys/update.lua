@@ -4,8 +4,8 @@ function update.install()
     term.setCursorPos(1,1)
     term.setBackgroundColor(colors.blue)
     term.clear()
-    print("Telecharge temp/install.lua depuis Pastebin.")
-    downloader = http.get("https://pastebin.com/raw/Nur35FnH")
+    print("Telecharge temp/install.lua depuis Github.")
+    downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/install.lua")
     if downloader then
         input = io.open("temp/install.lua", "w")
         input:write(downloader.readAll())
@@ -19,7 +19,7 @@ function update.install()
         os.reboot()
         return true
     else
-        print("Erreur lors du telechargement du fichier : temp/install.lua depuis https://pastebin.com/raw/Nur35FnH le système va redemarrer.")
+        print("Erreur lors du telechargement du fichier : temp/install.lua depuis Github le système va redemarrer.")
         sleep(5)
         os.reboot()
     end
