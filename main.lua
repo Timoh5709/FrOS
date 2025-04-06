@@ -4,6 +4,7 @@ local history = {}
 local speaker = peripheral.find("speaker")
 local textViewer
 local update
+local statusBar = require("sys/statusBar.lua")
 if fs.exists("sys/textViewer.lua") then
     textViewer = require("sys/textViewer")
 end
@@ -30,17 +31,6 @@ local function getLinesUsed()
   local _, y = term.getCursorPos()
   return y
 end
-
-local function drawStatusBar()
-  term.setCursorPos(1, 1)
-  term.setBackgroundColor(colors.gray)
-  term.setTextColor(colors.white)
-  term.clearLine()
-  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
-  term.write(string.format("%-45s %5s","Dossier actuel : " .. dossier, textutils.formatTime(os.time())))
-  term.setBackgroundColor(colors.black)
-end
-
 
 local function containsCriticalFiles(path)
   if not fs.isDir(path) then
@@ -249,7 +239,6 @@ end
 
 while running do
   lines = getLinesUsed()
-  drawStatusBar()
 
   term.setCursorPos(1, lines)
   
@@ -358,5 +347,12 @@ while running do
   else
     print("Veuillez rentrer une commande.")
     playErrorSound()
+  end
+end
+
+local curClock
+while sbTimer do
+  if statusBar.clock() != curClock then
+    statusBar.draw()
   end
 end

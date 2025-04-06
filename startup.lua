@@ -7,6 +7,21 @@ local decoder = dfpwm.make_decoder()
 local toRepair = {}
 local repair
 
+local function check(path)
+    if not fs.exists(path) then 
+        term.setTextColor(colors.red)
+        print("Erreur : le fichier '" .. path .. "' est introuvable. Le systeme peut etre instable et endommage.")
+        table.insert(toRepair, path)
+        sleep(0.1)
+        term.setTextColor(colors.white)
+    else
+        term.setTextColor(colors.green)
+        print("'" .. path .. "' present.")
+        sleep(0.1)
+        term.setTextColor(colors.white)
+    end
+end
+
 print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
 
@@ -15,30 +30,9 @@ if fs.exists("main.lua") then
     print("'main.lua' present.")
     sleep(0.1)
     term.setTextColor(colors.white)
-    if not fs.exists("sys/textViewer.lua") then 
-        term.setTextColor(colors.red)
-        print("Erreur : le fichier 'sys/textViewer.lua' est introuvable. Le systeme peut etre instable et endommage.")
-        table.insert(toRepair, "sys/textViewer.lua")
-        sleep(0.1)
-        term.setTextColor(colors.white)
-    else
-        term.setTextColor(colors.green)
-        print("'sys/textViewer.lua' present.")
-        sleep(0.1)
-        term.setTextColor(colors.white)
-    end
-    if not fs.exists("sys/update.lua") then 
-        term.setTextColor(colors.red)
-        print("Erreur : le fichier 'sys/update.lua' est introuvable. Le systeme peut etre instable et endommage.")
-        table.insert(toRepair, "sys/update.lua")
-        sleep(0.1)
-        term.setTextColor(colors.white)
-    else
-        term.setTextColor(colors.green)
-        print("'sys/update.lua' present.")
-        sleep(0.1)
-        term.setTextColor(colors.white)
-    end
+    check("sys/textViewer.lua")
+    check("sys/update.lua")
+    check("sys/statusBar.lua")
     if speaker ~= nil then
         if fs.exists("media/startup.dfpwm") then
             term.setTextColor(colors.green)
