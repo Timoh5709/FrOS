@@ -4,7 +4,7 @@ local history = {}
 local speaker = peripheral.find("speaker")
 local textViewer
 local update
-local statusBar = require("sys/statusBar.lua")
+local statusBar = require("sys/statusBar")
 if fs.exists("sys/textViewer.lua") then
     textViewer = require("sys/textViewer")
 end
