@@ -351,10 +351,6 @@ while running do
   end
 end
 
-local curClock
 while sbTimer do
-  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
-  if statusBar.clock() ~= curClock then
-    statusBar.draw(dossier)
-  end
+  statusBar.draw(dossier)
 end
