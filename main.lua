@@ -13,7 +13,7 @@ if fs.exists("sys/update.lua") then
     update = require("sys/update")
 end
 local lines = 0
-local dossier
+local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
 
 local criticalFiles = {
