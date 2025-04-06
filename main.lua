@@ -12,7 +12,6 @@ end
 if fs.exists("sys/update.lua") then
     update = require("sys/update")
 end
-local lines = 0
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
 
@@ -27,11 +26,6 @@ local criticalFiles = {
   ["disk"] = true,
   ["rom"] = true
 }
-
-local function getLinesUsed()
-  local _, y = term.getCursorPos()
-  return y
-end
 
 local function containsCriticalFiles(path)
   if not fs.isDir(path) then
@@ -349,9 +343,7 @@ end
 
 local function statusBarFunc()
   while sbTimer do
-    lines = getLinesUsed()
     statusBar.draw(dossier)
-    term.setCursorPos(string.len(dossier) + 1, lines)
   end
 end
 
