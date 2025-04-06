@@ -1,4 +1,5 @@
 local running = true
+local sbTimer = true
 term.clear()
 local history = {}
 local speaker = peripheral.find("speaker")
@@ -352,6 +353,7 @@ end
 
 local curClock
 while sbTimer do
+  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
   if statusBar.clock() ~= curClock then
     statusBar.draw(dossier)
   end
