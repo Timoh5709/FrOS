@@ -282,7 +282,7 @@ while running do
     os.reboot()
   elseif command == "infosys" then
     print("Informations systeme : ")
-    print("Version de FrOS : OS_HDD_1")
+    print("Version de FrOS : OS_HDD_2")
     if os.getComputerLabel() then
       print("Nom de l'ordinateur : " .. os.getComputerLabel())
     end
