@@ -2,7 +2,7 @@ local statusBar = {}
 
 local clock
 
-function statusBar.draw()
+function statusBar.draw(dossier)
     term.setCursorPos(1, 1)
     term.setBackgroundColor(colors.gray)
     term.setTextColor(colors.white)

@@ -353,6 +353,6 @@ end
 local curClock
 while sbTimer do
   if statusBar.clock() ~= curClock then
-    statusBar.draw()
+    statusBar.draw(dossier)
   end
 end
