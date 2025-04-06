@@ -351,7 +351,7 @@ local function statusBarFunc()
   while sbTimer do
     lines = getLinesUsed()
     statusBar.draw(dossier)
-    term.setCursorPos(1, lines)
+    term.setCursorPos(string.len(dossier) + 1, lines)
   end
 end
 
