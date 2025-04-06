@@ -238,11 +238,7 @@ function playConfirmationSound()
   end
 end
 
-while running do
-  lines = getLinesUsed()
-
-  term.setCursorPos(1, lines)
-  
+local function main()
   write(dossier .. "> ")
   local input = read()
 
@@ -276,10 +272,10 @@ while running do
     if os.getComputerLabel() then
       print("Nom de l'ordinateur : " .. os.getComputerLabel())
     end
-    
+
     local freeSpace = fs.getFreeSpace(shell.dir()) or 0
     print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
-    
+
     print("Heure actuelle : " .. textutils.formatTime(os.time(), true))    
   elseif command == "aide" then
     aides = {
@@ -351,6 +347,14 @@ while running do
   end
 end
 
-while sbTimer do
-  statusBar.draw(dossier)
+local function statusBarFunc()
+  while sbTimer do
+    lines = getLinesUsed()
+    statusBar.draw(dossier)
+    term.setCursorPos(1, lines)
+  end
+end
+
+while running do
+  parallel.waitForAny(main, statusBarFunc)
 end
