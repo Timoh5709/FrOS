@@ -352,7 +352,7 @@ end
 
 local curClock
 while sbTimer do
-  if statusBar.clock() != curClock then
+  if statusBar.clock() ~= curClock then
     statusBar.draw()
   end
 end
