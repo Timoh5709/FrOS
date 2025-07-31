@@ -234,6 +234,7 @@ end
 
 local function main()
   write(dossier .. "> ")
+  statusBar.draw(dossier)
   local input = read()
 
   if input ~= nil then
@@ -341,12 +342,6 @@ local function main()
   end
 end
 
-local function statusBarFunc()
-  while sbTimer do
-    statusBar.draw(dossier)
-  end
-end
-
 while running do
-  parallel.waitForAny(main, statusBarFunc)
+  main()
 end
