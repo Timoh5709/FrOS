@@ -206,6 +206,9 @@ local function exec(filename)
 
   local path = fs.combine(shell.dir(), filename)
   local path2 = shell.resolveProgram(filename)
+  if path2 == nil then
+    path2 = "nil"
+  end
   if fs.exists(path) and not fs.isDir(path) then
     shell.run(path)
   elseif fs.exists(path2) then
