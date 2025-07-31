@@ -1,6 +1,10 @@
 term.clear()
 term.setCursorPos(1,1)
 
+local speaker = peripheral.find("speaker")
+local dfpwm = require("cc.audio.dfpwm")
+local decoder = dfpwm.make_decoder()
+
 print("Ce programme va bien telecharger et installer les fichiers pour FrOS.")
 print("Veuillez ne pas eteindre votre ordinateur lors du telechargement.")
 sleep(1)
@@ -24,7 +28,18 @@ term.setBackgroundColor(colors.blue)
 term.clear()
 term.setCursorPos(1,1)
 
-installGithub("startup.lua")
+fs.makeDir("media")
+print("Dossier media cree avec succes.")
+installGithub("media/startup.dfpwm")
+if speaker ~= nil then
+    for chunk in io.lines("media/startup.dfpwm", 16 * 1024) do
+        local buffer = decoder(chunk)
+    
+        while not speaker.playAudio(buffer) do
+            os.pullEvent("speaker_audio_empty")
+        end
+    end 
+end
 installGithub("main.lua")
 fs.makeDir("sys")
 print("Dossier sys cree avec succes.")
@@ -32,11 +47,9 @@ installGithub("sys/textViewer.lua")
 installGithub("sys/update.lua")
 installGithub("sys/repair.lua")
 installGithub("sys/statusBar.lua")
-fs.makeDir("media")
-print("Dossier media cree avec succes.")
-installGithub("media/startup.dfpwm")
 fs.makeDir("temp")
 print("Dossier temp cree avec succes.")
+installGithub("startup.lua")
 print("Installation de FrOS version OS_HDD_2 termine. Votre ordinateur va redemarrer.")
 sleep(5)
 os.reboot()

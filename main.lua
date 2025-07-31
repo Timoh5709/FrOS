@@ -269,7 +269,11 @@ local function main()
     end
 
     local freeSpace = fs.getFreeSpace(shell.dir()) or 0
-    print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
+    if math.floor(freeSpace / 1024) < 10000 then
+      print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
+    else
+      print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1048576 * 100) / 100) .. " Mo")
+    end
 
     print("Heure actuelle : " .. textutils.formatTime(os.time(), true))    
   elseif command == "aide" then
