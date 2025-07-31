@@ -233,6 +233,7 @@ function playConfirmationSound()
 end
 
 local function main()
+  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
   write(dossier .. "> ")
   statusBar.draw(dossier)
   local input = read()
