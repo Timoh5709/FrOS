@@ -1,6 +1,8 @@
 term.clear()
 term.setCursorPos(1,1)
 
+periphemu.create("top", "speaker")
+
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
