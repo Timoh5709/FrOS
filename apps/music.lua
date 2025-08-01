@@ -15,6 +15,7 @@ local function player(filename)
       elseif event == "key" then
         speaker.stop()
         print("La musique est coupee.")
+        return
       end
     end
   end 
