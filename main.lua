@@ -12,7 +12,7 @@ if fs.exists("sys/update.lua") then
     update = require("sys/update")
 end
 if fs.exists("sys/httpViewer.lua") then
-    update = require("sys/httpViewer")
+    httpViewer = require("sys/httpViewer")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")

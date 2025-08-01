@@ -12,4 +12,13 @@ function httpViewer.readUrl(url)
     end
 end
 
+function httpViewer.getLines(url)
+    local text = httpViewer.readUrl(url)
+    local lignes = {}
+    for ligne in text:gmatch("([^\n]*)\n?") do
+        table.insert(lignes, ligne)
+    end
+    return lignes
+end
+
 return httpViewer
