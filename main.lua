@@ -308,7 +308,7 @@ local function main()
       "maj - Mettre a jour",
       "mkfile <nom> - Creer un fichier",
       "exec <nom> - Executer un fichier lua",
-      "nom <nom> - Renommer l'ordinateur"
+      "nom <nom> - Renommer l'ordinateur",
       "http <url> - Affiche le contenu d'une page http"
     }
     textViewer.lineViewer(aides)
