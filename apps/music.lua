@@ -15,7 +15,7 @@ end
 
 local function main()
   dossier = "music.lua"
-  write(dossier .. "♪ ")
+  write(dossier .. "& ")
   statusBar.draw(dossier)
   local input = read()
   
