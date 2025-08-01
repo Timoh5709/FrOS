@@ -28,6 +28,7 @@ local function installGithub(filename)
         return true
     else
         print("Erreur lors du telechargement du fichier : " .. filename)
+        return false
     end
 end
 
@@ -60,7 +61,11 @@ local function checkAndInstallApp(app)
         local f = fs.open("/appList.txt", "r")
         local ftexte = f.readAll()
         f.close()
-        installGithub("apps/" .. app)
+        if not installGithub("apps/" .. app) then
+            if not installGithub("apps/" .. app .. ".lua") then
+                print("Erreur : L'application " .. app .. " ne peut pas etre installee.")
+            end
+        end
         if string.find(ftexte, app) then
             print(app .. " a bien ete mis a jour.")
         else
@@ -97,18 +102,20 @@ local function main()
             "Commandes disponibles :",
             "aide - Affiche cet aide",
             "quit - Quitte l'application",
-            "liste OU list <nv OU pr> - Liste les applications disponibles OU installee"
+            "liste OU list <nv OU pr> - Liste les applications disponibles OU installee",
             "installer OU get <app> - Installe la derniere version d'une application"
         }
         textViewer.lineViewer(aides)
     elseif command == "liste" or command == "list" then
-        if param == "nv"
+        if param == "nv" then
             refresh()
-        elseif param == "pr"
+        elseif param == "pr" then
             readAllText("/appList.txt")
+        else
+            print("Erreur : Aucune liste selectionnee.")
         end
     elseif command == "installer" or command == "get" then
-
+        checkAndInstallApp(param)
     elseif command ~= nil then
         print("Commande inconnue : " .. command)
         playErrorSound()
