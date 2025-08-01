@@ -201,7 +201,7 @@ local function mkfile(filename)
   end
 end
 
-local function exec(filename)
+local function exec(filename, param)
   if not filename then
     print("Erreur : Aucun fichier specifie.")
     return
@@ -268,8 +268,9 @@ local function main()
 
   local command = args[1]
   local param = args[2]
+  local paramexec = ""
   if string.len(input) > 5 then
-    local paramexec string.sub(input, 6)
+    paramexec = string.sub(input, 6)
   end
 
   if command == "quit" then
@@ -355,7 +356,7 @@ local function main()
   elseif command == "mkfile" then
     mkfile(param)
   elseif command == "exec" then
-    exec(paramexec)
+    exec(param, string.sub(paramexec, string.len(param)))
   elseif command == "nom" then
     renommer(param)
   elseif command == "http" then
