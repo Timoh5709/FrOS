@@ -8,7 +8,14 @@ local function player(filename)
     local buffer = decoder(chunk)
     
     while not speaker.playAudio(buffer) do
-      os.pullEvent("speaker_audio_empty")
+      local eventData = {os.pullEvent()}
+      local event = eventData[1]
+
+      if event == "speaker_audio_empty" then
+      elseif event == "key" then
+        speaker.stop()
+        print("La musique est coupee.")
+      end
     end
   end 
 end
