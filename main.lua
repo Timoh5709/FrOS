@@ -268,6 +268,9 @@ local function main()
 
   local command = args[1]
   local param = args[2]
+  if string.len(input) > 5 then
+    local paramexec string.sub(input, 6)
+  end
 
   if command == "quit" then
     print("Fermeture de FrOS...")
@@ -352,7 +355,7 @@ local function main()
   elseif command == "mkfile" then
     mkfile(param)
   elseif command == "exec" then
-    exec(param)
+    exec(paramexec)
   elseif command == "nom" then
     renommer(param)
   elseif command == "http" then
