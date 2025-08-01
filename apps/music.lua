@@ -26,7 +26,7 @@ local function main()
   local input = read()
   
   if fs.exists(input) then
-    print("Joue actuellement : " input)
+    print("Joue actuellement : " .. input)
   end
 end
 
