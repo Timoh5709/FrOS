@@ -1,9 +1,22 @@
 local files = fs.list("/drivers")
+local lance = {"init.lua"}
 
-if not #files == 0 then
+local function tableContains(table, value)
+  for i = 1,#testTable do
+    if (testTable[i] == value) then
+      return true
+    end
+  end
+  return false
+end
+
+if #files > 0 then
     for _, file in ipairs(files) do
-        local path = fs.combine("/drivers/", file)
-        shell.run(file)
-        print(file .. " lance")
+        if tableContains(lance, file) then
+            table.insert(lance, file)
+            local path = fs.combine("/drivers/", file)
+            shell.run(path)
+            print(file .. " lance")
+        end
     end
 end
