@@ -27,7 +27,9 @@ local criticalFiles = {
   ["startup.dfpwm"] = true,
   ["disk"] = true,
   ["rom"] = true,
-  ["httpViewer.lua"] = true
+  ["httpViewer.lua"] = true,
+  ["drivers"] = true,
+  ["init.lua"] = true
 }
 
 local function containsCriticalFiles(path)
@@ -213,9 +215,17 @@ local function exec(filename, param)
     path2 = "nil"
   end
   if fs.exists(path) and not fs.isDir(path) then
-    shell.run(path)
+    if param then
+      shell.run(path .. param)
+    else
+      shell.run(path)
+    end
   elseif fs.exists(path2) then
-    shell.run(path2)
+    if param then
+      shell.run(path2 .. param)
+    else
+      shell.run(path2)
+    end
   else
     print("Erreur : Fichier introuvable ou non valide.")
   end
@@ -356,7 +366,7 @@ local function main()
   elseif command == "mkfile" then
     mkfile(param)
   elseif command == "exec" then
-    exec(param, string.sub(paramexec, string.len(param)))
+    exec(param, string.sub(paramexec, string.len(param) + 1))
   elseif command == "nom" then
     renommer(param)
   elseif command == "http" then

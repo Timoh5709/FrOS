@@ -1,6 +1,5 @@
 term.clear()
 term.setCursorPos(1,1)
-periphemu.create("top", "speaker")
 
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
@@ -49,6 +48,9 @@ installGithub("sys/update.lua")
 installGithub("sys/repair.lua")
 installGithub("sys/statusBar.lua")
 installGithub("sys/httpViewer.lua")
+fs.makeDir("drivers")
+print("Dossier drivers cree avec succes.")
+installGithub("drivers/init.lua")
 fs.makeDir("apps")
 print("Dossier apps cree avec succes.")
 installGithub("apps/appStore.lua")
@@ -59,6 +61,13 @@ if f then
     print("Fichier appList.txt cree avec succes.")
 else
     print("Erreur : Impossible de creer le fichier appList.txt.")
+end
+local f = fs.open("driversList.txt", "w")
+if f then
+    f.close()
+    print("Fichier driversList.txt cree avec succes.")
+else
+    print("Erreur : Impossible de creer le fichier driversList.txt.")
 end
 fs.makeDir("temp")
 print("Dossier temp cree avec succes.")

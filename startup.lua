@@ -1,7 +1,8 @@
 term.clear()
 term.setCursorPos(1,1)
-
-periphemu.create("top", "speaker")
+if check("drivers/init.lua") then
+    shell.run("drivers/init.lua")
+end
 
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
@@ -16,11 +17,13 @@ local function check(path)
         table.insert(toRepair, path)
         sleep(0.1)
         term.setTextColor(colors.white)
+        return false
     else
         term.setTextColor(colors.green)
         print("'" .. path .. "' present.")
         sleep(0.1)
         term.setTextColor(colors.white)
+        return true
     end
 end
 
