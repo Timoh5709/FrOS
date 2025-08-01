@@ -1,14 +1,5 @@
 term.clear()
 term.setCursorPos(1,1)
-if check("drivers/init.lua") then
-    shell.run("drivers/init.lua")
-end
-
-local speaker = peripheral.find("speaker")
-local dfpwm = require("cc.audio.dfpwm")
-local decoder = dfpwm.make_decoder()
-local toRepair = {}
-local repair
 
 local function check(path)
     if not fs.exists(path) then 
@@ -26,6 +17,16 @@ local function check(path)
         return true
     end
 end
+
+if check("drivers/init.lua") then
+    shell.run("drivers/init.lua")
+end
+
+local speaker = peripheral.find("speaker")
+local dfpwm = require("cc.audio.dfpwm")
+local decoder = dfpwm.make_decoder()
+local toRepair = {}
+local repair
 
 print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
