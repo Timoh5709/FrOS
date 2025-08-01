@@ -21,6 +21,7 @@ local function main()
   
   if fs.exists(input) then
     print("Joue actuellement : " .. input)
+    player(input)
   end
 end
 
