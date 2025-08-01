@@ -1,6 +1,6 @@
 local httpViewer = {}
 
-local function httpBrain(url)
+ function httpViewer.httpBrain(url)
     local request = http.get(url)
     if request == nil then
         term.setTextColor(colors.red)
@@ -13,13 +13,13 @@ local function httpBrain(url)
 end
 
 function httpViewer.readUrl(url)
-    print(httpBrain(url))
+    print(httpViewer.httpBrain(url))
 end
 
 function httpViewer.getLines(url)
-    local text = httpBrain(url)
+    local text = httpViewer.httpBrain(url)
     local lignes = {}
-    for ligne in text:gmatch("([^\n]*)\n?") do
+    for ligne in string.gmatch(text, "([^\n]*)\n?") do
         table.insert(lignes, ligne)
     end
     return lignes

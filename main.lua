@@ -232,7 +232,7 @@ local function http(url)
     return
   end
 
-  httpViewer.readUrl(url)
+  textViewer.lineViewer(httpViewer.readUrl(url))
 end
 
 function playErrorSound()
@@ -295,20 +295,21 @@ local function main()
   elseif command == "aide" then
     aides = {
       "Commandes disponibles :",
-      "aide - Afficher cette aide",
-      "quit - Quitter FrOS",
-      "ls OU dir - Lister les fichiers",
-      "go OU cd <dossier> - Changer de dossier",
-      "mkdir <nom> - Creer un dossier",
-      "del OU rm <nom> - Supprimer un fichier ou un dossier",
-      "history - Afficher l'historique des commandes",
-      "infosys - Aficher des informations sur le systeme",
-      "lire <nom> - Lire le fichier",
-      "cls - Nettoyer le terminal",
-      "maj - Mettre a jour",
-      "mkfile <nom> - Creer un fichier",
-      "exec <nom> - Executer un fichier lua",
-      "nom <nom> - Renommer l'ordinateur",
+      "aide - Affiche cette aide",
+      "quit - Quitte FrOS",
+      "reboot - Redémarre FrOS",
+      "ls OU dir - Liste les fichiers",
+      "go OU cd <dossier> - Change de dossier",
+      "mkdir <nom> - Cree un dossier",
+      "del OU rm <nom> - Supprime un fichier ou un dossier",
+      "history - Affiche l'historique des commandes",
+      "infosys - Affiche des informations sur le systeme",
+      "lire <nom> - Lit le fichier",
+      "cls - Nettoie le terminal",
+      "maj - Met a jour",
+      "mkfile <nom> - Cree un fichier",
+      "exec <nom> - Execute un fichier lua",
+      "nom <nom> - Renomme l'ordinateur",
       "http <url> - Affiche le contenu d'une page http"
     }
     textViewer.lineViewer(aides)

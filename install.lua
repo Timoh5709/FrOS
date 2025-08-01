@@ -52,6 +52,14 @@ installGithub("sys/httpViewer.lua")
 fs.makeDir("apps")
 print("Dossier apps cree avec succes.")
 installGithub("apps/appStore.lua")
+local f = fs.open("appList.txt", "w")
+if f then
+    f.write("appStore.lua\n")
+    f.close()
+    print("Fichier appList.txt cree avec succes.")
+else
+    print("Erreur : Impossible de creer le fichier appList.txt.")
+end
 fs.makeDir("temp")
 print("Dossier temp cree avec succes.")
 installGithub("startup.lua")
