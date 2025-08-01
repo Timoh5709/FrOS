@@ -20,6 +20,9 @@ local function check(path)
     end
 end
 
+print("Bienvenue sur FrOS")
+print("Tapez 'aide' pour voir les commandes disponibles.")
+
 if check("drivers/init.lua") then
     shell.run("drivers/init.lua")
 end
@@ -27,9 +30,6 @@ end
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
-
-print("Bienvenue sur FrOS")
-print("Tapez 'aide' pour voir les commandes disponibles.")
 
 if fs.exists("main.lua") then
     term.setTextColor(colors.green)
