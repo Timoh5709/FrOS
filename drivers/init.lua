@@ -12,7 +12,7 @@ end
 
 if #files > 0 then
     for _, file in ipairs(files) do
-        if tableContains(lance, file) then
+        if not tableContains(lance, file) then
             table.insert(lance, file)
             local path = fs.combine("/drivers/", file)
             shell.run(path)
