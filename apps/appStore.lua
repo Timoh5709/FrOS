@@ -1,1 +1,1 @@
-print("En cours de developpement")
+textViewer = require("sys/textViewer")

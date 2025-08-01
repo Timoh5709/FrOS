@@ -1,5 +1,4 @@
 local running = true
-local sbTimer = true
 term.clear()
 local history = {}
 local speaker = peripheral.find("speaker")
@@ -11,6 +10,9 @@ if fs.exists("sys/textViewer.lua") then
 end
 if fs.exists("sys/update.lua") then
     update = require("sys/update")
+end
+if fs.exists("sys/httpViewer.lua") then
+    update = require("sys/httpViewer")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
@@ -24,7 +26,8 @@ local criticalFiles = {
   ["media"] = true,
   ["startup.dfpwm"] = true,
   ["disk"] = true,
-  ["rom"] = true
+  ["rom"] = true,
+  ["httpViewer.lua"] = true
 }
 
 local function containsCriticalFiles(path)
@@ -223,6 +226,15 @@ local function renommer(value)
   print("Nom de l'ordinateur defini sur : " .. value)
 end
 
+local function http(url)
+  if not url then
+    print("Erreur : Aucune URL specifie")
+    return
+  end
+
+  httpViewer.readUrl(url)
+end
+
 function playErrorSound()
   if speaker ~= nil then
     speaker.playNote("bit")
@@ -297,6 +309,7 @@ local function main()
       "mkfile <nom> - Creer un fichier",
       "exec <nom> - Executer un fichier lua",
       "nom <nom> - Renommer l'ordinateur"
+      "http <url> - Affiche le contenu d'une page http"
     }
     textViewer.lineViewer(aides)
   elseif command == "ls" or command == "dir" then
@@ -341,6 +354,8 @@ local function main()
     exec(param)
   elseif command == "nom" then
     renommer(param)
+  elseif command == "http" then
+    http(param)
   elseif command ~= nil then
     print("Commande inconnue : " .. command)
     playErrorSound()

@@ -35,6 +35,7 @@ if fs.exists("main.lua") then
     check("sys/textViewer.lua")
     check("sys/update.lua")
     check("sys/statusBar.lua")
+    check("sys/httpViewer.lua")
     if speaker ~= nil then
         if fs.exists("media/startup.dfpwm") then
             term.setTextColor(colors.green)
@@ -50,7 +51,7 @@ if fs.exists("main.lua") then
             end 
         else
             term.setTextColor(colors.red)
-            print("Erreur : le fichier 'media/startup.dfpwm' est introuvable. Le systeme peut être endommage.")
+            print("Erreur : le fichier 'media/startup.dfpwm' est introuvable. Le systeme peut etre endommage.")
             table.insert(toRepair, "media/startup.dfpwm")
             sleep(0.1)
             term.setTextColor(colors.white)
