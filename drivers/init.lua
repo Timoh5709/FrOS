@@ -2,8 +2,8 @@ local files = fs.list("/drivers")
 local lance = {"init.lua"}
 
 local function tableContains(table, value)
-  for i = 1,#testTable do
-    if (testTable[i] == value) then
+  for i = 1,#table do
+    if (table[i] == value) then
       return true
     end
   end
