@@ -5,8 +5,18 @@ local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
 
+local maj = false
+
 print("Ce programme va bien telecharger et installer les fichiers pour FrOS.")
 print("Veuillez ne pas eteindre votre ordinateur lors du telechargement.")
+if fs.exists("/startup.lua") then
+    print("Voulez-vous mettre a jour ou installer a nouveau ? (maj/install)")
+    write("? ")
+    local choix = read()
+    if choix == "maj" then
+        maj = true
+    end
+end
 sleep(1)
 textutils.slowPrint("-------------------------------------------------")
 
@@ -54,20 +64,22 @@ installGithub("drivers/init.lua")
 fs.makeDir("apps")
 print("Dossier apps cree avec succes.")
 installGithub("apps/appStore.lua")
-local f = fs.open("appList.txt", "w")
-if f then
-    f.write("appStore.lua\n")
-    f.close()
-    print("Fichier appList.txt cree avec succes.")
-else
-    print("Erreur : Impossible de creer le fichier appList.txt.")
-end
-local f = fs.open("driversList.txt", "w")
-if f then
-    f.close()
-    print("Fichier driversList.txt cree avec succes.")
-else
-    print("Erreur : Impossible de creer le fichier driversList.txt.")
+if not maj then
+    local f = fs.open("appList.txt", "w")
+    if f then
+        f.write("appStore.lua\n")
+        f.close()
+        print("Fichier appList.txt cree avec succes.")
+    else
+        print("Erreur : Impossible de creer le fichier appList.txt.")
+    end
+    local f = fs.open("driversList.txt", "w")
+    if f then
+        f.close()
+        print("Fichier driversList.txt cree avec succes.")
+    else
+        print("Erreur : Impossible de creer le fichier driversList.txt.")
+    end
 end
 fs.makeDir("temp")
 print("Dossier temp cree avec succes.")
