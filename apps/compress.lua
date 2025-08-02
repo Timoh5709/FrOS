@@ -13,6 +13,18 @@ local function writeAll(path, data)
   file.close()
 end
 
+local function intToBytes(code)
+  local b1 = math.floor(code / (256^3)) % 256
+  local b2 = math.floor(code / (256^2)) % 256
+  local b3 = math.floor(code / 256) % 256
+  local b4 = code % 256
+  return string.char(b1, b2, b3, b4)
+end
+
+local function bytesToInt(b1, b2, b3, b4)
+  return ((b1 * 256 + b2) * 256 + b3) * 256 + b4
+end
+
 local function compress(input)
   local dict = {}
   for i = 0, 255 do dict[string.char(i)] = i end
@@ -37,10 +49,7 @@ local function compress(input)
 
   local out = {}
   for _, code in ipairs(outputCodes) do
-    local high = math.floor(code / 256)
-    local low = code % 256
-    out[#out+1] = string.char(high)
-    out[#out+1] = string.char(low)
+    out[#out+1] = intToBytes(code)
   end
   return table.concat(out)
 end
@@ -51,10 +60,9 @@ local function decompress(data)
 
   local nextCode = 256
   local codes = {}
-  for i = 1, #data, 2 do
-    local high = data:byte(i)
-    local low = data:byte(i+1)
-    codes[#codes+1] = high * 256 + low
+  for i = 1, #data, 4 do
+    local b1, b2, b3, b4 = data:byte(i, i+3)
+    codes[#codes+1] = bytesToInt(b1, b2, b3, b4)
   end
 
   local result = {}
