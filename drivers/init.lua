@@ -16,7 +16,7 @@ if #files > 0 then
             table.insert(lance, file)
             local path = fs.combine("/drivers/", file)
             shell.run(path)
-            print(file .. " lance")
+            print(file .. " lancé")
         end
     end
 end

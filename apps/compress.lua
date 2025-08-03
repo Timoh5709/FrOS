@@ -99,7 +99,7 @@ if mode == "-c" then
   writeAll(outPath, compressed)
   print("Fait.")
 elseif mode == "-d" then
-  print("Decompresse " .. inPath .. " -> " .. outPath)
+  print("Décompresse " .. inPath .. " -> " .. outPath)
   local input = readAll(inPath)
   local decompressed = decompress(input)
   writeAll(outPath, decompressed)

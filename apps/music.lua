@@ -14,7 +14,7 @@ local function player(filename)
       if event == "speaker_audio_empty" then
       elseif event == "key" then
         speaker.stop()
-        print("La musique est coupee.")
+        print("La musique est coupée.")
         return
       end
     end
@@ -36,5 +36,5 @@ end
 if speaker ~= nil then
   main()
 else
-  print("Erreur : Aucun haut-parleur detecte.")
+  print("Erreur : Aucun haut-parleur détécté.")
 end

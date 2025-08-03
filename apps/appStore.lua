@@ -18,16 +18,16 @@ function playConfirmationSound()
 end
 
 local function installGithub(filename)
-    print("Telecharge " .. filename .. " depuis Github.")
+    print("Télécharge " .. filename .. " depuis Github.")
     downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
     if downloader then
         input = io.open(filename, "w")
         input:write(downloader.readAll())
         input:close()
-        print("Telechargement de ".. filename .. " reussi")
+        print("Téléchargement de ".. filename .. " réussi")
         return true
     else
-        print("Erreur lors du telechargement du fichier : " .. filename)
+        print("Erreur lors du téléchargement du fichier : " .. filename)
         return false
     end
 end
@@ -68,16 +68,16 @@ local function checkAndInstallApp(app)
         f.close()
         if not installGithub("apps/" .. app) then
             if not installGithub("apps/" .. app .. ".lua") then
-                print("Erreur : L'application " .. app .. " ne peut pas etre installee.")
+                print("Erreur : L'application " .. app .. " ne peut pas être installée.")
             end
         end
         if string.find(ftexte, app) then
-            print(app .. " a bien ete mis a jour.")
+            print(app .. " a bien été mis à jour.")
         else
             f = fs.open("/appList.txt", "a")
             f.write(app .. "\n")
             f.close()
-            print(app .. " a bien ete installe.")
+            print(app .. " a bien été installé.")
         end
     else
         print("Erreur : Application introuvable en ligne.")
@@ -92,16 +92,16 @@ local function checkAndInstallDriver(driver)
         f.close()
         if not installGithub("drivers/" .. driver) then
             if not installGithub("drivers/" .. driver .. ".lua") then
-                print("Erreur : Le driver " .. driver .. " ne peut pas etre installe.")
+                print("Erreur : Le driver " .. driver .. " ne peut pas être installé.")
             end
         end
         if string.find(ftexte, driver) then
-            print(driver .. " a bien ete mis a jour.")
+            print(driver .. " a bien été mis à jour.")
         else
             f = fs.open("/driversList.txt", "a")
             f.write(driver .. "\n")
             f.close()
-            print(driver .. " a bien ete installe.")
+            print(driver .. " a bien été installé.")
         end
     else
         print("Erreur : Driver introuvable en ligne.")
@@ -131,9 +131,9 @@ local function main()
             "Commandes disponibles :",
             "aide - Affiche cet aide",
             "quit - Quitte l'application",
-            "liste OU list <napps OU apps OU ndrivers OU drivers> - Liste les applications disponibles OU installee OU les drivers disponibles OU les drivers installes",
-            "installer OU get <app> - Installe la derniere version d'une application",
-            "driver <driver> - Installe la derniere version d'un driver"
+            "liste OU list <napps OU apps OU ndrivers OU drivers> - Liste les applications disponibles OU installée OU les drivers disponibles OU les drivers installés",
+            "installer OU get <app> - Installe la dernière version d'une application",
+            "driver <driver> - Installe la dernière version d'un driver"
         }
         textViewer.lineViewer(aides)
     elseif command == "liste" or command == "list" then
@@ -146,7 +146,7 @@ local function main()
         elseif param == "drivers" then
             readAllText("/driversList.txt")
         else
-            print("Erreur : Aucune liste selectionnee.")
+            print("Erreur : Aucune liste selectionnée.")
         end
     elseif command == "installer" or command == "get" then
         checkAndInstallApp(param)

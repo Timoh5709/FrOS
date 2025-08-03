@@ -52,7 +52,7 @@ local function listFiles()
   local files = fs.list(shell.dir())
   
   if #files == 0 then
-    print("Le repertoire est vide.")
+    print("Le répertoire est vide.")
     return
   end
   
@@ -118,9 +118,9 @@ local function makeDir(dir)
   local newDir = fs.combine(shell.dir(), dir)
   if not fs.exists(newDir) then
     fs.makeDir(newDir)
-    print("Dossier cree : " .. newDir)
+    print("Dossier créé : " .. newDir)
   else
-    print("Erreur : Ce dossier existe deja.")
+    print("Erreur : Ce dossier existe déjà.")
     playErrorSound()
   end
 end
@@ -131,17 +131,17 @@ local function removeFileOrDir(target)
   if fs.exists(path) then
     if criticalFiles[target] or containsCriticalFiles(path) then
       print("Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.")
-      print("Cela pourrait affecter le fonctionnement du systeme. Voulez-vous continuer ? (oui/non)")
+      print("Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)")
       playConfirmationSound()
       write("? ")
       local confirmation1 = read()
       if confirmation1 ~= "oui" then
-        print("Suppression annulee.")
+        print("Suppression annulée.")
         return
       end
     end
 
-    print("Etes-vous sur de vouloir supprimer " .. target .. " ? (oui/non)")
+    print("Êtes-vous sur de vouloir supprimer " .. target .. " ? (oui/non)")
     playConfirmationSound()
     write("? ")
     local confirmation2 = read()
@@ -149,7 +149,7 @@ local function removeFileOrDir(target)
       fs.delete(path)
       print("Supprime : " .. path)
     else
-      print("Suppression annulee.")
+      print("Suppression annulée.")
     end
   else
     print("Erreur : Fichier ou dossier introuvable.")
@@ -184,28 +184,28 @@ end
 
 local function mkfile(filename)
   if not filename then
-    print("Erreur : Aucun nom de fichier spÃ©cifie.")
+    print("Erreur : Aucun nom de fichier spécifié.")
     return
   end
 
   local path = fs.combine(shell.dir(), filename)
   if fs.exists(path) then
-    print("Erreur : Le fichier '" .. filename .. "' existe deja.")
+    print("Erreur : Le fichier '" .. filename .. "' existe déjà.")
     return
   end
 
   local file = fs.open(path, "w")
   if file then
     file.close()
-    print("Fichier cree : " .. filename)
+    print("Fichier créé : " .. filename)
   else
-    print("Erreur : Impossible de creer le fichier.")
+    print("Erreur : Impossible de créer le fichier.")
   end
 end
 
 local function exec(filename, param)
   if not filename then
-    print("Erreur : Aucun fichier specifie.")
+    print("Erreur : Aucun fichier spécifié.")
     return
   end
 
@@ -233,12 +233,12 @@ end
 
 local function renommer(value)
   os.setComputerLabel(value)
-  print("Nom de l'ordinateur defini sur : " .. value)
+  print("Nom de l'ordinateur défini sur : " .. value)
 end
 
 local function http(url)
   if not url then
-    print("Erreur : Aucune URL specifie")
+    print("Erreur : Aucune URL spécifié")
     return
   end
 
@@ -288,11 +288,11 @@ local function main()
     sleep(1)
     os.shutdown()
   elseif command == "reboot" then
-    print("Redemarrage de FrOS...")
+    print("Redémarrage de FrOS...")
     sleep(1)
     os.reboot()
   elseif command == "infosys" then
-    print("Informations systeme : ")
+    print("Informations système : ")
     print("Version de FrOS : OS_HDD_2")
     if os.getComputerLabel() then
       print("Nom de l'ordinateur : " .. os.getComputerLabel())
@@ -300,9 +300,9 @@ local function main()
 
     local freeSpace = fs.getFreeSpace(shell.dir()) or 0
     if math.floor(freeSpace / 1024) < 10000 then
-      print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
+      print("Espace libre dans le répertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
     else
-      print("Espace libre dans le repertoire actuel : " .. (math.floor(freeSpace / 1048576 * 100) / 100) .. " Mo")
+      print("Espace libre dans le répertoire actuel : " .. (math.floor(freeSpace / 1048576 * 100) / 100) .. " Mo")
     end
 
     print("Heure actuelle : " .. textutils.formatTime(os.time(), true))    
@@ -311,18 +311,18 @@ local function main()
       "Commandes disponibles :",
       "aide - Affiche cette aide",
       "quit - Quitte FrOS",
-      "reboot - RedÃ©marre FrOS",
+      "reboot - Redémarre FrOS",
       "ls OU dir - Liste les fichiers",
       "go OU cd <dossier> - Change de dossier",
-      "mkdir <nom> - Cree un dossier",
+      "mkdir <nom> - Crée un dossier",
       "del OU rm <nom> - Supprime un fichier ou un dossier",
       "history - Affiche l'historique des commandes",
-      "infosys - Affiche des informations sur le systeme",
+      "infosys - Affiche des informations sur le système",
       "lire <nom> - Lit le fichier",
       "cls - Nettoie le terminal",
-      "maj - Met a jour",
-      "mkfile <nom> - Cree un fichier",
-      "exec <nom> - Execute un fichier lua",
+      "maj - Met à jour",
+      "mkfile <nom> - Crée un fichier",
+      "exec <nom> - Exécute un fichier lua",
       "nom <nom> - Renomme l'ordinateur",
       "http <url> - Affiche le contenu d'une page http"
     }
@@ -333,21 +333,21 @@ local function main()
     if param then
       changeDir(param)
     else
-      print("Erreur : Aucun dossier specifie.")
+      print("Erreur : Aucun dossier spécifié.")
       playErrorSound()
     end
   elseif command == "mkdir" then
     if param then
       makeDir(param)
     else
-      print("Erreur : Aucun nom de dossier specifie.")
+      print("Erreur : Aucun nom de dossier spécifié.")
       playErrorSound()
     end
   elseif command == "del" or command == "rm" then
     if param then
       removeFileOrDir(param)
     else
-      print("Erreur : Aucun nom specifie.")
+      print("Erreur : Aucun nom spécifié.")
       playErrorSound()
     end
   elseif command == "history" then
@@ -356,7 +356,7 @@ local function main()
     if param then
       readAllText(param)
     else
-      print("Erreur : Aucun fichier specifie.")
+      print("Erreur : Aucun fichier spécifié.")
       playErrorSound()
     end
   elseif command == "cls" then

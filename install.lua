@@ -7,10 +7,10 @@ local decoder = dfpwm.make_decoder()
 
 local maj = false
 
-print("Ce programme va bien telecharger et installer les fichiers pour FrOS.")
-print("Veuillez ne pas eteindre votre ordinateur lors du telechargement.")
+print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
+print("Veuillez ne pas éteindre votre ordinateur lors du téléchargement.")
 if fs.exists("/startup.lua") then
-    print("Voulez-vous mettre a jour ou installer a nouveau ? (maj/install)")
+    print("Voulez-vous mettre à jour ou installer à nouveau ? (maj/install)")
     write("? ")
     local choix = read()
     if choix == "maj" then
@@ -21,16 +21,16 @@ sleep(1)
 textutils.slowPrint("-------------------------------------------------")
 
 local function installGithub(filename)
-    print("Telecharge " .. filename .. " depuis Github.")
+    print("Télécharge " .. filename .. " depuis Github.")
     downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
     if downloader then
         input = io.open(filename, "w")
         input:write(downloader.readAll())
         input:close()
-		print("Telechargement de ".. filename .. " reussi")
+		print("Téléchargement de ".. filename .. " réussi")
         return true
     else
-        print("Erreur lors du telechargement du fichier : " .. filename)
+        print("Erreur lors du téléchargement du fichier : " .. filename)
     end
 end
 
@@ -39,7 +39,7 @@ term.clear()
 term.setCursorPos(1,1)
 
 fs.makeDir("media")
-print("Dossier media cree avec succes.")
+print("Dossier media créé avec succès.")
 installGithub("media/startup.dfpwm")
 if speaker ~= nil then
     for chunk in io.lines("media/startup.dfpwm", 16 * 1024) do
@@ -52,33 +52,33 @@ if speaker ~= nil then
 end
 installGithub("main.lua")
 fs.makeDir("sys")
-print("Dossier sys cree avec succes.")
+print("Dossier sys créé avec succès.")
 installGithub("sys/textViewer.lua")
 installGithub("sys/update.lua")
 installGithub("sys/repair.lua")
 installGithub("sys/statusBar.lua")
 installGithub("sys/httpViewer.lua")
 fs.makeDir("drivers")
-print("Dossier drivers cree avec succes.")
+print("Dossier drivers créé avec succès.")
 installGithub("drivers/init.lua")
 fs.makeDir("apps")
-print("Dossier apps cree avec succes.")
+print("Dossier apps créé avec succès.")
 installGithub("apps/appStore.lua")
 if not maj then
     local f = fs.open("appList.txt", "w")
     if f then
         f.write("appStore.lua\n")
         f.close()
-        print("Fichier appList.txt cree avec succes.")
+        print("Fichier appList.txt créé avec succès.")
     else
-        print("Erreur : Impossible de creer le fichier appList.txt.")
+        print("Erreur : Impossible de créer le fichier appList.txt.")
     end
     local f = fs.open("driversList.txt", "w")
     if f then
         f.close()
-        print("Fichier driversList.txt cree avec succes.")
+        print("Fichier driversList.txt créé avec succès.")
     else
-        print("Erreur : Impossible de creer le fichier driversList.txt.")
+        print("Erreur : Impossible de créer le fichier driversList.txt.")
     end
     print("Voulez-vous installer des drivers ? (oui/non)")
     write("? ")
@@ -88,8 +88,8 @@ if not maj then
     end
 end
 fs.makeDir("temp")
-print("Dossier temp cree avec succes.")
+print("Dossier temp créé avec succès.")
 installGithub("startup.lua")
-print("Installation de FrOS version OS_HDD_2 termine. Votre ordinateur va redemarrer.")
+print("Installation de FrOS version OS_HDD_2 terminée. Votre ordinateur va redémarrer.")
 sleep(5)
 os.reboot()

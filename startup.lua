@@ -6,14 +6,14 @@ local repair
 local function check(path)
     if not fs.exists(path) then 
         term.setTextColor(colors.red)
-        print("Erreur : le fichier '" .. path .. "' est introuvable. Le systeme peut etre instable et endommage.")
+        print("Erreur : le fichier '" .. path .. "' est introuvable. Le système peut être instable et endommagé.")
         table.insert(toRepair, path)
         sleep(0.1)
         term.setTextColor(colors.white)
         return false
     else
         term.setTextColor(colors.green)
-        print("'" .. path .. "' present.")
+        print("'" .. path .. "' présent.")
         sleep(0.1)
         term.setTextColor(colors.white)
         return true
@@ -55,7 +55,7 @@ if fs.exists("main.lua") then
             end 
         else
             term.setTextColor(colors.red)
-            print("Erreur : le fichier 'media/startup.dfpwm' est introuvable. Le systeme peut etre endommage.")
+            print("Erreur : le fichier 'media/startup.dfpwm' est introuvable. Le système peut être endommagé.")
             table.insert(toRepair, "media/startup.dfpwm")
             sleep(0.1)
             term.setTextColor(colors.white)
@@ -68,13 +68,13 @@ if fs.exists("main.lua") then
         print("'temp/install.lua' present, suppression.")
         sleep(0.1)
         fs.delete("/temp/install.lua")
-        print("Le systeme d'installation autonome a ete desinstalle.")
+        print("Le système d'installation autonome a été désinstallé.")
         sleep(0.1)
         term.setTextColor(colors.white)
     end
     if not fs.exists("sys/repair.lua") then 
         term.setTextColor(colors.red)
-        print("Erreur : le fichier 'sys/repair.lua' est introuvable. Le systeme peut etre instable et endommage.")
+        print("Erreur : le fichier 'sys/repair.lua' est introuvable. Le système peut être instable et endommagé.")
         sleep(0.1)
         term.setTextColor(colors.white)
     else
@@ -84,7 +84,7 @@ if fs.exists("main.lua") then
         term.setTextColor(colors.white)
         repair = require("sys/repair")
         if #toRepair > 0 then
-            print("Il y a un ou plusieurs fichiers manquants, voulez-vous les reparer ? (oui/non)")
+            print("Il y a un ou plusieurs fichiers manquants, voulez-vous les réparer ? (oui/non)")
             write("? ")
             local confirmation = read()
             if confirmation == "oui" then
@@ -94,7 +94,7 @@ if fs.exists("main.lua") then
                 term.setBackgroundColor(colors.black)
                 term.clear()
             else
-              print("Reparation annulee. Le systeme peut etre instable.")
+              print("Réparation annulée. Le système peut être instable.")
             end
         end
     end
@@ -102,7 +102,7 @@ if fs.exists("main.lua") then
     shell.run("main.lua")
 else
     term.setTextColor(colors.red)
-    print("Erreur : le fichier 'main.lua' est introuvable. Veuillez reinstaller le systeme en executant 'pastebin run Nur35FnH' sur CraftOS.")
+    print("Erreur : le fichier 'main.lua' est introuvable. Veuillez réinstaller le système en exécutant 'wget run https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/install.lua' sur CraftOS.")
     table.insert(toRepair, "main.lua")
     sleep(0.1)
     term.setTextColor(colors.white)
