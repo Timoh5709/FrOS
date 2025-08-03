@@ -4,7 +4,6 @@ local statusBar = require("/sys/statusBar")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/appList.txt"
 local driversListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/driversList.txt"
 local running = true
-term.clear()
 
 function playErrorSound()
   if speaker ~= nil then

@@ -80,6 +80,12 @@ if not maj then
     else
         print("Erreur : Impossible de creer le fichier driversList.txt.")
     end
+    print("Voulez-vous installer des drivers ? (oui/non)")
+    write("? ")
+    local choix = read()
+    if choix == "oui" then
+        shell.run("/apps/appStore.lua")
+    end
 end
 fs.makeDir("temp")
 print("Dossier temp cree avec succes.")

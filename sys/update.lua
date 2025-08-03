@@ -19,7 +19,7 @@ function update.install()
         os.reboot()
         return true
     else
-        print("Erreur lors du telechargement du fichier : temp/install.lua depuis Github le système va redemarrer.")
+        print("Erreur lors du telechargement du fichier : temp/install.lua depuis Github le systeme va redemarrer.")
         sleep(5)
         os.reboot()
     end
