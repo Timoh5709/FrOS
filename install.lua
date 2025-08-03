@@ -69,7 +69,7 @@ installGithub("apps/appStore.lua")
 if not maj then
     local f = fs.open("FrOS/appList.txt", "w")
     if f then
-        f.write("FrOS/appStore.lua\n")
+        f.write("appStore.lua\n")
         f.close()
         print("Fichier FrOS/appList.txt créé avec succès.")
     else
