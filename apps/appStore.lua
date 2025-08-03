@@ -1,8 +1,8 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local httpViewer = require("/FrOS/sys/httpViewer")
 local statusBar = require("/FrOS/sys/statusBar")
-local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/appList.txt"
-local driversListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/driversList.txt"
+local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
+local driversListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/driversList.txt"
 local running = true
 
 function playErrorSound()
