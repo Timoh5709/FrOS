@@ -82,7 +82,7 @@ if fs.exists("FrOS/main.lua") then
         print("'FrOS/sys/repair.lua' present.")
         sleep(0.1)
         term.setTextColor(colors.white)
-        repair = require("/sys/repair")
+        repair = require("/FrOS/sys/repair")
         if #toRepair > 0 then
             print("Il y a un ou plusieurs fichiers manquants, voulez-vous les réparer ? (oui/non)")
             write("? ")

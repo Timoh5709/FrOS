@@ -63,9 +63,9 @@ installGithub("FrOS/sys/httpViewer.lua")
 fs.makeDir("FrOS/drivers")
 print("Dossier FrOS/drivers créé avec succès.")
 installGithub("FrOS/drivers/init.lua")
-fs.makeDir("FrOS/apps")
-print("Dossier FrOS/apps créé avec succès.")
-installGithub("FrOS/apps/appStore.lua")
+fs.makeDir("apps")
+print("Dossier apps créé avec succès.")
+installGithub("apps/appStore.lua")
 if not maj then
     local f = fs.open("FrOS/appList.txt", "w")
     if f then
