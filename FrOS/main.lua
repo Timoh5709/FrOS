@@ -4,20 +4,22 @@ local history = {}
 local speaker = peripheral.find("speaker")
 local textViewer
 local update
-local statusBar = require("sys/statusBar")
-if fs.exists("sys/textViewer.lua") then
-    textViewer = require("sys/textViewer")
+local statusBar = require("FrOS/sys/statusBar")
+if fs.exists("FrOS/sys/textViewer.lua") then
+    textViewer = require("FrOS/sys/textViewer")
 end
-if fs.exists("sys/update.lua") then
-    update = require("sys/update")
+if fs.exists("FrOS/sys/update.lua") then
+    update = require("FrOS/sys/update")
 end
-if fs.exists("sys/httpViewer.lua") then
-    httpViewer = require("sys/httpViewer")
+if fs.exists("FrOS/sys/httpViewer.lua") then
+    httpViewer = require("FrOS/sys/httpViewer")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
 
 local criticalFiles = {
+  ["FrOS"] = true,
+  ["boot.lua"] = true,
   ["startup.lua"] = true,
   ["main.lua"] = true,
   ["sys"] = true,
@@ -293,7 +295,7 @@ local function main()
     os.reboot()
   elseif command == "infosys" then
     print("Informations système : ")
-    print("Version de FrOS : OS_HDD_2")
+    print("Version de FrOS : OS_HDD_3")
     if os.getComputerLabel() then
       print("Nom de l'ordinateur : " .. os.getComputerLabel())
     end

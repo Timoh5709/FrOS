@@ -9,7 +9,7 @@ local maj = false
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
 print("Veuillez ne pas éteindre votre ordinateur lors du téléchargement.")
-if fs.exists("/startup.lua") then
+if fs.exists("/FrOS/boot.lua") then
     print("Voulez-vous mettre à jour ou installer à nouveau ? (maj/install)")
     write("? ")
     local choix = read()
@@ -38,11 +38,13 @@ term.setBackgroundColor(colors.blue)
 term.clear()
 term.setCursorPos(1,1)
 
-fs.makeDir("media")
-print("Dossier media créé avec succès.")
-installGithub("media/startup.dfpwm")
+fs.makeDir("FrOS")
+print("Dossier FrOS créé avec succès.")
+fs.makeDir("FrOS/media")
+print("Dossier FrOS/media créé avec succès.")
+installGithub("FrOS/media/startup.dfpwm")
 if speaker ~= nil then
-    for chunk in io.lines("media/startup.dfpwm", 16 * 1024) do
+    for chunk in io.lines("FrOS/media/startup.dfpwm", 16 * 1024) do
         local buffer = decoder(chunk)
     
         while not speaker.playAudio(buffer) do
@@ -50,35 +52,35 @@ if speaker ~= nil then
         end
     end 
 end
-installGithub("main.lua")
-fs.makeDir("sys")
-print("Dossier sys créé avec succès.")
-installGithub("sys/textViewer.lua")
-installGithub("sys/update.lua")
-installGithub("sys/repair.lua")
-installGithub("sys/statusBar.lua")
-installGithub("sys/httpViewer.lua")
-fs.makeDir("drivers")
-print("Dossier drivers créé avec succès.")
-installGithub("drivers/init.lua")
-fs.makeDir("apps")
-print("Dossier apps créé avec succès.")
-installGithub("apps/appStore.lua")
+installGithub("FrOS/main.lua")
+fs.makeDir("FrOS/sys")
+print("Dossier FrOS/sys créé avec succès.")
+installGithub("FrOS/sys/textViewer.lua")
+installGithub("FrOS/sys/update.lua")
+installGithub("FrOS/sys/repair.lua")
+installGithub("FrOS/sys/statusBar.lua")
+installGithub("FrOS/sys/httpViewer.lua")
+fs.makeDir("FrOS/drivers")
+print("Dossier FrOS/drivers créé avec succès.")
+installGithub("FrOS/drivers/init.lua")
+fs.makeDir("FrOS/apps")
+print("Dossier FrOS/apps créé avec succès.")
+installGithub("FrOS/apps/appStore.lua")
 if not maj then
-    local f = fs.open("appList.txt", "w")
+    local f = fs.open("FrOS/appList.txt", "w")
     if f then
-        f.write("appStore.lua\n")
+        f.write("FrOS/appStore.lua\n")
         f.close()
-        print("Fichier appList.txt créé avec succès.")
+        print("Fichier FrOS/appList.txt créé avec succès.")
     else
-        print("Erreur : Impossible de créer le fichier appList.txt.")
+        print("Erreur : Impossible de créer le fichier FrOS/appList.txt.")
     end
-    local f = fs.open("driversList.txt", "w")
+    local f = fs.open("FrOS/driversList.txt", "w")
     if f then
         f.close()
-        print("Fichier driversList.txt créé avec succès.")
+        print("Fichier FrOS/driversList.txt créé avec succès.")
     else
-        print("Erreur : Impossible de créer le fichier driversList.txt.")
+        print("Erreur : Impossible de créer le fichier FrOS/driversList.txt.")
     end
     print("Voulez-vous installer des drivers ? (oui/non)")
     write("? ")
@@ -89,7 +91,8 @@ if not maj then
 end
 fs.makeDir("temp")
 print("Dossier temp créé avec succès.")
+installGithub("FrOS/boot.lua")
 installGithub("startup.lua")
-print("Installation de FrOS version OS_HDD_2 terminée. Votre ordinateur va redémarrer.")
+print("Installation de FrOS version OS_HDD_3 terminée. Votre ordinateur va redémarrer.")
 sleep(5)
 os.reboot()

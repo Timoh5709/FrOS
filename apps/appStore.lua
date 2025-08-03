@@ -1,6 +1,6 @@
-local textViewer = require("/sys/textViewer")
-local httpViewer = require("/sys/httpViewer")
-local statusBar = require("/sys/statusBar")
+local textViewer = require("FrOS/sys/textViewer")
+local httpViewer = require("FrOS/sys/httpViewer")
+local statusBar = require("FrOS/sys/statusBar")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/appList.txt"
 local driversListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/driversList.txt"
 local running = true
@@ -63,7 +63,7 @@ end
 local function checkAndInstallApp(app)
     local texte = httpViewer.httpBrain(appListUrl)
     if string.find(texte, app) then
-        local f = fs.open("/appList.txt", "r")
+        local f = fs.open("FrOS/appList.txt", "r")
         local ftexte = f.readAll()
         f.close()
         if not installGithub("apps/" .. app) then
@@ -74,7 +74,7 @@ local function checkAndInstallApp(app)
         if string.find(ftexte, app) then
             print(app .. " a bien été mis à jour.")
         else
-            f = fs.open("/appList.txt", "a")
+            f = fs.open("FrOS/appList.txt", "a")
             f.write(app .. "\n")
             f.close()
             print(app .. " a bien été installé.")
@@ -87,18 +87,18 @@ end
 local function checkAndInstallDriver(driver)
     local texte = httpViewer.httpBrain(driversListUrl)
     if string.find(texte, driver) then
-        local f = fs.open("/driversList.txt", "r")
+        local f = fs.open("FrOS/driversList.txt", "r")
         local ftexte = f.readAll()
         f.close()
-        if not installGithub("drivers/" .. driver) then
-            if not installGithub("drivers/" .. driver .. ".lua") then
+        if not installGithub("FrOS/drivers/" .. driver) then
+            if not installGithub("FrOS/drivers/" .. driver .. ".lua") then
                 print("Erreur : Le driver " .. driver .. " ne peut pas être installé.")
             end
         end
         if string.find(ftexte, driver) then
             print(driver .. " a bien été mis à jour.")
         else
-            f = fs.open("/driversList.txt", "a")
+            f = fs.open("FrOS/driversList.txt", "a")
             f.write(driver .. "\n")
             f.close()
             print(driver .. " a bien été installé.")
@@ -140,11 +140,11 @@ local function main()
         if param == "napps" then
             refreshApp()
         elseif param == "apps" then
-            readAllText("/appList.txt")
+            readAllText("FrOS/appList.txt")
         elseif param == "ndrivers" then
             refreshDrivers()
         elseif param == "drivers" then
-            readAllText("/driversList.txt")
+            readAllText("FrOS/driversList.txt")
         else
             print("Erreur : Aucune liste selectionnée.")
         end
