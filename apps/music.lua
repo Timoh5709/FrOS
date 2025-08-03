@@ -1,7 +1,7 @@
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
-local statusBar = require("FrOS/sys/statusBar")
+local statusBar = require("/FrOS/sys/statusBar")
 
 local function player(filename)
   for chunk in io.lines(filename, 16 * 1024) do

@@ -4,15 +4,15 @@ local history = {}
 local speaker = peripheral.find("speaker")
 local textViewer
 local update
-local statusBar = require("FrOS/sys/statusBar")
+local statusBar = require("/FrOS/sys/statusBar")
 if fs.exists("FrOS/sys/textViewer.lua") then
-    textViewer = require("FrOS/sys/textViewer")
+    textViewer = require("/FrOS/sys/textViewer")
 end
 if fs.exists("FrOS/sys/update.lua") then
-    update = require("FrOS/sys/update")
+    update = require("/FrOS/sys/update")
 end
 if fs.exists("FrOS/sys/httpViewer.lua") then
-    httpViewer = require("FrOS/sys/httpViewer")
+    httpViewer = require("/FrOS/sys/httpViewer")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
