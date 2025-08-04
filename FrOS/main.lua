@@ -211,18 +211,13 @@ local function exec(filename, param)
     return
   end
 
-  local path = fs.combine(shell.dir(), filename)
-  local path2 = shell.resolveProgram(filename)
+  local path2 = "/" .. shell.resolveProgram(filename)
   if path2 == nil then
     path2 = "nil"
+    print("Erreur : Fichier introuvable ou non valide.")
+    return
   end
-  if fs.exists(path) and not fs.isDir(path) then
-    if param then
-      shell.run(path .. param)
-    else
-      shell.run(path)
-    end
-  elseif fs.exists(path2) then
+  if fs.exists(path2) then
     if param then
       shell.run(path2 .. param)
     else

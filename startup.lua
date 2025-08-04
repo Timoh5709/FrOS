@@ -1,7 +1,78 @@
 term.clear()
 term.setCursorPos(1,1)
+local running = true
 
-print("Bienvenue sur la béta publique du bootloader FrOS.")
-print("FrOS va se lancer.")
+function lineViewer(lines)
+  local _, height = term.getSize()
+  local currentIndex = 1
+  local maxIndex = #lines
+  local pageSize = height - 5
 
-shell.run("FrOS/boot.lua")
+  while true do
+    term.setCursorPos(1, 3)
+
+    for i = currentIndex, math.min(currentIndex + pageSize - 1, maxIndex) do
+      print(lines[i])
+    end
+
+    print("\n-- Veuillez sélectionner un OS --")
+
+    return
+  end
+end
+
+function table_contains(tbl, x)
+    found = false
+    idx = 1
+    for _, v in pairs(tbl) do
+        if v == x then 
+            found = true 
+            break
+        end
+        idx = idx + 1
+    end
+    return found, idx
+end
+
+print("Bienvenue sur le bootloader FrOS.")
+
+local boots = fs.find("/*/boot.lua")
+local startup = fs.find("/*/startup.lua")
+local names = {}
+for i=1,#boots do
+    startup[#startup+1] = boots[i]
+end
+for i=1,#startup do
+    if startup[i] == "rom/startup.lua" then
+        table.insert(names, "CraftOS")
+    elseif startup[i] == "FrOS/boot.lua" then
+        table.insert(names, "FrOS")
+    else
+        table.insert(names, startup[i])
+    end
+end
+lineViewer(names)
+
+while running do
+    write("? ")
+    local input = read()
+    if input == nil then
+        input = "nil"
+    end
+
+    local fnd, idx = table_contains(names, input)
+    if idx <= #names then
+        local _, height = term.getSize()
+        term.setCursorPos(1,height)
+        write("Lancement de " .. names[idx])
+        os.sleep(3)
+        if input == "CraftOS" then
+            term.clear()
+            term.setCursorPos(1,1)
+            return
+        end
+        shell.run(startup[idx])
+    else
+        print("Erreur : OS introuvable : " .. input)
+    end
+end
