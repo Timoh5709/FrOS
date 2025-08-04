@@ -37,16 +37,22 @@ end
 print("Bienvenue sur le bootloader FrOS.")
 
 local boots = fs.find("/*/boot.lua")
+local install = fs.find("/*/install.lua")
 local startup = fs.find("/*/startup.lua")
 local names = {}
 for i=1,#boots do
     startup[#startup+1] = boots[i]
+end
+for i=1,#install do
+    startup[#startup+1] = install[i]
 end
 for i=1,#startup do
     if startup[i] == "rom/startup.lua" then
         table.insert(names, "CraftOS")
     elseif startup[i] == "FrOS/boot.lua" then
         table.insert(names, "FrOS")
+    elseif startup[i] == "temp/install.lua" then
+        table.insert(names, "Maj FrOS")
     else
         table.insert(names, startup[i])
     end

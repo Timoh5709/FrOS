@@ -13,9 +13,6 @@ function update.install()
         print("Téléchargement de temp/install.lua réussi")
         print("Le système d'installation autonome a été installé. Votre ordinateur va redémarrer.")
         sleep(5)
-        input2 = io.open("startup.lua", "w")
-        input2:write("shell.run('temp/install.lua')")
-        input2:close()
         os.reboot()
         return true
     else
