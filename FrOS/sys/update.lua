@@ -12,12 +12,10 @@ function update.install()
         input:close()
         print("Téléchargement de temp/install.lua réussi")
         print("Le système d'installation autonome a été installé. Votre ordinateur va redémarrer.")
-        sleep(5)
         os.reboot()
         return true
     else
         print("Erreur lors du téléchargement du fichier : temp/install.lua depuis Github le système va redémarrer.")
-        sleep(5)
         os.reboot()
     end
 end

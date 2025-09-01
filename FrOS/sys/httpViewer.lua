@@ -5,7 +5,6 @@ local httpViewer = {}
     if request == nil then
         term.setTextColor(colors.red)
         print("Erreur 404")
-        sleep(0.1)
         term.setTextColor(colors.white)
     else
         return request.readAll()

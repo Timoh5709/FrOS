@@ -282,11 +282,9 @@ local function main()
 
   if command == "quit" then
     print("Fermeture de FrOS...")
-    sleep(1)
     os.shutdown()
   elseif command == "reboot" then
     print("Redémarrage de FrOS...")
-    sleep(1)
     os.reboot()
   elseif command == "infosys" then
     print("Informations système : ")

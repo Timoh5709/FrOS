@@ -71,7 +71,6 @@ while running do
         local _, height = term.getSize()
         term.setCursorPos(1,height)
         write("Lancement de " .. names[idx])
-        os.sleep(3)
         if input == "CraftOS" then
             term.clear()
             term.setCursorPos(1,1)

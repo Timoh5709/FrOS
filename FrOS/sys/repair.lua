@@ -18,7 +18,6 @@ function repair.file(filename)
     term.setBackgroundColor(colors.red)
     term.clear()
     installGithub(filename)
-    sleep(1)
 end
 
 return repair

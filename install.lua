@@ -17,7 +17,6 @@ if fs.exists("/FrOS/boot.lua") then
         maj = true
     end
 end
-sleep(1)
 textutils.slowPrint("-------------------------------------------------")
 
 local function installGithub(filename)
@@ -94,5 +93,4 @@ print("Dossier temp créé avec succès.")
 installGithub("FrOS/boot.lua")
 installGithub("startup.lua")
 print("Installation de FrOS version OS_HDD_3 terminée. Votre ordinateur va redémarrer.")
-sleep(5)
 os.reboot()
