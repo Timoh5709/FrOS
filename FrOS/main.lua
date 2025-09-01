@@ -6,13 +6,16 @@ local textViewer
 local update
 local statusBar = require("/FrOS/sys/statusBar")
 if fs.exists("FrOS/sys/textViewer.lua") then
-    textViewer = require("/FrOS/sys/textViewer")
+  textViewer = require("/FrOS/sys/textViewer")
 end
 if fs.exists("FrOS/sys/update.lua") then
-    update = require("/FrOS/sys/update")
+  update = require("/FrOS/sys/update")
 end
 if fs.exists("FrOS/sys/httpViewer.lua") then
-    httpViewer = require("/FrOS/sys/httpViewer")
+  httpViewer = require("/FrOS/sys/httpViewer")
+end
+if fs.exists("FrOS/sys/dfpwmPlayer.lua") then
+  dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
@@ -112,7 +115,7 @@ local function changeDir(dir)
     shell.setDir(newDir)
   else
     print("Erreur : Dossier introuvable.")
-    playErrorSound()
+    dfpwmPlayer.playErrorSound()
   end
 end
 
@@ -123,7 +126,7 @@ local function makeDir(dir)
     print("Dossier créé : " .. newDir)
   else
     print("Erreur : Ce dossier existe déjà.")
-    playErrorSound()
+    dfpwmPlayer.playErrorSound()
   end
 end
 
@@ -134,7 +137,7 @@ local function removeFileOrDir(target)
     if criticalFiles[target] or containsCriticalFiles(path) then
       print("Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.")
       print("Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)")
-      playConfirmationSound()
+      dfpwmPlayer.playConfirmationSound()
       write("? ")
       local confirmation1 = read()
       if confirmation1 ~= "oui" then
@@ -144,7 +147,7 @@ local function removeFileOrDir(target)
     end
 
     print("Êtes-vous sur de vouloir supprimer " .. target .. " ? (oui/non)")
-    playConfirmationSound()
+    dfpwmPlayer.playConfirmationSound()
     write("? ")
     local confirmation2 = read()
     if confirmation2 == "oui" then
@@ -155,7 +158,7 @@ local function removeFileOrDir(target)
     end
   else
     print("Erreur : Fichier ou dossier introuvable.")
-    playErrorSound()
+    dfpwmPlayer.playErrorSound()
   end
 end
 
@@ -172,7 +175,7 @@ local function readAllText(path)
     local handle = fs.open(file, "r")
     if not handle then
         print("Erreur : Fichier illisible.")
-        playErrorSound()
+        dfpwmPlayer.playErrorSound()
         return
     end
     while true do
@@ -240,18 +243,6 @@ local function http(url)
   end
 
   textViewer.lineViewer(httpViewer.readUrl(url))
-end
-
-function playErrorSound()
-  if speaker ~= nil then
-    speaker.playNote("bit")
-  end
-end
-
-function playConfirmationSound()
-  if speaker ~= nil then
-    speaker.playNote("chime")
-  end
 end
 
 local function main()
@@ -329,21 +320,21 @@ local function main()
       changeDir(param)
     else
       print("Erreur : Aucun dossier spécifié.")
-      playErrorSound()
+      dfpwmPlayer.playErrorSound()
     end
   elseif command == "mkdir" then
     if param then
       makeDir(param)
     else
       print("Erreur : Aucun nom de dossier spécifié.")
-      playErrorSound()
+      dfpwmPlayer.playErrorSound()
     end
   elseif command == "del" or command == "rm" then
     if param then
       removeFileOrDir(param)
     else
       print("Erreur : Aucun nom spécifié.")
-      playErrorSound()
+      dfpwmPlayer.playErrorSound()
     end
   elseif command == "history" then
     showHistory()
@@ -352,7 +343,7 @@ local function main()
       readAllText(param)
     else
       print("Erreur : Aucun fichier spécifié.")
-      playErrorSound()
+      dfpwmPlayer.playErrorSound()
     end
   elseif command == "cls" then
     term.clear()
@@ -368,10 +359,10 @@ local function main()
     http(param)
   elseif command ~= nil then
     print("Commande inconnue : " .. command)
-    playErrorSound()
+    dfpwmPlayer.playErrorSound()
   else
     print("Veuillez rentrer une commande.")
-    playErrorSound()
+    dfpwmPlayer.playErrorSound()
   end
 end
 

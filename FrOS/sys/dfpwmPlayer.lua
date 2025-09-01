@@ -19,4 +19,16 @@ function dfpwmPlayer.play(path)
     end
 end
 
+function dfpwmPlayer.playErrorSound()
+  if speaker ~= nil then
+    speaker.playNote("bit")
+  end
+end
+
+function dfpwmPlayer.playConfirmationSound()
+  if speaker ~= nil then
+    speaker.playNote("chime")
+  end
+end
+
 return dfpwmPlayer

@@ -1,20 +1,9 @@
 local statusBar = require("/FrOS/sys/statusBar")
 local textViewer = require("/FrOS/sys/textViewer")
 local httpViewer = require("/FrOS/sys/httpViewer")
+local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
 local running = true
-
-function playErrorSound()
-  if speaker ~= nil then
-    speaker.playNote("bit")
-  end
-end
-
-function playConfirmationSound()
-  if speaker ~= nil then
-    speaker.playNote("chime")
-  end
-end
 
 local function lire(nom)
     if http.checkURL(manuelsLoc .. nom .. ".txt") then
@@ -57,10 +46,10 @@ local function main()
         lire(param)
     elseif command ~= nil then
         print("Commande inconnue : " .. command)
-        playErrorSound()
+        dfpwmPlayer.playErrorSound()
     else
         print("Veuillez rentrer une commande.")
-        playErrorSound()
+        dfpwmPlayer.playErrorSound()
     end
 end
 
