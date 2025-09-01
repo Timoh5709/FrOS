@@ -6,7 +6,7 @@ local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/
 local running = true
 
 local function lire(nom)
-    if http.checkURL(manuelsLoc .. nom .. ".txt") then
+    if http.checkURL(manuelsLoc .. nom .. ".txt") == true then
         local lignes = httpViewer.getLines(manuelsLoc .. nom .. ".txt")
         textViewer.lineViewer(lignes)
     else
