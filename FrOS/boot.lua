@@ -23,7 +23,10 @@ if repair.check("FrOS/main.lua") then
     end
     if repair.check("FrOS/media/startup.dfpwm") then
         if canPlay then
-            dfpwmPlayer.play("FrOS/media/startup.dfpwm")
+            local co = coroutine.create(function ()
+                dfpwmPlayer.play("FrOS/media/startup.dfpwm")
+            end)
+            coroutine.resume(co)
         end
     end
     if fs.exists("temp/install.lua") then
