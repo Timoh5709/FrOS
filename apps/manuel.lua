@@ -4,6 +4,18 @@ local httpViewer = require("/FrOS/sys/httpViewer")
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
 local running = true
 
+function playErrorSound()
+  if speaker ~= nil then
+    speaker.playNote("bit")
+  end
+end
+
+function playConfirmationSound()
+  if speaker ~= nil then
+    speaker.playNote("chime")
+  end
+end
+
 local function lire(nom)
     if http.checkURL(manuelsLoc .. nom .. ".txt") then
         local lignes = httpViewer.getLines(manuelsLoc .. nom .. ".txt")
@@ -52,6 +64,6 @@ local function main()
     end
 end
 
-if running then
+while running do
     main()
 end
