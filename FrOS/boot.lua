@@ -6,7 +6,7 @@ local repair = require("/FrOS/sys/repair")
 print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
 
-if check("FrOS/drivers/init.lua") then
+if repair.check("FrOS/drivers/init.lua") then
     shell.run("FrOS/drivers/init.lua")
 end
 
@@ -23,7 +23,7 @@ if repair.check("FrOS/main.lua") then
         canPlay = true
     end
     if speaker ~= nil then
-        if repair..check("FrOS/media/startup.dfpwm") then
+        if repair.check("FrOS/media/startup.dfpwm") then
             if canPlay then
                 dfpwmPlayer.play("FrOS/media/startup.dfpwm")
             end
