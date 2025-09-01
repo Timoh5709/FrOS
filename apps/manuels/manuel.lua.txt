@@ -1,0 +1,5 @@
+L'application "manuel.lua" est une application permettant aux utilisateurs et développeurs FrOS de mieux comprendre le fonctionnement d'un programme ou d'une librairie.
+Il y a 3 commandes :
+- "aide" pour afficher la liste des commandes
+- "lire <nom>" pour afficher la page du manuel sur un programme ou une librairie
+- "quit" pour quitter le programme

@@ -42,15 +42,6 @@ print("Dossier FrOS créé avec succès.")
 fs.makeDir("FrOS/media")
 print("Dossier FrOS/media créé avec succès.")
 installGithub("FrOS/media/startup.dfpwm")
-if speaker ~= nil then
-    for chunk in io.lines("FrOS/media/startup.dfpwm", 16 * 1024) do
-        local buffer = decoder(chunk)
-    
-        while not speaker.playAudio(buffer) do
-            os.pullEvent("speaker_audio_empty")
-        end
-    end 
-end
 installGithub("FrOS/main.lua")
 fs.makeDir("FrOS/sys")
 print("Dossier FrOS/sys créé avec succès.")
@@ -66,10 +57,11 @@ installGithub("FrOS/drivers/init.lua")
 fs.makeDir("apps")
 print("Dossier apps créé avec succès.")
 installGithub("apps/appStore.lua")
+installGithub("apps/manuel.lua")
 if not maj then
     local f = fs.open("FrOS/appList.txt", "w")
     if f then
-        f.write("appStore.lua\n")
+        f.write("appStore.lua\nmanuel.lua\n")
         f.close()
         print("Fichier FrOS/appList.txt créé avec succès.")
     else
