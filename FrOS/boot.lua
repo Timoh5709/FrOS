@@ -10,8 +10,6 @@ if repair.check("FrOS/drivers/init.lua") then
     shell.run("FrOS/drivers/init.lua")
 end
 
-local speaker = peripheral.find("speaker")
-
 if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/textViewer.lua")
     repair.check("FrOS/sys/update.lua")
@@ -23,14 +21,11 @@ if repair.check("FrOS/main.lua") then
         dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
         canPlay = true
     end
-    if speaker ~= nil then
-        if repair.check("FrOS/media/startup.dfpwm") then
-            if canPlay then
-                dfpwmPlayer.play("FrOS/media/startup.dfpwm")
-            end
+    if repair.check("FrOS/media/startup.dfpwm") then
+        if canPlay then
+            dfpwmPlayer.play("FrOS/media/startup.dfpwm")
         end
-    else
-    end  
+    end
     if fs.exists("temp/install.lua") then
         term.setTextColor(colors.orange)
         print("'temp/install.lua' present, suppression.")
