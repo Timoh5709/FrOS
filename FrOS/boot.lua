@@ -18,8 +18,9 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/statusBar.lua")
     repair.check("FrOS/sys/httpViewer.lua")
     local canPlay = false
+    local dfpwmPlayer
     if repair.check("FrOS/sys/dfpwmPlayer.lua") then
-        local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
+        dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
         canPlay = true
     end
     if speaker ~= nil then
