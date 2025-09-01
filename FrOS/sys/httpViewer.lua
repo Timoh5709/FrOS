@@ -1,6 +1,6 @@
 local httpViewer = {}
 
- function httpViewer.httpBrain(url)
+function httpViewer.httpBrain(url)
     local request = http.get(url)
     if request == nil then
         term.setTextColor(colors.red)

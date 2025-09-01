@@ -15,9 +15,23 @@ local function installGithub(filename)
 end
 
 function repair.file(filename)
-    term.setBackgroundColor(colors.red)
-    term.clear()
+    term.setTextColor(colors.red)
     installGithub(filename)
+end
+
+function repair.check(filename)
+    if not fs.exists(filename) then 
+        term.setTextColor(colors.red)
+        print("Erreur : le fichier '" .. filename .. "' est introuvable. Le système peut être instable et endommagé.")
+        repair.file(filename)
+        term.setTextColor(colors.white)
+        return false
+    else
+        term.setTextColor(colors.green)
+        print("'" .. filename .. "' présent.")
+        term.setTextColor(colors.white)
+        return true
+    end
 end
 
 return repair

@@ -1,22 +1,7 @@
 term.clear()
 term.setCursorPos(1,1)
 
-local toRepair = {}
-local repair
-local function check(path)
-    if not fs.exists(path) then 
-        term.setTextColor(colors.red)
-        print("Erreur : le fichier '" .. path .. "' est introuvable. Le système peut être instable et endommagé.")
-        table.insert(toRepair, path)
-        term.setTextColor(colors.white)
-        return false
-    else
-        term.setTextColor(colors.green)
-        print("'" .. path .. "' présent.")
-        term.setTextColor(colors.white)
-        return true
-    end
-end
+local repair = require("/FrOS/sys/repair")
 
 print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
@@ -26,34 +11,22 @@ if check("FrOS/drivers/init.lua") then
 end
 
 local speaker = peripheral.find("speaker")
-local dfpwm = require("cc.audio.dfpwm")
-local decoder = dfpwm.make_decoder()
 
-if fs.exists("FrOS/main.lua") then
-    term.setTextColor(colors.green)
-    print("'FrOS/main.lua' present.")
-    term.setTextColor(colors.white)
-    check("FrOS/sys/textViewer.lua")
-    check("FrOS/sys/update.lua")
-    check("FrOS/sys/statusBar.lua")
-    check("FrOS/sys/httpViewer.lua")
+if repair.check("FrOS/main.lua") then
+    repair.check("FrOS/sys/textViewer.lua")
+    repair.check("FrOS/sys/update.lua")
+    repair.check("FrOS/sys/statusBar.lua")
+    repair.check("FrOS/sys/httpViewer.lua")
+    local canPlay = false
+    if repair.check("FrOS/sys/dfpwmPlayer.lua") then
+        local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
+        canPlay = true
+    end
     if speaker ~= nil then
-        if fs.exists("FrOS/media/startup.dfpwm") then
-            term.setTextColor(colors.green)
-            print("'FrOS/media/startup.dfpwm' present.")
-            term.setTextColor(colors.white)
-            for chunk in io.lines("FrOS/media/startup.dfpwm", 16 * 1024) do
-                local buffer = decoder(chunk)
-            
-                while not speaker.playAudio(buffer) do
-                    os.pullEvent("speaker_audio_empty")
-                end
-            end 
-        else
-            term.setTextColor(colors.red)
-            print("Erreur : le fichier 'FrOS/media/startup.dfpwm' est introuvable. Le système peut être endommagé.")
-            table.insert(toRepair, "FrOS/media/startup.dfpwm")
-            term.setTextColor(colors.white)
+        if repair..check("FrOS/media/startup.dfpwm") then
+            if canPlay then
+                dfpwmPlayer.play("FrOS/media/startup.dfpwm")
+            end
         end
     else
     end  
@@ -64,35 +37,6 @@ if fs.exists("FrOS/main.lua") then
         print("Le système d'installation autonome a été désinstallé.")
         term.setTextColor(colors.white)
     end
-    if not fs.exists("FrOS/sys/repair.lua") then 
-        term.setTextColor(colors.red)
-        print("Erreur : le fichier 'sys/repair.lua' est introuvable. Le système peut être instable et endommagé.")
-        term.setTextColor(colors.white)
-    else
-        term.setTextColor(colors.green)
-        print("'FrOS/sys/repair.lua' present.")
-        term.setTextColor(colors.white)
-        repair = require("/FrOS/sys/repair")
-        if #toRepair > 0 then
-            print("Il y a un ou plusieurs fichiers manquants, voulez-vous les réparer ? (oui/non)")
-            write("? ")
-            local confirmation = read()
-            if confirmation == "oui" then
-                for i = 1, #toRepair do
-                    repair.file(toRepair[i])
-                end
-                term.setBackgroundColor(colors.black)
-                term.clear()
-            else
-              print("Réparation annulée. Le système peut ètre instable.")
-            end
-        end
-    end
     textutils.slowPrint("-------------------------------------------------")
     shell.run("FrOS/main.lua")
-else
-    term.setTextColor(colors.red)
-    print("Erreur : le fichier 'FrOS/main.lua' est introuvable. Veuillez réinstaller le système en exécutant 'wget run https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/install.lua' sur CraftOS.")
-    table.insert(toRepair, "FrOS/main.lua")
-    term.setTextColor(colors.white)
 end
