@@ -6,13 +6,9 @@ local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/
 local running = true
 
 local function lire(nom)
-    if http.checkURL(manuelsLoc .. nom .. ".txt") == true then
+    if httpViewer.httpBrain(manuelsLoc .. nom .. ".txt") ~= false then
         local lignes = httpViewer.getLines(manuelsLoc .. nom .. ".txt")
         textViewer.lineViewer(lignes)
-    else
-        term.setTextColor(colors.red)
-        print("Erreur 404 : '" .. manuelsLoc .. nom .. ".txt' introuvable")
-        term.setTextColor(colors.white)
     end
 end
 

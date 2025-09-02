@@ -37,4 +37,16 @@ function textViewer.lineViewer(lines)
   end
 end
 
+function textViewer.getVer()
+  local file = "FrOS/version.txt"
+  local handle = fs.open(file, "r")
+  if not handle then
+    print("Erreur : Fichier 'FrOS/version.txt' illisible.")
+    return
+  end
+  local ver = handle.readAll()
+  handle.close()
+  return ver
+end
+
 return textViewer

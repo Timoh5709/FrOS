@@ -6,6 +6,7 @@ function httpViewer.httpBrain(url)
         term.setTextColor(colors.red)
         print("Erreur 404")
         term.setTextColor(colors.white)
+        return false
     else
         return request.readAll()
     end

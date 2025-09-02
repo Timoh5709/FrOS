@@ -33,16 +33,29 @@ local function installGithub(filename)
     end
 end
 
+local function getVer()
+    local file = "FrOS/version.txt"
+    local handle = fs.open(file, "r")
+    if not handle then
+        print("Erreur : Fichier 'FrOS/version.txt' illisible.")
+        return
+    end
+    local ver = handle.readAll()
+    handle.close()
+    return ver
+end
+
 term.setBackgroundColor(colors.blue)
 term.clear()
 term.setCursorPos(1,1)
 
 fs.makeDir("FrOS")
 print("Dossier FrOS créé avec succès.")
+installGithub("FrOS/main.lua")
+installGithub("FrOS/version.txt")
 fs.makeDir("FrOS/media")
 print("Dossier FrOS/media créé avec succès.")
 installGithub("FrOS/media/startup.dfpwm")
-installGithub("FrOS/main.lua")
 fs.makeDir("FrOS/sys")
 print("Dossier FrOS/sys créé avec succès.")
 installGithub("FrOS/sys/textViewer.lua")
@@ -85,5 +98,5 @@ fs.makeDir("temp")
 print("Dossier temp créé avec succès.")
 installGithub("FrOS/boot.lua")
 installGithub("startup.lua")
-print("Installation de FrOS version OS_HDD_3 terminée. Votre ordinateur va redémarrer.")
+print("Installation de FrOS version " .. getVer() .. " terminée. Votre ordinateur va redémarrer.")
 os.reboot()

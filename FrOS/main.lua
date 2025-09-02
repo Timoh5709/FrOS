@@ -170,21 +170,21 @@ local function showHistory()
 end
 
 local function readAllText(path)
-    local lignes = {}
-    local file = fs.combine(shell.dir(), path)
-    local handle = fs.open(file, "r")
-    if not handle then
-        print("Erreur : Fichier illisible.")
-        dfpwmPlayer.playErrorSound()
-        return
-    end
-    while true do
-       local ligne = handle.readLine()
-       if not ligne then break end
-       lignes[#lignes+1] = ligne
-    end
-    handle.close()
-    textViewer.lineViewer(lignes)
+  local lignes = {}
+  local file = fs.combine(shell.dir(), path)
+  local handle = fs.open(file, "r")
+  if not handle then
+    print("Erreur : Fichier illisible.")
+    dfpwmPlayer.playErrorSound()
+    return
+  end
+  while true do
+    local ligne = handle.readLine()
+    if not ligne then break end
+    lignes[#lignes+1] = ligne
+  end
+  handle.close()
+  textViewer.lineViewer(lignes)
 end
 
 local function mkfile(filename)
@@ -279,7 +279,7 @@ local function main()
     os.reboot()
   elseif command == "infosys" then
     print("Informations système : ")
-    print("Version de FrOS : OS_HDD_3")
+    print("Version de FrOS : " .. textViewer.getVer())
     if os.getComputerLabel() then
       print("Nom de l'ordinateur : " .. os.getComputerLabel())
     end
