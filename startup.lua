@@ -86,9 +86,6 @@ while running do
         end
         running = false
         shell.run(startup[idx])
-    elseif command == "add" then
-        if param ~= "" and args[3] ~= "" then
-            
     else
         print("Erreur : OS introuvable : " .. input)
     end
