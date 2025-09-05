@@ -8,6 +8,7 @@ function textViewer.cprint(text, color)
     term.setTextColor(color)
     print(text)
     term.setTextColor(prev)
+  end
 end
 
 function textViewer.eout(text)
