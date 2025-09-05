@@ -66,6 +66,14 @@ while running do
         input = "nil"
     end
 
+    local args = {}
+    for word in string.gmatch(input, "%S+") do
+        table.insert(args, word)
+    end
+
+    local command = args[1]
+    local param = args[2]
+
     local fnd, idx = table_contains(names, input)
     if idx <= #names then
         local _, height = term.getSize()
@@ -76,7 +84,11 @@ while running do
             term.setCursorPos(1,1)
             return
         end
+        running = false
         shell.run(startup[idx])
+    elseif command == "add" then
+        if param ~= "" and args[3] ~= "" then
+            
     else
         print("Erreur : OS introuvable : " .. input)
     end

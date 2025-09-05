@@ -291,7 +291,7 @@ local function main()
       print("Espace libre dans le répertoire actuel : " .. (math.floor(freeSpace / 1048576 * 100) / 100) .. " Mo")
     end
 
-    print("Heure actuelle : " .. textutils.formatTime(os.time(), true))    
+    print("Heure actuelle : " .. textutils.formatTime(os.time("local"), true))    
   elseif command == "aide" then
     aides = {
       "Commandes disponibles :",

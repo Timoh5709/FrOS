@@ -1,10 +1,15 @@
 local textViewer = require("/FrOS/sys/textViewer")
+local running = true
+if tonumber(textViewer.getVer()) < 0.3 then
+    print("Erreur : Veuillez mettre à jour FrOS avec 'maj'")
+    running = false
+    return
+end
 local httpViewer = require("/FrOS/sys/httpViewer")
 local statusBar = require("/FrOS/sys/statusBar")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
 local driversListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/driversList.txt"
-local running = true
 
 local function installGithub(filename)
     print("Télécharge " .. filename .. " depuis Github.")

@@ -1,5 +1,10 @@
-local statusBar = require("/FrOS/sys/statusBar")
 local textViewer = require("/FrOS/sys/textViewer")
+if tonumber(textViewer.getVer()) < 0.3 then
+    print("Erreur : Veuillez mettre à jour FrOS avec 'maj'")
+    running = false
+    return
+end
+local statusBar = require("/FrOS/sys/statusBar")
 local httpViewer = require("/FrOS/sys/httpViewer")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
