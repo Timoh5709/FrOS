@@ -50,18 +50,19 @@ function addBoot(name, loc)
         if f then
             f.write(name .. "|" .. loc .. "\n")
             f.close()
-            print(name .. "a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements.")
+            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements.")
         else
             print("Erreur : Impossible d'ajouter au fichier 'boot.txt'.")
         end
     end
 end
 
+local boots = fs.find("/*/boot.lua")
+local install = fs.find("/*/install.lua")
+local startup = fs.find("/*/startup.lua")
+local names = {}
+
 function readBoot()
-    local boots = fs.find("/*/boot.lua")
-    local install = fs.find("/*/install.lua")
-    local startup = fs.find("/*/startup.lua")
-    local names = {}
     for i=1,#boots do
         startup[#startup+1] = boots[i]
     end
@@ -85,7 +86,7 @@ function readBoot()
             local ligne = f.readLine()
             if not ligne then break end
             local idx = 1
-            for i in string.gmatch(ligne, "|") do
+            for i in string.gmatch(ligne, "([^|]+)") do
                 if idx == 1 then
                     table.insert(names, i)
                 else
