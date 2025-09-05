@@ -1,7 +1,7 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local running = true
 if tonumber(textViewer.getVer()) < 0.3 then
-    print("Erreur : Veuillez mettre à jour FrOS avec 'maj'")
+    print("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
     running = false
     return
 end
