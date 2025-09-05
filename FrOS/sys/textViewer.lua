@@ -1,5 +1,19 @@
 local textViewer = {}
 
+function textViewer.cprint(text, color)
+  if not color then
+    print(text)
+  else
+    local prev = term.getTextColor()
+    term.setTextColor(color)
+    print(text)
+    term.setTextColor(prev)
+end
+
+function textViewer.eout(text)
+  textViewer.cprint(text, colors.red)
+end
+
 function textViewer.lineViewer(lines)
   local _, height = term.getSize()
   local currentIndex = 1
@@ -41,7 +55,7 @@ function textViewer.getVer()
   local file = "FrOS/version.txt"
   local handle = fs.open(file, "r")
   if not handle then
-    print("Erreur : Fichier 'FrOS/version.txt' illisible.")
+    textViewer.eout("Erreur : Fichier 'FrOS/version.txt' illisible.")
     return
   end
   local ver = handle.readAll()

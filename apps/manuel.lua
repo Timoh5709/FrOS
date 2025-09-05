@@ -1,6 +1,6 @@
 local textViewer = require("/FrOS/sys/textViewer")
 if tonumber(textViewer.getVer()) < 0.3 then
-    print("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
+    textViewer.eout("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
     running = false
     return
 end
@@ -46,10 +46,10 @@ local function main()
     elseif command == "lire" then
         lire(param)
     elseif command ~= nil then
-        print("Commande inconnue : " .. command)
+        textViewer.eout("Commande inconnue : " .. command)
         dfpwmPlayer.playErrorSound()
     else
-        print("Veuillez rentrer une commande.")
+        textViewer.eout("Veuillez rentrer une commande.")
         dfpwmPlayer.playErrorSound()
     end
 end

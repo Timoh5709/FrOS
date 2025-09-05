@@ -30,11 +30,9 @@ if repair.check("FrOS/main.lua") then
         end
     end
     if fs.exists("temp/install.lua") then
-        term.setTextColor(colors.orange)
-        print("'temp/install.lua' present, suppression.")
+        textViewer.cprint("'temp/install.lua' present, suppression.", colors.orange)
         fs.delete("temp/install.lua")
-        print("Le système d'installation autonome a été désinstallé.")
-        term.setTextColor(colors.white)
+        textViewer.cprint("Le système d'installation autonome a été désinstallé.", colors.orange)
     end
     textutils.slowPrint("-------------------------------------------------")
     shell.run("FrOS/main.lua")

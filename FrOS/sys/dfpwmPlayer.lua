@@ -1,5 +1,6 @@
 local dfpwmPlayer = {}
 local dfpwm = require("cc.audio.dfpwm")
+local textViewer = require("/FrOS/sys/textViewer")
 local decoder = dfpwm.make_decoder()
 local speaker = peripheral.find("speaker")
 
@@ -14,7 +15,7 @@ function dfpwmPlayer.play(path)
                 end
             end
         else
-            print("Erreur : Fichier introuvable")
+            textViewer.eout("Erreur : Fichier introuvable.")
         end
     end
 end

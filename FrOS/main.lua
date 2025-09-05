@@ -114,7 +114,7 @@ local function changeDir(dir)
   if fs.exists(newDir) and fs.isDir(newDir) then
     shell.setDir(newDir)
   else
-    print("Erreur : Dossier introuvable.")
+    textViewer.eout("Erreur : Dossier introuvable.")
     dfpwmPlayer.playErrorSound()
   end
 end
@@ -123,9 +123,9 @@ local function makeDir(dir)
   local newDir = fs.combine(shell.dir(), dir)
   if not fs.exists(newDir) then
     fs.makeDir(newDir)
-    print("Dossier créé : " .. newDir)
+    textViewer.cprint("Dossier créé : " .. newDir, colors.green)
   else
-    print("Erreur : Ce dossier existe déjà.")
+    textViewer.eout("Erreur : Ce dossier existe déjà.")
     dfpwmPlayer.playErrorSound()
   end
 end
@@ -135,8 +135,8 @@ local function removeFileOrDir(target)
 
   if fs.exists(path) then
     if criticalFiles[target] or containsCriticalFiles(path) then
-      print("Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.")
-      print("Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)")
+      textViewer.cprint("Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.", colors.orange)
+      textViewer.cprint("Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)", colors.orange)
       dfpwmPlayer.playConfirmationSound()
       write("? ")
       local confirmation1 = read()
@@ -146,18 +146,18 @@ local function removeFileOrDir(target)
       end
     end
 
-    print("Êtes-vous sur de vouloir supprimer " .. target .. " ? (oui/non)")
+    textViewer.cprint("Êtes-vous sur de vouloir supprimer " .. target .. " ? (oui/non)", colors.orange)
     dfpwmPlayer.playConfirmationSound()
     write("? ")
     local confirmation2 = read()
     if confirmation2 == "oui" then
       fs.delete(path)
-      print("Supprime : " .. path)
+      textViewer.cprint("Supprimé : " .. path, colors.green)
     else
       print("Suppression annulée.")
     end
   else
-    print("Erreur : Fichier ou dossier introuvable.")
+    textViewer.eout("Erreur : Fichier ou dossier introuvable.")
     dfpwmPlayer.playErrorSound()
   end
 end
@@ -174,7 +174,7 @@ local function readAllText(path)
   local file = fs.combine(shell.dir(), path)
   local handle = fs.open(file, "r")
   if not handle then
-    print("Erreur : Fichier illisible.")
+    textViewer.eout("Erreur : Fichier illisible.")
     dfpwmPlayer.playErrorSound()
     return
   end
@@ -189,35 +189,35 @@ end
 
 local function mkfile(filename)
   if not filename then
-    print("Erreur : Aucun nom de fichier spécifié.")
+    textViewer.eout("Erreur : Aucun nom de fichier spécifié.")
     return
   end
 
   local path = fs.combine(shell.dir(), filename)
   if fs.exists(path) then
-    print("Erreur : Le fichier '" .. filename .. "' existe déjà.")
+    textViewer.eout("Erreur : Le fichier '" .. filename .. "' existe déjà.")
     return
   end
 
   local file = fs.open(path, "w")
   if file then
     file.close()
-    print("Fichier créé : " .. filename)
+    textViewer.cprint("Fichier créé : " .. filename, colors.green)
   else
-    print("Erreur : Impossible de créer le fichier.")
+    textViewer.eout("Erreur : Impossible de créer le fichier.")
   end
 end
 
 local function exec(filename, param)
   if not filename then
-    print("Erreur : Aucun fichier spécifié.")
+    textViewer.eout("Erreur : Aucun fichier spécifié.")
     return
   end
 
   local path2 = "/" .. shell.resolveProgram(filename)
   if path2 == nil then
     path2 = "nil"
-    print("Erreur : Fichier introuvable ou non valide.")
+    textViewer.eout("Erreur : Fichier introuvable ou non valide.")
     return
   end
   if fs.exists(path2) then
@@ -227,18 +227,18 @@ local function exec(filename, param)
       shell.run(path2)
     end
   else
-    print("Erreur : Fichier introuvable ou non valide.")
+    textViewer.eout("Erreur : Fichier introuvable ou non valide.")
   end
 end
 
 local function renommer(value)
   os.setComputerLabel(value)
-  print("Nom de l'ordinateur défini sur : " .. value)
+  textViewer.cprint("Nom de l'ordinateur défini sur : " .. value, colors.green)
 end
 
 local function http(url)
   if not url then
-    print("Erreur : Aucune URL spécifié")
+    textViewer.eout("Erreur : Aucune URL spécifié")
     return
   end
 
@@ -319,21 +319,21 @@ local function main()
     if param then
       changeDir(param)
     else
-      print("Erreur : Aucun dossier spécifié.")
+      textViewer.eout("Erreur : Aucun dossier spécifié.")
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "mkdir" then
     if param then
       makeDir(param)
     else
-      print("Erreur : Aucun nom de dossier spécifié.")
+      textViewer.eout("Erreur : Aucun nom de dossier spécifié.")
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "del" or command == "rm" then
     if param then
       removeFileOrDir(param)
     else
-      print("Erreur : Aucun nom spécifié.")
+      textViewer.eout("Erreur : Aucun nom spécifié.")
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "history" then
@@ -342,7 +342,7 @@ local function main()
     if param then
       readAllText(param)
     else
-      print("Erreur : Aucun fichier spécifié.")
+      textViewer.eout("Erreur : Aucun fichier spécifié.")
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "cls" then
@@ -358,10 +358,10 @@ local function main()
   elseif command == "http" then
     http(param)
   elseif command ~= nil then
-    print("Commande inconnue : " .. command)
+    textViewer.eout("Commande inconnue : " .. command)
     dfpwmPlayer.playErrorSound()
   else
-    print("Veuillez rentrer une commande.")
+    textViewer.eout("Veuillez rentrer une commande.")
     dfpwmPlayer.playErrorSound()
   end
 end

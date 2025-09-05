@@ -1,5 +1,6 @@
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
+local textViewer = require("/FrOS/sys/textViewer")
 local decoder = dfpwm.make_decoder()
 local statusBar = require("/FrOS/sys/statusBar")
 
@@ -36,5 +37,5 @@ end
 if speaker ~= nil then
   main()
 else
-  print("Erreur : Aucun haut-parleur détécté.")
+  textViewer.eout("Erreur : Aucun haut-parleur détécté.")
 end

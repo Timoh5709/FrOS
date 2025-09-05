@@ -1,4 +1,5 @@
 local update = {}
+local textViewer = require("/FrOS/sys/textViewer")
 
 function update.install()
     term.setCursorPos(1,1)
@@ -15,7 +16,7 @@ function update.install()
         os.reboot()
         return true
     else
-        print("Erreur lors du téléchargement du fichier : temp/install.lua depuis Github le système va redémarrer.")
+        textViewer.eout("Erreur lors du téléchargement du fichier : temp/install.lua depuis Github le système va redémarrer.")
         os.reboot()
     end
 end

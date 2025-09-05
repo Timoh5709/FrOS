@@ -1,7 +1,7 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local running = true
 if tonumber(textViewer.getVer()) < 0.3 then
-    print("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
+    textViewer.eout("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
     running = false
     return
 end
@@ -18,10 +18,10 @@ local function installGithub(filename)
         input = io.open(filename, "w")
         input:write(downloader.readAll())
         input:close()
-        print("Téléchargement de ".. filename .. " réussi")
+        textViewer.cprint("Téléchargement de ".. filename .. " réussi", colors.green)
         return true
     else
-        print("Erreur lors du téléchargement du fichier : " .. filename)
+        textViewer.eout("Erreur lors du téléchargement du fichier : " .. filename)
         return false
     end
 end
@@ -41,7 +41,7 @@ local function readAllText(path)
     local file = fs.combine(shell.dir(), path)
     local handle = fs.open(file, "r")
     if not handle then
-        print("Erreur : Fichier illisible.")
+        textViewer.eout("Erreur : Fichier illisible.")
         dfpwmPlayer.playErrorSound()
         return
     end
@@ -62,19 +62,19 @@ local function checkAndInstallApp(app)
         f.close()
         if not installGithub("apps/" .. app) then
             if not installGithub("apps/" .. app .. ".lua") then
-                print("Erreur : L'application " .. app .. " ne peut pas être installée.")
+                textViewer.eout("Erreur : L'application " .. app .. " ne peut pas être installée.")
             end
         end
         if string.find(ftexte, app) then
-            print(app .. " a bien été mis à jour.")
+            textViewer.cprint(app .. " a bien été mis à jour.", colors.green)
         else
             f = fs.open("/FrOS/appList.txt", "a")
             f.write(app .. "\n")
             f.close()
-            print(app .. " a bien été installé.")
+            textViewer.cprint(app .. " a bien été installé.", colors.green)
         end
     else
-        print("Erreur : Application introuvable en ligne.")
+        textViewer.eout("Erreur : Application introuvable en ligne.")
     end
 end
 
@@ -86,19 +86,19 @@ local function checkAndInstallDriver(driver)
         f.close()
         if not installGithub("FrOS/drivers/" .. driver) then
             if not installGithub("FrOS/drivers/" .. driver .. ".lua") then
-                print("Erreur : Le driver " .. driver .. " ne peut pas être installé.")
+                textViewer.eout("Erreur : Le driver " .. driver .. " ne peut pas être installé.")
             end
         end
         if string.find(ftexte, driver) then
-            print(driver .. " a bien été mis à jour.")
+            textViewer.cprint(driver .. " a bien été mis à jour.", colors.green)
         else
             f = fs.open("/FrOS/driversList.txt", "a")
             f.write(driver .. "\n")
             f.close()
-            print(driver .. " a bien été installé.")
+            textViewer.cprint(driver .. " a bien été installé.", colors.green)
         end
     else
-        print("Erreur : Driver introuvable en ligne.")
+        textViewer.eout("Erreur : Driver introuvable en ligne.")
     end
 end
 
@@ -140,17 +140,17 @@ local function main()
         elseif param == "drivers" then
             readAllText("/FrOS/driversList.txt")
         else
-            print("Erreur : Aucune liste selectionnée.")
+            textViewer.eout("Erreur : Aucune liste selectionnée.")
         end
     elseif command == "installer" or command == "get" then
         checkAndInstallApp(param)
     elseif command == "driver" then
         checkAndInstallDriver(param)
     elseif command ~= nil then
-        print("Commande inconnue : " .. command)
+        textViewer.eout("Commande inconnue : " .. command)
         dfpwmPlayer.playErrorSound()
     else
-        print("Veuillez rentrer une commande.")
+        textViewer.eout("Veuillez rentrer une commande.")
         dfpwmPlayer.playErrorSound()
     end
 end

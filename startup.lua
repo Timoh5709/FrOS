@@ -34,7 +34,7 @@ function addBoot(name, loc)
         print("Erreur : Le fichier '" .. loc .. "' n'existe pas.")
         print("Exemple : add FrOS FrOS/boot.lua")
         return
-    -- Ajouter si name existe
+    -- TODO : Ajouter si name existe
     end
     if not fs.exists("boot.txt") then
         local f = fs.open("boot.txt", "w")

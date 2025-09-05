@@ -1,10 +1,11 @@
 local httpViewer = {}
+local textViewer = require("/FrOS/sys/textViewer")
 
 function httpViewer.httpBrain(url)
     local request = http.get(url)
     if request == nil then
         term.setTextColor(colors.red)
-        print("Erreur 404")
+        textViewer.eout("Erreur 404")
         term.setTextColor(colors.white)
         return false
     else
