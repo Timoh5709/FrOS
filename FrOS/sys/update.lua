@@ -25,7 +25,7 @@ end
 function update.check()
   local ver = textViewer.getVer()
   local oVer = httpViewer.httpBrain("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/version.txt")
-  return ver == oVer, oVer
+  return ver ~= oVer, oVer
 end
 
 return update

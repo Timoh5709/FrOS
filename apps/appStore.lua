@@ -1,6 +1,6 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local running = true
-if tonumber(textViewer.getVer()) < 0.4 then
+if tonumber(textViewer.getVer()) < 0.41 then
     textViewer.eout("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
     running = false
     return
@@ -9,9 +9,10 @@ local httpViewer = require("/FrOS/sys/httpViewer")
 local statusBar = require("/FrOS/sys/statusBar")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
-local appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/"
+local appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
+local isFrOSList = true
 local driversListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/driversList.txt"
-local driversUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/drivers/"
+local driversUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
 
 local function setList(url)
     if url ~= nil then
@@ -22,6 +23,7 @@ local function setList(url)
                 f.close()
                 appListUrl = url
                 appsUrl = string.sub(appListUrl, 1, #appListUrl - 11)
+                isFrOSList = false
                 textViewer.cprint(url .. "a bien été défini comme liste par défaut.")
             else
                 print("Erreur : Impossible de créer le fichier 'boot.txt'.")
@@ -38,7 +40,8 @@ local function resetList()
     if fs.exists("apps/appListUrl.txt") then
         fs.delete("apps/appListUrl.txt")
         appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
-        appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/"
+        appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
+        isFrOSList = true
         textViewer.cprint("Liste officielle de FrOS sélectionnée par défaut")
     else
         textViewer.eout("Erreur : Liste déjà par défaut.")
@@ -81,6 +84,9 @@ local function checkAndInstallApp(app)
         local f = fs.open("/FrOS/appList.txt", "r")
         local ftexte = f.readAll()
         f.close()
+        if isFrOSList then
+            app = "apps/" .. app
+        end
         if not httpViewer.installGithub(appsUrl, app) then
             if not httpViewer.installGithub(appsUrl, app .. ".lua") then
                 textViewer.eout("Erreur : L'application " .. appfilename .. " ne peut pas être installée.")
@@ -113,8 +119,8 @@ local function checkAndInstallDriver(driver)
         local f = fs.open("/FrOS/driversList.txt", "r")
         local ftexte = f.readAll()
         f.close()
-        if not httpViewer.installGithub(driversUrl, driver) then
-            if not httpViewer.installGithub(driversUrl, driver .. ".lua") then
+        if not httpViewer.installGithub(driversUrl, "FrOS/drivers/" .. driver) then
+            if not httpViewer.installGithub(driversUrl, "FrOS/drivers/" .. driver .. ".lua") then
                 textViewer.eout("Erreur : Le driver " .. driverfilename .. " ne peut pas être installé.")
             else
                 driverfilename = driver .. ".lua"
@@ -196,6 +202,7 @@ if fs.exists("apps/appListUrl.txt") then
     local f = fs.open("apps/appListUrl.txt", "r")
     appListUrl = f.readAll()
     appsUrl = string.sub(appListUrl, 1, #appListUrl - 11)
+    isFrOSList = false
 end
 
 while running do
