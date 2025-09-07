@@ -366,6 +366,11 @@ local function main()
   end
 end
 
+needUpdate, oVer = update.check()
+if needUpdate then
+  print("La version " .. oVer .. " est disponible, faites 'maj' pour l'installer !")
+end
+
 while running do
   main()
 end
