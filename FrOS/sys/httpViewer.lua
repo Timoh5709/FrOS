@@ -1,6 +1,20 @@
 local httpViewer = {}
 local textViewer = require("/FrOS/sys/textViewer")
 
+function httpViewer.installGithub(url, filename)
+    print("Télécharge " .. filename .. " depuis Github.")
+    downloader = http.get(url .. filename)
+    if downloader then
+        input = io.open(filename, "w")
+        input:write(downloader.readAll())
+        input:close()
+        textViewer.cprint("Téléchargement de ".. filename .. " réussi", colors.green)
+        return true
+    else
+        textViewer.eout("Erreur lors du téléchargement du fichier : " .. filename)
+    end
+end
+
 function httpViewer.httpBrain(url)
     local request = http.get(url)
     if request == nil then

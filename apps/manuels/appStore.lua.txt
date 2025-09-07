@@ -1,0 +1,17 @@
+[Pour la version 0.4]
+L'application "appStore.lua" est une application permettant aux utilisateurs de télécharger facilement des applications auprès de leurs développeurs préférés.
+Contrairement aux versions précédentes, l'appStore 0.4 peut télécharger depuis d'autres sources qui suivent le format suivant :
+
+??"appList.txt" -> Contient l'ensemble des noms des applications disponibles
+??app1.lua
+??app2.lua
+...
+
+Il y a 7 commandes :
+- "aide" pour afficher la liste des commandes
+- "liste OU list <napps OU apps Ou ndrivers OU drivers>" pour sélectionner entre les applications/drivers disponibles ("n...") et les programmes déjà installés
+- "set <url du fichier raw de 'appList.txt' sur Github>" pour définir la liste pour installer de nouvelles applications. ATTENTION AUX DÉVELOPPEURS : il faut obligatoirement que la liste soit nommée "appList.txt", que ça soit le lien du fichier brut et que les applications soit aussi dans le même dossier
+- "reset" pour réinitialiser la liste sur celle de FrOS
+- "installer OU get <app>" pour installer ou mettre à jour une application
+- "driver <driver>" pour installer ou mettre à jour un driver (par ex : emuSpeaker.lua pour avoir du son sur CraftOS-PC)
+- "quit" pour quitter le programme
