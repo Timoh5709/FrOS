@@ -1,0 +1,50 @@
+0.43 :
+- correction du textViewer
+- ajout des logs (dans manuel : "lire logs")
+
+0.42 :
+- correction de bugs
+
+0.41 :
+- nouveau driver pour les moniteurs
+- message de mise à jour
+
+0.4 :
+- centralisation des installations Github sur httpViewer
+- implémentation des progressBar
+- simplification de la statusBar + correction de la position de l'horloge
+- possibilité de choisir une liste sur l'appStore
+
+0.32 :
+- mise à jour des couleurs
+
+0.31 :
+- check de version pour les applications officielles
+- nouveau bootloader customisable
+
+OS_HDD_3 :
+- implémentation du bootloader
+- réorganisation des fichiers
+- bootloader intacte lors d'une mise à jour
+- suppression des fausses pauses
+- implémentation de dfpwmPlayer + coroutines
+- allègement du boot de FrOS
+- nouvelle application : manuel
+
+OS_HDD_2 :
+- implémentation de repair
+- utilisation de la variable shell.path()
+- création du programme statusBar + horloge réelle
+- implémentation des Mo pour la taille du répertoire actuel
+- implémentation de l'appStore et du httpViewer
+- possibilité d'exécuter des programmes avec paramètres
+- implémentation du système de drivers et du driver pour le son de CraftOS PC
+- changement du son de démarrage
+- nouvelles applications : music et compress (pas efficace)
+- encodage en Windows 1252 pour avoir des accents
+
+OS_HDD_1 :
+- implémentation du shell
+- implémentation du startup
+- implémentation de textViewer et d'update
+- implémentation du son de démarrage

@@ -1,0 +1,16 @@
+[Pour la version 0.4]
+
+httpViewer.installGithub(url, filename)
+Télécharge depuis un repo Github un fichier.
+Pour l'utiliser :
+- "url" doit être l'adresse "raw" du repo : "https://raw.githubusercontent.com/[USER]/[REPOSITORY]/refs/heads/main/".
+- "filename" doit être le nom du fichier ainsi que l'endroit relatif à l'url ET le root.
+
+httpViewer.httpBrain(url)
+Envoie une requête GET à l'url, retourne false s'il y a une erreur 404, et le contenu si ça n'a pas échoué.
+
+httpViewer.readUrl(url)
+Donne juste le "print" de httpViewer.httpBrain(url) (utilisé par exemple par la commande "http")
+
+httpViewer.getLines(url)
+Divise en lignes le contenu d'une page html. /!\ N'est pas totalement stable.

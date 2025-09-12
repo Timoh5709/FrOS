@@ -1,0 +1,4 @@
+[Pour la version 0.4]
+
+statusBar.draw(dossier)
+De base cette fonction servait uniquement au shell pour afficher le dossier en cours, mais il peut être utilisé dans certaines applications pour indiquer l'application en cours (si ça termine avec ".lua", la statusBar affichera "> " à la place du "/").

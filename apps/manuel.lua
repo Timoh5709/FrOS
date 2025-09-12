@@ -1,14 +1,10 @@
 local textViewer = require("/FrOS/sys/textViewer")
-if tonumber(textViewer.getVer()) < 0.3 then
-    textViewer.eout("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
-    running = false
-    return
-end
+local update = require("/FrOS/sys/update")
+local running = update.appCheck(0.43)
 local statusBar = require("/FrOS/sys/statusBar")
 local httpViewer = require("/FrOS/sys/httpViewer")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
-local running = true
 
 local function lire(nom)
     if httpViewer.httpBrain(manuelsLoc .. nom .. ".txt") ~= false then
@@ -18,7 +14,7 @@ local function lire(nom)
 end
 
 local function main()
-    dossier = "manuel.lua"
+    local dossier = "manuel.lua"
     write(dossier .. "? ")
     statusBar.draw(dossier)
     local input = read()
@@ -36,7 +32,7 @@ local function main()
         running = false
         return
     elseif command == "aide" then
-        aides = {
+        local aides = {
             "Commandes disponibles :",
             "aide - Affiche cet aide",
             "quit - Quitte l'application",

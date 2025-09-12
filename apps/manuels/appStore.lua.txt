@@ -2,9 +2,9 @@
 L'application "appStore.lua" est une application permettant aux utilisateurs de télécharger facilement des applications auprès de leurs développeurs préférés.
 Contrairement aux versions précédentes, l'appStore 0.4 peut télécharger depuis d'autres sources qui suivent le format suivant :
 
-??"appList.txt" -> Contient l'ensemble des noms des applications disponibles
-??app1.lua
-??app2.lua
+--"appList.txt" -> Contient l'ensemble des noms des applications disponibles
+|-app1.lua
+|-app2.lua
 ...
 
 Il y a 7 commandes :

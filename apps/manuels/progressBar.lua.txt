@@ -1,0 +1,26 @@
+[Pour la version 0.4]
+
+progressBar.create(max, width, y)
+Retourne l'identifiant de la barre de progression créée.
+
+progressBar.inc(id)
+Incrémente la barre de progression. L'affiche après avec progressBar.render(id, width, y).
+
+progressBar.dec(id)
+Décrémente la barre de progression. L'affiche après avec progressBar.render(id, width, y).
+
+progressBar.reset(id, newMax)
+Remet à 0 la barre de progression avec, ou non, un nouveau seuil. L'affiche après avec progressBar.render(id, width, y).
+
+progressBar.remove(id)
+Supprime la barre de progression de la mémoire. L'ID ne fonctionnera plus.
+
+progressBar.get(id)
+Retourne toutes les informations de la barre de progression :
+- la valeur ;
+- le maximum ;
+- la longueur ;
+- la position dans l'axe des ordonnées.
+
+progressBar.render(id, width, y)
+Permet d'afficher une barre de progression à un endroit donné. Cependant cette fonction est systématiquement appelée par les fonctions touchant la valeur de la barre de progression afin de faciliter l'utilisation.

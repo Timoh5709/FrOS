@@ -1,0 +1,13 @@
+[Pour la version 0.43]
+
+textViewer.cprint(text, color)
+Cette fonction permet de print facilement du texte en couleur disponible avec "color.".
+
+textViewer.eout(text)
+Utilise la fonction textViewer.cprint pour facilement mettre en rouge les erreurs.
+
+textViewer.lineViewer(lines)
+Cette fonction permet de lire facilement du texte en format "lignes". Ça permet à d'autres modules et applications de lire du texte qui peut être plus long que le permet la taille du terminal. Les contrôles sont les boutons pages haut/bas et le "Q" pour quitter.
+
+textViewer.getVer()
+Cette fonction n'a qu'une seule utilité : lire la version du système installé.

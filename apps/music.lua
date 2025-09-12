@@ -23,7 +23,7 @@ local function player(filename)
 end
 
 local function main()
-  dossier = "music.lua"
+  local dossier = "music.lua"
   write(dossier .. "& ")
   statusBar.draw(dossier)
   local input = read()

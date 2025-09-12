@@ -1,3 +1,4 @@
+local statusBar = require("/FrOS/sys/statusBar")
 local textViewer = {}
 
 function textViewer.cprint(text, color)
@@ -15,14 +16,49 @@ function textViewer.eout(text)
   textViewer.cprint(text, colors.red)
 end
 
+local function wrapLine(line, width)
+  local res, current = {}, ""
+
+  for word in string.gmatch(line, "%S+") do
+    if #current + #word + 1 <= width then
+      if current == "" then
+        current = word
+      else
+        current = current .. " " .. word
+      end
+    else
+      table.insert(res, current)
+      current = word
+    end
+  end
+
+  if current ~= "" then
+    table.insert(res, current)
+  end
+
+  return res
+end
+
 function textViewer.lineViewer(lines)
-  local _, height = term.getSize()
+  local width, height = term.getSize()
   local currentIndex = 1
-  local maxIndex = #lines
   local pageSize = height - 5
+
+  local wrapLines = {}
+  for _, line in ipairs(lines) do
+    local parts = wrapLine(line, width)
+    for _, part in ipairs(parts) do
+      table.insert(wrapLines, part)
+    end
+  end
+
+  lines = wrapLines
+  local maxIndex = #lines
 
   while true do
     term.clear()
+    local dossier = "textViewer.lua"
+    statusBar.draw(dossier)
     term.setCursorPos(1, 2)
 
     for i = currentIndex, math.min(currentIndex + pageSize - 1, maxIndex) do

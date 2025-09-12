@@ -1,10 +1,6 @@
 local textViewer = require("/FrOS/sys/textViewer")
-local running = true
-if tonumber(textViewer.getVer()) < 0.41 then
-    textViewer.eout("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
-    running = false
-    return
-end
+local update = require("/FrOS/sys/update")
+local running = update.appCheck(0.43)
 local httpViewer = require("/FrOS/sys/httpViewer")
 local statusBar = require("/FrOS/sys/statusBar")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
@@ -140,7 +136,7 @@ local function checkAndInstallDriver(driver)
 end
 
 local function main()
-    dossier = "appStore.lua"
+    local dossier = "appStore.lua"
     write(dossier .. "$ ")
     statusBar.draw(dossier)
     local input = read()
@@ -158,7 +154,7 @@ local function main()
         running = false
         return
     elseif command == "aide" then
-        aides = {
+        local aides = {
             "Commandes disponibles :",
             "aide - Affiche cet aide",
             "quit - Quitte l'application",

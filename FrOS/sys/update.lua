@@ -28,4 +28,13 @@ function update.check()
   return ver ~= oVer, oVer
 end
 
+function update.appCheck(ver)
+    if tonumber(textViewer.getVer()) < ver then
+        textViewer.eout("Erreur : Veuillez mettre à jour FrOS avec 'maj'.")
+        return false
+    else
+        return true
+    end
+end
+
 return update

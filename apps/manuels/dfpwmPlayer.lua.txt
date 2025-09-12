@@ -1,0 +1,10 @@
+[Pour la version OS_HDD_3]
+
+dfpwmPlayer.play(path)
+Joue le son dfpwm à "path". Permet de ne pas copier la fonction de 14 lignes.
+
+dfpwmPlayer.playErrorSound()
+Joue la note "bit".
+
+dfpwmPlayer.playConfirmationSound()
+Joue la note "chime".
