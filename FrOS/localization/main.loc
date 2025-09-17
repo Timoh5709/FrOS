@@ -1,59 +1,59 @@
-/.locLoaded:FR Fichier de traduction chargÈ avec succËs !
+/.locLoaded:FR Fichier de traduction charg√© avec succ√®s !
 /.newVersion1:FR La version 
 /.newVersion2:FR  est disponible, faites 'maj' pour l'installer !
 
 /error.unknownDir:FR Erreur : Dossier introuvable.
 /error.unknownFile:FR Erreur : Fichier introuvable.
-/error.unknown:FR Erreur : …lÈment introuvable.
+/error.unknown:FR Erreur : √âl√©ment introuvable.
 /error.unreadableFile:FR Erreur : Fichier illisible.
 /error.unknownUnreadableFile:FR Erreur : Fichier introuvable ou non valide.
-/error.unspecifiedFile:FR Erreur : Aucun fichier spÈcifiÈ.
-/error.unspecifiedDir:FR Erreur : Aucun dossier spÈcifiÈ.
-/error.unspecifiedURL:FR Erreur : Aucune URL spÈcifiÈ.
-/error.unspecified:FR Erreur : Aucun ÈlÈment spÈcifiÈ.
-/error.alreadyExistingDir:FR Erreur : Ce dossier existe dÈj‡ : 
-/error.alreadyExistingFile:FR Erreur : Ce fichier existe dÈj‡ : 
+/error.unspecifiedFile:FR Erreur : Aucun fichier sp√©cifi√©.
+/error.unspecifiedDir:FR Erreur : Aucun dossier sp√©cifi√©.
+/error.unspecifiedURL:FR Erreur : Aucune URL sp√©cifi√©.
+/error.unspecified:FR Erreur : Aucun √©l√©ment sp√©cifi√©.
+/error.alreadyExistingDir:FR Erreur : Ce dossier existe d√©j√† : 
+/error.alreadyExistingFile:FR Erreur : Ce fichier existe d√©j√† : 
 
 /main.quitCommand:FR Fermeture de FrOS...
-/main.rebootCommand:FR RedÈmarrage de FrOS...
-/main.infosysCommand:FR Informations systËme :
+/main.rebootCommand:FR Red√©marrage de FrOS...
+/main.infosysCommand:FR Informations syst√®me :
 /main.versionInfosys:FR Version de FrOS : 
 /main.nameInfosys:FR Nom de l'ordinateur : 
-/main.freeSpaceInfosys:FR Espace libre dans le rÈpertoire actuel : 
+/main.freeSpaceInfosys:FR Espace libre dans le r√©pertoire actuel : 
 /main.clockInfosys:FR Heure actuelle : 
 /main.aideCommand:FR Commandes disponibles :
 /main.aideAide:FR aide - Affiche cette aide
 /main.quitAide:FR quit - Quitte FrOS
-/main.rebootAide:FR reboot - RedÈmarre FrOS
+/main.rebootAide:FR reboot - Red√©marre FrOS
 /main.lsAide:FR ls OU dir - Liste les fichiers
 /main.goAide:FR go OU cd <dossier> - Change de dossier
-/main.mkdirAide:FR mkdir <nom> - CrÈe un dossier
+/main.mkdirAide:FR mkdir <nom> - Cr√©e un dossier
 /main.delAide:FR del OU rm <nom> - Supprime un fichier ou un dossier
 /main.historyAide:FR history - Affiche l'historique des commandes
-/main.infosysAide:FR infosys - Affiche des informations sur le systËme
+/main.infosysAide:FR infosys - Affiche des informations sur le syst√®me
 /main.lireAide:FR lire <nom> - Lit le fichier
 /main.clsAide:FR cls - Nettoie le terminal
-/main.majAide:FR maj - Met ‡ jour
-/main.mkfileAide:FR mkfile <nom> - CrÈe un fichier
-/main.execAide:FR exec <nom> - ExÈcute un fichier lua
+/main.majAide:FR maj - Met √† jour
+/main.mkfileAide:FR mkfile <nom> - Cr√©e un fichier
+/main.execAide:FR exec <nom> - Ex√©cute un fichier lua
 /main.nomAide:FR nom <nom> - Renomme l'ordinateur
 /main.httpAide:FR http <url> - Affiche le contenu d'une page http
 /main.unknownCommand:FR Commande inconnue : 
 /main.noCommand:FR Veuillez rentrer une commande.
 
-/listFiles.emptyDir:FR Le rÈpertoire est vide.
+/listFiles.emptyDir:FR Le r√©pertoire est vide.
 
-/makeDir.success:FR Dossier crÈÈ : 
+/makeDir.success:FR Dossier cr√©√© : 
 
-/removeFileOrDir.canceled:FR Suppression annulÈe.
+/removeFileOrDir.canceled:FR Suppression annul√©e.
 /removeFileOrDir.critical1:FR Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.
-/removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du systËme. Voulez-vous continuer ? (oui/non)
-/removeFileOrDir.confirmation1:FR  tes-vous sur de vouloir supprimer 
+/removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du syst√®me. Voulez-vous continuer ? (oui/non)
+/removeFileOrDir.confirmation1:FR √ätes-vous sur de vouloir supprimer 
 /removeFileOrDir.confirmation2:FR  ? (oui/non)
-/removeFileOrDir.success:FR SupprimÈ : 
+/removeFileOrDir.success:FR Supprim√© : 
 
 /showHistory.command:FR Historique des commandes :
 
-/mkfile.success:FR Fichier crÈÈ : 
+/mkfile.success:FR Fichier cr√©√© : 
 
-/rename.success:FR Nom de l'ordinateur dÈfini sur : 
+/rename.success:FR Nom de l'ordinateur d√©fini sur : 
