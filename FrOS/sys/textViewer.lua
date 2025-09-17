@@ -19,16 +19,22 @@ end
 local function wrapLine(line, width)
   local res, current = {}, ""
 
-  for word in string.gmatch(line, "%S+") do
-    if #current + #word + 1 <= width then
-      if current == "" then
-        current = word
-      else
-        current = current .. " " .. word
+  for token in string.gmatch(line, "([%S]+[%s]*)") do
+    if token:find("\n") then
+      if current ~= "" then
+        table.insert(res, current)
+        current = ""
+      end
+      for _ in token:gmatch("\n") do
+        table.insert(res, "")
       end
     else
-      table.insert(res, current)
-      current = word
+      if #current + #token <= width then
+        current = current .. token
+      else
+        table.insert(res, current)
+        current = token
+      end
     end
   end
 

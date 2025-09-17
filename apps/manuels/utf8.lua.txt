@@ -1,0 +1,7 @@
+[Pour la version 0.5]
+
+utf8.tocp1252(str)
+Cette fonction est extrêmement utile pour convertir du texte utf8 en CP 1252 ou Windows 1252, l'encodage utilisé par défaut par Computer Craft. Ainsi, des fichiers de traductions peuvent être facilement faisable.
+
+utf8.toutf8(str)
+Un peu moins utile mais tout de même pratique, cette fonction peut permettre de sauvegarder du texte en utf8.

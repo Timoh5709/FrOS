@@ -36,7 +36,7 @@ local function main()
             "Commandes disponibles :",
             "aide - Affiche cet aide",
             "quit - Quitte l'application",
-            "lire <nom d'un fichier lua> - Affiche la documentation d'un programme ou d'une librairie"
+            "lire <nom d'un fichier lua> - Affiche la documentation en ligne d'un programme ou d'une librairie"
         }
         textViewer.lineViewer(aides)
     elseif command == "lire" then

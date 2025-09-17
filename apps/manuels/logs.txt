@@ -1,3 +1,7 @@
+0.5 :
+- implémentation de l'utf8 et de loc
+- main.lua totalement traduit
+
 0.43 :
 - correction du textViewer
 - ajout des logs (dans manuel : "lire logs")

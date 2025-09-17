@@ -1,0 +1,59 @@
+/.locLoaded:FR Fichier de traduction chargé avec succès !
+/.newVersion1:FR La version 
+/.newVersion2:FR  est disponible, faites 'maj' pour l'installer !
+
+/error.unknownDir:FR Erreur : Dossier introuvable.
+/error.unknownFile:FR Erreur : Fichier introuvable.
+/error.unknown:FR Erreur : Élément introuvable.
+/error.unreadableFile:FR Erreur : Fichier illisible.
+/error.unknownUnreadableFile:FR Erreur : Fichier introuvable ou non valide.
+/error.unspecifiedFile:FR Erreur : Aucun fichier spécifié.
+/error.unspecifiedDir:FR Erreur : Aucun dossier spécifié.
+/error.unspecifiedURL:FR Erreur : Aucune URL spécifié.
+/error.unspecified:FR Erreur : Aucun élément spécifié.
+/error.alreadyExistingDir:FR Erreur : Ce dossier existe déjà : 
+/error.alreadyExistingFile:FR Erreur : Ce fichier existe déjà : 
+
+/main.quitCommand:FR Fermeture de FrOS...
+/main.rebootCommand:FR Redémarrage de FrOS...
+/main.infosysCommand:FR Informations système :
+/main.versionInfosys:FR Version de FrOS : 
+/main.nameInfosys:FR Nom de l'ordinateur : 
+/main.freeSpaceInfosys:FR Espace libre dans le répertoire actuel : 
+/main.clockInfosys:FR Heure actuelle : 
+/main.aideCommand:FR Commandes disponibles :
+/main.aideAide:FR aide - Affiche cette aide
+/main.quitAide:FR quit - Quitte FrOS
+/main.rebootAide:FR reboot - Redémarre FrOS
+/main.lsAide:FR ls OU dir - Liste les fichiers
+/main.goAide:FR go OU cd <dossier> - Change de dossier
+/main.mkdirAide:FR mkdir <nom> - Crée un dossier
+/main.delAide:FR del OU rm <nom> - Supprime un fichier ou un dossier
+/main.historyAide:FR history - Affiche l'historique des commandes
+/main.infosysAide:FR infosys - Affiche des informations sur le système
+/main.lireAide:FR lire <nom> - Lit le fichier
+/main.clsAide:FR cls - Nettoie le terminal
+/main.majAide:FR maj - Met à jour
+/main.mkfileAide:FR mkfile <nom> - Crée un fichier
+/main.execAide:FR exec <nom> - Exécute un fichier lua
+/main.nomAide:FR nom <nom> - Renomme l'ordinateur
+/main.httpAide:FR http <url> - Affiche le contenu d'une page http
+/main.unknownCommand:FR Commande inconnue : 
+/main.noCommand:FR Veuillez rentrer une commande.
+
+/listFiles.emptyDir:FR Le répertoire est vide.
+
+/makeDir.success:FR Dossier créé : 
+
+/removeFileOrDir.canceled:FR Suppression annulée.
+/removeFileOrDir.critical1:FR Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.
+/removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)
+/removeFileOrDir.confirmation1:FR Êtes-vous sur de vouloir supprimer 
+/removeFileOrDir.confirmation2:FR  ? (oui/non)
+/removeFileOrDir.success:FR Supprimé : 
+
+/showHistory.command:FR Historique des commandes :
+
+/mkfile.success:FR Fichier créé : 
+
+/rename.success:FR Nom de l'ordinateur défini sur : 

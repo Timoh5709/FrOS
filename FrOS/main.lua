@@ -1,9 +1,10 @@
 local running = true
 term.clear()
 local history = {}
-local speaker = peripheral.find("speaker")
 local textViewer
 local update
+local httpViewer
+local dfpwmPlayer
 local statusBar = require("/FrOS/sys/statusBar")
 if fs.exists("FrOS/sys/textViewer.lua") then
   textViewer = require("/FrOS/sys/textViewer")
@@ -19,6 +20,8 @@ if fs.exists("FrOS/sys/dfpwmPlayer.lua") then
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
+
+local loc = FrOS.mainLoc
 
 local criticalFiles = {
   ["FrOS"] = true,
@@ -57,7 +60,7 @@ local function listFiles()
   local files = fs.list(shell.dir())
   
   if #files == 0 then
-    print("Le répertoire est vide.")
+    print(loc["listFiles.emptyDir"])
     return
   end
   
@@ -114,7 +117,7 @@ local function changeDir(dir)
   if fs.exists(newDir) and fs.isDir(newDir) then
     shell.setDir(newDir)
   else
-    textViewer.eout("Erreur : Dossier introuvable.")
+    textViewer.eout(loc["error.unknownDir"])
     dfpwmPlayer.playErrorSound()
   end
 end
@@ -123,9 +126,9 @@ local function makeDir(dir)
   local newDir = fs.combine(shell.dir(), dir)
   if not fs.exists(newDir) then
     fs.makeDir(newDir)
-    textViewer.cprint("Dossier créé : " .. newDir, colors.green)
+    textViewer.cprint(loc["makeDir.success"] .. newDir, colors.green)
   else
-    textViewer.eout("Erreur : Ce dossier existe déjà.")
+    textViewer.eout(loc["error.alreadyExistingDir"] .. dir)
     dfpwmPlayer.playErrorSound()
   end
 end
@@ -135,35 +138,35 @@ local function removeFileOrDir(target)
 
   if fs.exists(path) then
     if criticalFiles[target] or containsCriticalFiles(path) then
-      textViewer.cprint("Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.", colors.orange)
-      textViewer.cprint("Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)", colors.orange)
+      textViewer.cprint(loc["removeFileOrDir.critical1"], colors.orange)
+      textViewer.cprint(loc["removeFileOrDir.critical2"], colors.orange)
       dfpwmPlayer.playConfirmationSound()
       write("? ")
       local confirmation1 = read()
       if confirmation1 ~= "oui" then
-        print("Suppression annulée.")
+        print(loc["removeFileOrDir.canceled"])
         return
       end
     end
 
-    textViewer.cprint("Êtes-vous sur de vouloir supprimer " .. target .. " ? (oui/non)", colors.orange)
+    textViewer.cprint(loc["removeFileOrDir.confirmation1"] .. target .. loc["removeFileOrDir.confirmation2"], colors.orange)
     dfpwmPlayer.playConfirmationSound()
     write("? ")
     local confirmation2 = read()
     if confirmation2 == "oui" then
       fs.delete(path)
-      textViewer.cprint("Supprimé : " .. path, colors.green)
+      textViewer.cprint(loc["removeFileOrDir.success"] .. path, colors.green)
     else
-      print("Suppression annulée.")
+      print(loc["removeFileOrDir.canceled"])
     end
   else
-    textViewer.eout("Erreur : Fichier ou dossier introuvable.")
+    textViewer.eout(loc["error.unknown"])
     dfpwmPlayer.playErrorSound()
   end
 end
 
 local function showHistory()
-  print("Historique des commandes :")
+  print(loc["showHistory.command"])
   for i = 1, #history do
     print(i .. ": " .. history[i])
   end
@@ -174,7 +177,7 @@ local function readAllText(path)
   local file = fs.combine(shell.dir(), path)
   local handle = fs.open(file, "r")
   if not handle then
-    textViewer.eout("Erreur : Fichier illisible.")
+    textViewer.eout(loc["error.unreadableFile"])
     dfpwmPlayer.playErrorSound()
     return
   end
@@ -189,20 +192,20 @@ end
 
 local function mkfile(filename)
   if not filename then
-    textViewer.eout("Erreur : Aucun nom de fichier spécifié.")
+    textViewer.eout(loc["error.unspecifiedFile"])
     return
   end
 
   local path = fs.combine(shell.dir(), filename)
   if fs.exists(path) then
-    textViewer.eout("Erreur : Le fichier '" .. filename .. "' existe déjà.")
+    textViewer.eout(loc["error.alreadyExistingFile"] .. filename)
     return
   end
 
   local file = fs.open(path, "w")
   if file then
     file.close()
-    textViewer.cprint("Fichier créé : " .. filename, colors.green)
+    textViewer.cprint(loc["mkfile.success"] .. filename, colors.green)
   else
     textViewer.eout("Erreur : Impossible de créer le fichier.")
   end
@@ -210,14 +213,14 @@ end
 
 local function exec(filename, param)
   if not filename then
-    textViewer.eout("Erreur : Aucun fichier spécifié.")
+    textViewer.eout(loc["error.unspecifiedFile"])
     return
   end
 
   local path2 = "/" .. shell.resolveProgram(filename)
   if path2 == nil then
     path2 = "nil"
-    textViewer.eout("Erreur : Fichier introuvable ou non valide.")
+    textViewer.eout(loc["error.unknownUnreadableFile"])
     return
   end
   if fs.exists(path2) then
@@ -227,18 +230,18 @@ local function exec(filename, param)
       shell.run(path2)
     end
   else
-    textViewer.eout("Erreur : Fichier introuvable ou non valide.")
+    textViewer.eout(loc["error.unknownUnreadableFile"])
   end
 end
 
-local function renommer(value)
+local function rename(value)
   os.setComputerLabel(value)
-  textViewer.cprint("Nom de l'ordinateur défini sur : " .. value, colors.green)
+  textViewer.cprint(loc["rename.success"] .. value, colors.green)
 end
 
 local function http(url)
   if not url then
-    textViewer.eout("Erreur : Aucune URL spécifié")
+    textViewer.eout(loc["error.unspecifiedURL"])
     return
   end
 
@@ -272,45 +275,45 @@ local function main()
   end
 
   if command == "quit" then
-    print("Fermeture de FrOS...")
+    print(loc["main.quitCommand"])
     os.shutdown()
   elseif command == "reboot" then
-    print("Redémarrage de FrOS...")
+    print(loc["main.rebootCommand"])
     os.reboot()
   elseif command == "infosys" then
-    print("Informations système : ")
-    print("Version de FrOS : " .. textViewer.getVer())
+    print(loc["main.infosysCommand"])
+    print(loc["main.versionInfosys"] .. textViewer.getVer())
     if os.getComputerLabel() then
-      print("Nom de l'ordinateur : " .. os.getComputerLabel())
+      print(loc["main.nameInfosys"] .. os.getComputerLabel())
     end
 
     local freeSpace = fs.getFreeSpace(shell.dir()) or 0
     if math.floor(freeSpace / 1024) < 10000 then
-      print("Espace libre dans le répertoire actuel : " .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
+      print(loc["main.freeSpaceInfosys"] .. (math.floor(freeSpace / 1024 * 100) / 100) .. " Ko")
     else
-      print("Espace libre dans le répertoire actuel : " .. (math.floor(freeSpace / 1048576 * 100) / 100) .. " Mo")
+      print(loc["main.freeSpaceInfosys"] .. (math.floor(freeSpace / 1048576 * 100) / 100) .. " Mo")
     end
 
-    print("Heure actuelle : " .. textutils.formatTime(os.time("local"), true))    
+    print(loc["main.clockInfosys"] .. textutils.formatTime(os.time("local"), true))    
   elseif command == "aide" then
     aides = {
-      "Commandes disponibles :",
-      "aide - Affiche cette aide",
-      "quit - Quitte FrOS",
-      "reboot - Redémarre FrOS",
-      "ls OU dir - Liste les fichiers",
-      "go OU cd <dossier> - Change de dossier",
-      "mkdir <nom> - Crée un dossier",
-      "del OU rm <nom> - Supprime un fichier ou un dossier",
-      "history - Affiche l'historique des commandes",
-      "infosys - Affiche des informations sur le système",
-      "lire <nom> - Lit le fichier",
-      "cls - Nettoie le terminal",
-      "maj - Met à jour",
-      "mkfile <nom> - Crée un fichier",
-      "exec <nom> - Exécute un fichier lua",
-      "nom <nom> - Renomme l'ordinateur",
-      "http <url> - Affiche le contenu d'une page http"
+      loc["main.aideCommand"],
+      loc["main.aideAide"],
+      loc["main.quitAide"],
+      loc["main.rebootAide"],
+      loc["main.lsAide"],
+      loc["main.goAide"],
+      loc["main.mkdirAide"],
+      loc["main.delAide"],
+      loc["main.historyAide"],
+      loc["main.infosysAide"],
+      loc["main.lireAide"],
+      loc["main.clsAide"],
+      loc["main.majAide"],
+      loc["main.mkfileAide"],
+      loc["main.execAide"],
+      loc["main.nomAide"],
+      loc["main.httpAide"]
     }
     textViewer.lineViewer(aides)
   elseif command == "ls" or command == "dir" then
@@ -319,21 +322,21 @@ local function main()
     if param then
       changeDir(param)
     else
-      textViewer.eout("Erreur : Aucun dossier spécifié.")
+      textViewer.eout(loc["error.unspecifiedDir"])
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "mkdir" then
     if param then
       makeDir(param)
     else
-      textViewer.eout("Erreur : Aucun nom de dossier spécifié.")
+      textViewer.eout(loc["error.unspecifiedDir"])
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "del" or command == "rm" then
     if param then
       removeFileOrDir(param)
     else
-      textViewer.eout("Erreur : Aucun nom spécifié.")
+      textViewer.eout(loc["error.unspecified"])
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "history" then
@@ -342,7 +345,7 @@ local function main()
     if param then
       readAllText(param)
     else
-      textViewer.eout("Erreur : Aucun fichier spécifié.")
+      textViewer.eout(loc["error.unspecifiedFile"])
       dfpwmPlayer.playErrorSound()
     end
   elseif command == "cls" then
@@ -354,21 +357,21 @@ local function main()
   elseif command == "exec" then
     exec(param, string.sub(paramexec, string.len(param) + 1))
   elseif command == "nom" then
-    renommer(param)
+    rename(param)
   elseif command == "http" then
     http(param)
   elseif command ~= nil then
-    textViewer.eout("Commande inconnue : " .. command)
+    textViewer.eout(loc["main.unknownCommand"] .. command)
     dfpwmPlayer.playErrorSound()
   else
-    textViewer.eout("Veuillez rentrer une commande.")
+    textViewer.eout(loc["main.noCommand"])
     dfpwmPlayer.playErrorSound()
   end
 end
 
 needUpdate, oVer = update.check()
 if needUpdate then
-  print("La version " .. oVer .. " est disponible, faites 'maj' pour l'installer !")
+  print(loc[".newVersion1"] .. oVer .. loc[".newVersion2"])
 end
 
 while running do

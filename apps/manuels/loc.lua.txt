@@ -1,0 +1,11 @@
+[Pour la version 0.5]
+
+loc.decode(path, language)
+Fonction principale de loc.lua permettant d'extraire simplement les traductions des fichiers loc.
+/!\ Attention aux développeurs voulant utiliser cette fonction :
+- utilisez loc.load(path, language) ;
+- pour respecter une harmonie dans la nomenclature, merci de faire des fichiers de traduction en utf8 avec l'extension .loc ;
+- pour que ça fonctionne, il faut suivre ce modèle : "/[nom de la fonction ou rien si c'est hors d'une fonction].[nom du texte]:[langue abrégé en majuscule] [le texte dans la langue, après l'espace de séparation]".
+
+loc.load(path, language)
+Cette fonction utilise progressBar et utf8 pour automatiquement avoir les traductions en CP 1252.
