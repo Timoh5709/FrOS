@@ -1,3 +1,7 @@
+0.51 :
+- mise à jour des sons
+- mise à jour importante du bootloader avec la possibilité de supprimer des boots
+
 0.5 :
 - implémentation de l'utf8 et de loc
 - main.lua totalement traduit

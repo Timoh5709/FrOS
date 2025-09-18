@@ -1,10 +1,16 @@
-[Pour la version OS_HDD_3]
+[Pour la version 0.51]
 
 dfpwmPlayer.play(path)
 Joue le son dfpwm à "path". Permet de ne pas copier la fonction de 14 lignes.
 
+dfpwmPlayer.playStartupSound()
+Joue le son "startup.dfpwm" en coroutine.
+
+dfpwmPlayer.playShutdownSound()
+Joue le son "shutdown.dfpwm" et attend 2.15 secondes.
+
 dfpwmPlayer.playErrorSound()
-Joue la note "bit".
+Joue le son "error.dfpwm" en coroutine.
 
 dfpwmPlayer.playConfirmationSound()
-Joue la note "chime".
+Joue le son "ask.dfpwm" en coroutine.

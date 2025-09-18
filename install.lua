@@ -1,10 +1,6 @@
 term.clear()
 term.setCursorPos(1,1)
 
-local speaker = peripheral.find("speaker")
-local dfpwm = require("cc.audio.dfpwm")
-local decoder = dfpwm.make_decoder()
-
 local maj = false
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -56,6 +52,9 @@ installGithub("FrOS/version.txt")
 fs.makeDir("FrOS/media")
 print("Dossier FrOS/media créé avec succès.")
 installGithub("FrOS/media/startup.dfpwm")
+installGithub("FrOS/media/shutdown.dfpwm")
+installGithub("FrOS/media/error.dfpwm")
+installGithub("FrOS/media/ask.dfpwm")
 fs.makeDir("FrOS/sys")
 print("Dossier FrOS/sys créé avec succès.")
 installGithub("FrOS/sys/textViewer.lua")
@@ -92,6 +91,14 @@ if not maj then
         print("Fichier FrOS/driversList.txt créé avec succès.")
     else
         print("Erreur : Impossible de créer le fichier FrOS/driversList.txt.")
+    end
+    local f = fs.open("boot.txt", "w")
+    if f then
+        f.write("CraftOS|rom/startup.lua\nFrOS|FrOS/boot.lua\n")
+        f.close()
+        print("Fichier boot.txt créé avec succès.")
+    else
+        print("Erreur : Impossible de créer le fichier boot.txt.")
     end
     print("Voulez-vous installer des drivers ? (oui/non)")
     write("? ")

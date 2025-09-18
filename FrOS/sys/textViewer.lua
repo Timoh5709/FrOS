@@ -1,4 +1,5 @@
 local statusBar = require("/FrOS/sys/statusBar")
+local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local textViewer = {}
 
 function textViewer.cprint(text, color)
@@ -14,6 +15,7 @@ end
 
 function textViewer.eout(text)
   textViewer.cprint(text, colors.red)
+  dfpwmPlayer.playErrorSound()
 end
 
 local function wrapLine(line, width)

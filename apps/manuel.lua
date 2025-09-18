@@ -43,10 +43,8 @@ local function main()
         lire(param)
     elseif command ~= nil then
         textViewer.eout("Commande inconnue : " .. command)
-        dfpwmPlayer.playErrorSound()
     else
         textViewer.eout("Veuillez rentrer une commande.")
-        dfpwmPlayer.playErrorSound()
     end
 end
 

@@ -1,6 +1,6 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.43)
+local running = update.appCheck(0.51)
 local httpViewer = require("/FrOS/sys/httpViewer")
 local statusBar = require("/FrOS/sys/statusBar")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
@@ -60,7 +60,6 @@ local function readAllText(path)
     local handle = fs.open(file, "r")
     if not handle then
         textViewer.eout("Erreur : Fichier illisible.")
-        dfpwmPlayer.playErrorSound()
         return
     end
     while true do
@@ -187,10 +186,8 @@ local function main()
         checkAndInstallDriver(param)
     elseif command ~= nil then
         textViewer.eout("Commande inconnue : " .. command)
-        dfpwmPlayer.playErrorSound()
     else
         textViewer.eout("Veuillez rentrer une commande.")
-        dfpwmPlayer.playErrorSound()
     end
 end
 

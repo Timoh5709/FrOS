@@ -21,7 +21,6 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/utf8.lua")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
-        repair.check("FrOS/localization/main.loc")
         _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
         if FrOS.mainLoc then
             term.setTextColor(colors.green)
@@ -41,13 +40,13 @@ if repair.check("FrOS/main.lua") then
     end
     if repair.check("FrOS/media/startup.dfpwm") then
         if canPlay then
-            local co = coroutine.create(function ()
-                dfpwmPlayer.play("FrOS/media/startup.dfpwm")
-            end)
-            coroutine.resume(co)
+            dfpwmPlayer.playStartupSound()
         end
     end
-    
+    repair.check("FrOS/media/error.dfpwm")
+    repair.check("FrOS/media/ask.dfpwm")
+    repair.check("FrOS/media/shutdown.dfpwm")
+
     if fs.exists("temp/install.lua") then
         term.setTextColor(colors.orange)
         print("'temp/install.lua' present, suppression.")

@@ -118,7 +118,6 @@ local function changeDir(dir)
     shell.setDir(newDir)
   else
     textViewer.eout(loc["error.unknownDir"])
-    dfpwmPlayer.playErrorSound()
   end
 end
 
@@ -129,7 +128,6 @@ local function makeDir(dir)
     textViewer.cprint(loc["makeDir.success"] .. newDir, colors.green)
   else
     textViewer.eout(loc["error.alreadyExistingDir"] .. dir)
-    dfpwmPlayer.playErrorSound()
   end
 end
 
@@ -161,7 +159,6 @@ local function removeFileOrDir(target)
     end
   else
     textViewer.eout(loc["error.unknown"])
-    dfpwmPlayer.playErrorSound()
   end
 end
 
@@ -178,7 +175,6 @@ local function readAllText(path)
   local handle = fs.open(file, "r")
   if not handle then
     textViewer.eout(loc["error.unreadableFile"])
-    dfpwmPlayer.playErrorSound()
     return
   end
   while true do
@@ -276,9 +272,11 @@ local function main()
 
   if command == "quit" then
     print(loc["main.quitCommand"])
+    dfpwmPlayer.playShutdownSound()
     os.shutdown()
   elseif command == "reboot" then
     print(loc["main.rebootCommand"])
+    dfpwmPlayer.playShutdownSound()
     os.reboot()
   elseif command == "infosys" then
     print(loc["main.infosysCommand"])
@@ -323,21 +321,18 @@ local function main()
       changeDir(param)
     else
       textViewer.eout(loc["error.unspecifiedDir"])
-      dfpwmPlayer.playErrorSound()
     end
   elseif command == "mkdir" then
     if param then
       makeDir(param)
     else
       textViewer.eout(loc["error.unspecifiedDir"])
-      dfpwmPlayer.playErrorSound()
     end
   elseif command == "del" or command == "rm" then
     if param then
       removeFileOrDir(param)
     else
       textViewer.eout(loc["error.unspecified"])
-      dfpwmPlayer.playErrorSound()
     end
   elseif command == "history" then
     showHistory()
@@ -346,7 +341,6 @@ local function main()
       readAllText(param)
     else
       textViewer.eout(loc["error.unspecifiedFile"])
-      dfpwmPlayer.playErrorSound()
     end
   elseif command == "cls" then
     term.clear()
@@ -362,10 +356,8 @@ local function main()
     http(param)
   elseif command ~= nil then
     textViewer.eout(loc["main.unknownCommand"] .. command)
-    dfpwmPlayer.playErrorSound()
   else
     textViewer.eout(loc["main.noCommand"])
-    dfpwmPlayer.playErrorSound()
   end
 end
 
