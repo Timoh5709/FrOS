@@ -21,6 +21,7 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/utf8.lua")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
+        repair.check("FrOS/localization/main.loc")
         _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
         if FrOS.mainLoc then
             term.setTextColor(colors.green)
