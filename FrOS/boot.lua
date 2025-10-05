@@ -15,6 +15,7 @@ end
 if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/textViewer.lua")
     repair.check("FrOS/sys/update.lua")
+    repair.check("FrOS/sys/offline-installer.lua")
     repair.check("FrOS/sys/statusBar.lua")
     repair.check("FrOS/sys/httpViewer.lua")
     repair.check("FrOS/sys/progressBar.lua")

@@ -1,4 +1,4 @@
-[Pour la version 0.43]
+[Pour la version 0.6]
 
 update.install()
 Permet de télécharger le système d'installation autonome pour mettre à jour FrOS.
@@ -8,3 +8,6 @@ Vérifie si la version correspond à la dernière version disponible.
 
 update.appCheck(ver)
 Une fonction pour vérifier si la version correspond à celle attendue par l'application. Permet d'éviter des problèmes d'incompatibilité avec des fonctions pas implémentées à cause d'une version trop vieille.
+
+update.createInstallationDisk()
+Télécharge, archive et met sur un disque FrOS afin qu'il puisse être installé hors-connexion.
