@@ -33,7 +33,7 @@
 /main.infosysAide:FR infosys - Affiche des informations sur le système
 /main.lireAide:FR lire <nom> - Lit le fichier
 /main.clsAide:FR cls - Nettoie le terminal
-/main.majAide:FR maj - Met à jour
+/main.majAide:FR maj <create | optionnel> - Met à jour OU crée un disque d'installation hors-ligne sur une diskette
 /main.mkfileAide:FR mkfile <nom> - Crée un fichier
 /main.execAide:FR exec <nom> - Exécute un fichier lua
 /main.nomAide:FR nom <nom> - Renomme l'ordinateur

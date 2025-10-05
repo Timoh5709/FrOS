@@ -2,24 +2,62 @@ term.clear()
 term.setCursorPos(1,1)
 
 local maj = false
+local format = false
+local exBootloader = false
+local step = 0
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
 print("Veuillez ne pas éteindre votre ordinateur lors du téléchargement.")
 if fs.exists("/FrOS/boot.lua") then
-    print("Voulez-vous mettre à jour ou installer à nouveau ? (maj/install)")
+    while step == 0 do
+        print("Voulez-vous mettre à jour ou installer à nouveau ? (maj/install)")
+        write("? ")
+        local choix = read()
+        if choix == "maj" then
+            step = step + 3
+            maj = true
+            format = false
+            exBootloader = false
+        elseif choix == "install" then
+            step = step + 1
+            maj = false
+        end
+    end
+else
+    step = step + 1
+end
+while step == 1 do
+    print("Voulez-vous formater le disque ? (oui/non)")
     write("? ")
     local choix = read()
-    if choix == "maj" then
-        maj = true
+    if choix == "oui" then
+        step = step + 2
+        format = true
+        exBootloader = false
+    elseif choix == "non" then
+        step = step + 1
+        format = false
+    end
+    while step == 2 do
+        print("Utilisez-vous un bootloader ? (oui/non)")
+        write("? ")
+        choix = read()
+        if choix == "oui" then
+            step = step + 1
+            exBootloader = true
+        elseif choix == "non" then
+            step = step + 1
+            exBootloader = false
+        end
     end
 end
 textutils.slowPrint("-------------------------------------------------")
 
 local function installGithub(filename)
     print("Télécharge " .. filename .. " depuis Github.")
-    downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
+    local downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
     if downloader then
-        input = io.open(filename, "w")
+        local input = io.open(filename, "w")
         input:write(downloader.readAll())
         input:close()
 		print("Téléchargement de ".. filename .. " réussi")
@@ -45,6 +83,10 @@ term.setBackgroundColor(colors.blue)
 term.clear()
 term.setCursorPos(1,1)
 
+if format then
+    fs.delete("*")
+end
+
 fs.makeDir("FrOS")
 print("Dossier FrOS créé avec succès.")
 installGithub("FrOS/main.lua")
@@ -66,6 +108,8 @@ installGithub("FrOS/sys/dfpwmPlayer.lua")
 installGithub("FrOS/sys/progressBar.lua")
 installGithub("FrOS/sys/utf8.lua")
 installGithub("FrOS/sys/loc.lua")
+installGithub("FrOS/sys/FZIP.lua")
+installGithub("FrOS/sys/offline-installer.lua")
 fs.makeDir("FrOS/localization")
 print("Dossier FrOS/localization créé avec succès.")
 installGithub("FrOS/localization/main.loc")
@@ -79,7 +123,7 @@ installGithub("apps/manuel.lua")
 if not maj then
     local f = fs.open("FrOS/appList.txt", "w")
     if f then
-        f.write("appStore.lua\nmanuel.lua\n")
+        f.write("apps/appStore.lua\napps/manuel.lua\n")
         f.close()
         print("Fichier FrOS/appList.txt créé avec succès.")
     else
@@ -92,24 +136,29 @@ if not maj then
     else
         print("Erreur : Impossible de créer le fichier FrOS/driversList.txt.")
     end
-    local f = fs.open("boot.txt", "w")
-    if f then
-        f.write("CraftOS|rom/startup.lua\nFrOS|FrOS/boot.lua\n")
-        f.close()
-        print("Fichier boot.txt créé avec succès.")
-    else
-        print("Erreur : Impossible de créer le fichier boot.txt.")
+    if not exBootloader then
+        local f = fs.open("boot.txt", "w")
+        if f then
+            f.write("CraftOS|rom/startup.lua\nFrOS|FrOS/boot.lua\n")
+            f.close()
+            print("Fichier boot.txt créé avec succès.")
+        else
+            print("Erreur : Impossible de créer le fichier boot.txt.")
+        end
     end
     print("Voulez-vous installer des drivers ? (oui/non)")
     write("? ")
     local choix = read()
     if choix == "oui" then
-        shell.run("/apps/appStore.lua")
+        print("Pour regarder la liste des drivers, faites 'liste ndrivers' et installez les avec 'driver <nom du driver>'.")
+        shell.run("/apps/appStore.lua -install")
     end
 end
 fs.makeDir("temp")
 print("Dossier temp créé avec succès.")
 installGithub("FrOS/boot.lua")
-installGithub("startup.lua")
+if not exBootloader then
+    installGithub("startup.lua")
+end
 print("Installation de FrOS version " .. getVer() .. " terminée. Votre ordinateur va redémarrer.")
 os.reboot()

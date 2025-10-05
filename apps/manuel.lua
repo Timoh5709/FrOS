@@ -3,7 +3,6 @@ local update = require("/FrOS/sys/update")
 local running = update.appCheck(0.43)
 local statusBar = require("/FrOS/sys/statusBar")
 local httpViewer = require("/FrOS/sys/httpViewer")
-local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
 
 local function lire(nom)

@@ -19,6 +19,7 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/httpViewer.lua")
     repair.check("FrOS/sys/progressBar.lua")
     repair.check("FrOS/sys/utf8.lua")
+    repair.check("FrOS/sys/FZIP.lua")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
         _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
@@ -47,13 +48,8 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/media/ask.dfpwm")
     repair.check("FrOS/media/shutdown.dfpwm")
 
-    if fs.exists("temp/install.lua") then
-        term.setTextColor(colors.orange)
-        print("'temp/install.lua' present, suppression.")
-        fs.delete("temp/install.lua")
-        print("Le système d'installation autonome a été désinstallé.")
-        term.setTextColor(colors.white)
-    end
+    fs.delete("temp")
+    fs.makeDir("temp")
     textutils.slowPrint("-------------------------------------------------")
     shell.run("FrOS/main.lua")
 end

@@ -1,3 +1,9 @@
+0.6 :
+- implémentation du format FZIP
+- correction de quelques bugs
+- mise à jour de l'installeur
+- possibilité de créer des disques d'installation hors-ligne
+
 0.51 :
 - mise à jour des sons
 - mise à jour importante du bootloader avec la possibilité de supprimer des boots

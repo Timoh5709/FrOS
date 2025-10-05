@@ -1,0 +1,11 @@
+[Pour la version 0.6]
+
+fzip.create(archivePath, inputs)
+Fonction appelant en coroutine une autre fonction qui crée un fichier d'archive FZIP (FrOS-ZIP) avec un système de compression LZW+RLE. Peut archiver un dossier entier.
+/!\ Attention aux développeurs voulant utiliser cette fonction :
+- pour que l'archive soit ouvrable avec le shell, il faut que l'extension soit en ".fzip" ;
+- "inputs" DOIT être une liste ;
+- le système de compression n'est pas exceptionnel, c'est pour ça qu'il peut juste mettre le fichier brut si le compressé n'est pas plus léger (les fichiers de texte/code sont les mieux compressés).
+
+fzip.extract(archivePath, outDir)
+Fonction appelant en coroutine une autre fonction qui extracte un fichier d'archive FZIP (FrOS-ZIP) qui peut être compressé.

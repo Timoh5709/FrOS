@@ -5,6 +5,7 @@ local textViewer
 local update
 local httpViewer
 local dfpwmPlayer
+local fzip
 local statusBar = require("/FrOS/sys/statusBar")
 if fs.exists("FrOS/sys/textViewer.lua") then
   textViewer = require("/FrOS/sys/textViewer")
@@ -17,6 +18,9 @@ if fs.exists("FrOS/sys/httpViewer.lua") then
 end
 if fs.exists("FrOS/sys/dfpwmPlayer.lua") then
   dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
+end
+if fs.exists("FrOS/sys/FZIP.lua") then
+  fzip = require("/FrOS/sys/fzip")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
@@ -40,6 +44,29 @@ local criticalFiles = {
   ["init.lua"] = true
 }
 
+local function listFilesRecursive(basePath)
+  local results = {}
+  local allSizes = 0
+
+  local function scan(path, rel)
+    for _, item in ipairs(fs.list(path)) do
+      local fullPath = fs.combine(path, item)
+      local relPath = rel and fs.combine(rel, item) or item
+      local size = fs.isDir(fullPath) and 0 or fs.getSize(fullPath)
+
+      if fs.isDir(fullPath) then
+        scan(fullPath, relPath)
+      else
+        table.insert(results, {abs = fullPath, rel = relPath})
+        allSizes = allSizes + size
+      end
+    end
+  end
+
+  scan(basePath, nil)
+  return results, allSizes
+end
+
 local function containsCriticalFiles(path)
   if not fs.isDir(path) then
     return false
@@ -54,6 +81,10 @@ local function containsCriticalFiles(path)
     end
   end
   return false
+end
+
+function string:endswith(suffix)
+  return self:sub(-#suffix) == suffix
 end
 
 local function listFiles()
@@ -85,12 +116,24 @@ local function listFiles()
         
         table.insert(romFiles, string.format("%-20s %-10s", file .. "/", string.upper(type)))
       else
-        table.insert(dirFiles, file .. "/")
+        local _, usedSpace = listFilesRecursive(path)
+        local space
+        if math.floor(usedSpace / 1024) < 10000 then
+          space = (math.floor(usedSpace / 1024 * 100) / 100) .. " Ko"
+        else
+          space = (math.floor(usedSpace / 1048576 * 100) / 100) .. " Mo"
+        end
+        table.insert(dirFiles, string.format("%-30s %-20s", file .. "/", space))
       end
     else
       local size = fs.getSize(path)
-      
-      table.insert(regularFiles, string.format("%-20s  %-10s", file, (math.floor(size / 1024 * 100) / 100) .. " Ko"))
+      local space
+      if math.floor(size / 1024) < 10000 then
+        space = (math.floor(size / 1024 * 100) / 100) .. " Ko"
+      else
+        space = (math.floor(size / 1048576 * 100) / 100) .. " Mo"
+      end
+      table.insert(regularFiles, string.format("%-30s  %-10s", file, space))
     end
   end
 
@@ -116,6 +159,10 @@ local function changeDir(dir)
   local newDir = fs.combine(shell.dir(), dir)
   if fs.exists(newDir) and fs.isDir(newDir) then
     shell.setDir(newDir)
+  elseif fs.exists(newDir) and newDir:endswith(".fzip") then
+    local tempDir = fs.combine("temp", dir:sub(1, -6))
+    fzip.extract(newDir, tempDir)
+    shell.setDir(tempDir)
   else
     textViewer.eout(loc["error.unknownDir"])
   end
@@ -294,7 +341,7 @@ local function main()
 
     print(loc["main.clockInfosys"] .. textutils.formatTime(os.time("local"), true))    
   elseif command == "aide" then
-    aides = {
+    local aides = {
       loc["main.aideCommand"],
       loc["main.aideAide"],
       loc["main.quitAide"],
@@ -344,8 +391,13 @@ local function main()
     end
   elseif command == "cls" then
     term.clear()
+    term.setCursorPos(1, 2)
   elseif command == "maj" then
-    update.install()
+    if param == "create" then
+      update.createInstallationDisk()
+    else
+      update.install()
+    end
   elseif command == "mkfile" then
     mkfile(param)
   elseif command == "exec" then
@@ -361,7 +413,7 @@ local function main()
   end
 end
 
-needUpdate, oVer = update.check()
+local needUpdate, oVer = update.check()
 if needUpdate then
   print(loc[".newVersion1"] .. oVer .. loc[".newVersion2"])
 end
