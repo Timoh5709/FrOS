@@ -1,5 +1,6 @@
 # FrOS
 > A french Computercraft project.
+
 Pour installer cet OS, il vous faudra environ 100 Ko de libre et exécuter la commande `wget run https://github.com/Timoh5709/FrOS/raw/refs/heads/main/install.lua`. Vous pourrez ensuite explorer un système d'exploitation développé principalement pour les francophones, basé sur la [thèse de JackMacWindows sur les OS de ComputerCraft](https://gist.github.com/MCJack123/4b2bca21bdc0cf5c67ce7177326c2154).
 ## Un shell intuitif :
 Étant parti sur l'aspect fonctionnel, il s'agit d'un OS basé en lignes de commandes (les applications CraftOS sont disponibles avec `exec`) :
