@@ -13,4 +13,4 @@ Plusieurs applications essentielles sont installées/installables. Parmi les app
 <img width="886" height="580" alt="image" src="https://github.com/user-attachments/assets/f5ecd2d5-688d-4113-be23-796e85431ec7" />
 ## Un projet en évolution constante :
 Il y a quelques mois, nous n'étions qu'un simple shell, désormais, nous pouvons archiver, traduire, utiliser l'utf8, utiliser le protocole http, etc. Demain nous pourrions même aller jusqu'au shell graphique ? Qui sait !
-# Mais vous pouvez nous soutenir en essayant FrOS, peut importe la version qui vous sera contemporaine !
+# Mais vous pouvez nous soutenir en essayant FrOS, peu importe la version qui vous sera contemporaine !
