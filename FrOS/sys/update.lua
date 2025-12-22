@@ -100,6 +100,9 @@ function update.check()
     if http.checkURL("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/version.txt") == true then
         local ver = textViewer.getVer()
         local oVer = httpViewer.httpBrain("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/version.txt")
+        if oVer == false then
+            oVer = "4.0.4"
+        end
         return ver ~= oVer, oVer
     end
     return false, 1
