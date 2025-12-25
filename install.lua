@@ -2,7 +2,6 @@ term.clear()
 term.setCursorPos(1,1)
 
 local maj = false
-local format = false
 local exBootloader = false
 local step = 0
 
@@ -16,7 +15,6 @@ if fs.exists("/FrOS/boot.lua") then
         if choix == "maj" then
             step = step + 3
             maj = true
-            format = false
             exBootloader = false
         elseif choix == "install" then
             step = step + 1
@@ -27,28 +25,15 @@ else
     step = step + 1
 end
 while step == 1 do
-    print("Voulez-vous formater le disque ? (oui/non)")
+    print("Utilisez-vous un bootloader ? (oui/non)")
     write("? ")
-    local choix = read()
+    choix = read()
     if choix == "oui" then
-        step = step + 2
-        format = true
-        exBootloader = false
+        step = step + 1
+        exBootloader = true
     elseif choix == "non" then
         step = step + 1
-        format = false
-    end
-    while step == 2 do
-        print("Utilisez-vous un bootloader ? (oui/non)")
-        write("? ")
-        choix = read()
-        if choix == "oui" then
-            step = step + 1
-            exBootloader = true
-        elseif choix == "non" then
-            step = step + 1
-            exBootloader = false
-        end
+        exBootloader = false
     end
 end
 textutils.slowPrint("-------------------------------------------------")
@@ -83,10 +68,6 @@ term.setBackgroundColor(colors.blue)
 term.clear()
 term.setCursorPos(1,1)
 
-if format then
-    fs.delete("*")
-end
-
 fs.makeDir("FrOS")
 print("Dossier FrOS créé avec succès.")
 installGithub("FrOS/main.lua")
@@ -109,6 +90,7 @@ installGithub("FrOS/sys/progressBar.lua")
 installGithub("FrOS/sys/utf8.lua")
 installGithub("FrOS/sys/loc.lua")
 installGithub("FrOS/sys/FZIP.lua")
+installGithub("FrOS/sys/script.lua")
 installGithub("FrOS/sys/offline-installer.lua")
 fs.makeDir("FrOS/localization")
 print("Dossier FrOS/localization créé avec succès.")

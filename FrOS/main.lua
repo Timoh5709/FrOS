@@ -6,6 +6,7 @@ local update
 local httpViewer
 local dfpwmPlayer
 local fzip
+local script
 local statusBar = require("/FrOS/sys/statusBar")
 if fs.exists("FrOS/sys/textViewer.lua") then
   textViewer = require("/FrOS/sys/textViewer")
@@ -21,6 +22,9 @@ if fs.exists("FrOS/sys/dfpwmPlayer.lua") then
 end
 if fs.exists("FrOS/sys/FZIP.lua") then
   fzip = require("/FrOS/sys/fzip")
+end
+if fs.exists("FrOS/sys/script.lua") then
+  script = require("/FrOS/sys/script")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
@@ -291,20 +295,12 @@ local function http(url)
   textViewer.lineViewer(httpViewer.readUrl(url))
 end
 
-local function main()
-  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
-  write(dossier .. "> ")
-  statusBar.draw(dossier)
-  local input = read()
-
-  if input ~= nil then
-    table.insert(history, input)
+local function executeLine(input)
+  if not input or input == "" then
+    textViewer.eout(loc["main.noCommand"])
+    return
   end
-
-  if #history > 16 then
-    table.remove(history, 1)
-  end
-
+  
   local args = {}
   for word in string.gmatch(input, "%S+") do
     table.insert(args, word)
@@ -312,6 +308,7 @@ local function main()
 
   local command = args[1]
   local param = args[2]
+
   local paramexec = ""
   if string.len(input) > 5 then
     paramexec = string.sub(input, 6)
@@ -321,13 +318,16 @@ local function main()
     print(loc["main.quitCommand"])
     dfpwmPlayer.playShutdownSound()
     os.shutdown()
+
   elseif command == "reboot" then
     print(loc["main.rebootCommand"])
     dfpwmPlayer.playShutdownSound()
     os.reboot()
+
   elseif command == "infosys" then
     print(loc["main.infosysCommand"])
     print(loc["main.versionInfosys"] .. textViewer.getVer())
+
     if os.getComputerLabel() then
       print(loc["main.nameInfosys"] .. os.getComputerLabel())
     end
@@ -340,6 +340,7 @@ local function main()
     end
 
     print(loc["main.clockInfosys"] .. textutils.formatTime(os.time("local"), true))    
+
   elseif command == "aide" then
     local aides = {
       loc["main.aideCommand"],
@@ -358,58 +359,116 @@ local function main()
       loc["main.mkfileAide"],
       loc["main.execAide"],
       loc["main.nomAide"],
-      loc["main.httpAide"]
+      loc["main.httpAide"],
+      loc["main.scriptAide"],
+      loc["main.sleepAide"],
+      loc["main.echoAide"]
     }
+
     textViewer.lineViewer(aides)
+
   elseif command == "ls" or command == "dir" then
     listFiles()
+
   elseif command == "go" or command == "cd" then
     if param then
       changeDir(param)
     else
       textViewer.eout(loc["error.unspecifiedDir"])
     end
+
   elseif command == "mkdir" then
     if param then
       makeDir(param)
     else
       textViewer.eout(loc["error.unspecifiedDir"])
     end
+
   elseif command == "del" or command == "rm" then
     if param then
       removeFileOrDir(param)
     else
       textViewer.eout(loc["error.unspecified"])
     end
+
   elseif command == "history" then
     showHistory()
+
   elseif command == "lire" then
     if param then
       readAllText(param)
     else
       textViewer.eout(loc["error.unspecifiedFile"])
     end
+
   elseif command == "cls" then
     term.clear()
     term.setCursorPos(1, 2)
+
   elseif command == "maj" then
     if param == "create" then
       update.createInstallationDisk()
     else
       update.install()
     end
+
   elseif command == "mkfile" then
     mkfile(param)
+
   elseif command == "exec" then
     exec(param, string.sub(paramexec, string.len(param) + 1))
+
   elseif command == "nom" then
     rename(param)
+
   elseif command == "http" then
     http(param)
+
+  elseif command == "script" then
+    local commands = script.read(param)
+    
+    if not commands then
+      return
+    end
+
+    for i = 1, #commands do
+      local line = commands[i]
+
+      if line ~= "" and not line:match("^#") then
+        print(dossier .. "> " .. line)
+        executeLine(line)
+      end
+    end
+
+  elseif command == "sleep" then
+    sleep(tonumber(param))
+  
+  elseif command == "echo" then
+    print(paramexec)
+
   elseif command ~= nil then
     textViewer.eout(loc["main.unknownCommand"] .. command)
+
   else
     textViewer.eout(loc["main.noCommand"])
+  end
+end
+
+local function main()
+  dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
+  write(dossier .. "> ")
+  statusBar.draw(dossier)
+
+  local input = read(nil, history)
+
+  if input then
+    table.insert(history, input)
+    
+    if #history > 64 then
+      table.remove(history, 1)
+    end
+
+    executeLine(input)
   end
 end
 

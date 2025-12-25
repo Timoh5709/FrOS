@@ -38,6 +38,9 @@
 /main.execAide:FR exec <nom> - Exécute un fichier lua
 /main.nomAide:FR nom <nom> - Renomme l'ordinateur
 /main.httpAide:FR http <url> - Affiche le contenu d'une page http
+/main.scriptAide:FR script <script fsc> - Exécute les commandes dans l'ordre du fichier
+/main.sleepAide:FR sleep <secondes> - Met en pause toute les commandes pendant quelques secondes
+/main.echoAide:FR echo <texte> - Affiche du texte
 /main.unknownCommand:FR Commande inconnue : 
 /main.noCommand:FR Veuillez rentrer une commande.
 

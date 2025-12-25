@@ -1,0 +1,6 @@
+[Pour la version 0.61]
+
+script.read(path)
+Fonction principale de script.lua permettant d'extraire simplement les commandes du fichier fsc.
+Facilement accessible dans le shell avec la commande script.
+Il y a aussi la possibilité de mettre des commentaires à l'aide du # en début de ligne.

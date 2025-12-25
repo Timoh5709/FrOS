@@ -1,3 +1,9 @@
+0.61 :
+- utilisation hors-ligne débuguée
+- grosse mise à jour du shell (script, sleep et echo) et utilisation correcte de l'historique (avec les flèches)
+- implémentation du format FSC (en gros un fichier bat)
+- ajout de la commande "reboot" dans le bootloader
+
 0.6 :
 - implémentation du format FZIP
 - correction de quelques bugs

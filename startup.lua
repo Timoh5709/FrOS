@@ -41,7 +41,7 @@ local function addBoot(name, loc)
         if f then
             f.write(name .. "|" .. loc .. "\n")
             f.close()
-            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements.")
+            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements 'reboot'.")
         else
             print("Erreur : Impossible de créer le fichier 'boot.txt'.")
         end
@@ -50,7 +50,7 @@ local function addBoot(name, loc)
         if f then
             f.write(name .. "|" .. loc .. "\n")
             f.close()
-            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements.")
+            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements 'reboot'.")
         else
             print("Erreur : Impossible d'ajouter au fichier 'boot.txt'.")
         end
@@ -93,7 +93,7 @@ local function removeBoot(name)
         handle.close()
 
         if fnd then
-            print(name .. " a bien été supprimé de la liste, veuillez redémarrer pour appliquer les changements.")
+            print(name .. " a bien été supprimé de la liste, veuillez redémarrer pour appliquer les changements 'reboot'.")
         else
             print("Erreur : Vous ne pouvez pas supprimer " .. name .. " car il n'est pas accessible.")
         end
@@ -198,6 +198,8 @@ while running do
         addBoot(param, args[3])
     elseif command == "remove" then
         removeBoot(param)
+    elseif command == "reboot" then
+        os.reboot()
     else
         print("Erreur : OS introuvable : " .. input)
     end

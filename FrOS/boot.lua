@@ -21,6 +21,7 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/progressBar.lua")
     repair.check("FrOS/sys/utf8.lua")
     repair.check("FrOS/sys/FZIP.lua")
+    repair.check("FrOS/sys/script.lua")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
         _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
