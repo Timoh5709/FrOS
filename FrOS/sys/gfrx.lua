@@ -1,5 +1,4 @@
 local gfrx = {}
-local textViewer = require("/FrOS/sys/textViewer")
 gfrx.__index = gfrx
 
 local DEFAULT_FG = colors.white
@@ -49,7 +48,7 @@ function gfrx.new(target, opts)
             self.device = p
             self.isMonitor = true
         else
-            textViewer.eout(loc["gfrx.new.wrapError"]..tostring(target).."'", 2)
+            print(loc["gfrx.new.wrapError"]..tostring(target).."'", 2)
             return
         end
     end
@@ -125,7 +124,7 @@ function gfrx:addBuffer(colorOn, colorOff)
 end
 
 function gfrx:useBuffer(id)
-    if not id or id < 1 or id > #self.buffers then textViewer.eout(loc["gfrx.useBuffer.error"]) return end
+    if not id or id < 1 or id > #self.buffers then print(loc["gfrx.useBuffer.error"]) return end
     self.activeBuffer = id
 end
 
@@ -155,7 +154,7 @@ end
 
 function gfrx:setPixel(x, y, on)
     if x < 1 or x > self.width or y < 1 or y > self.height then return false end
-    if not self.activeBuffer then textViewer.eout(loc["gfrx.setPixel.error"]) return end
+    if not self.activeBuffer then print(loc["gfrx.setPixel.error"]) return end
     local buf = self.buffers[self.activeBuffer]
     buf.pixels[x] = buf.pixels[x] or {}
     if on then
