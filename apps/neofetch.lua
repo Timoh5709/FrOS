@@ -4,11 +4,12 @@ if not running then
     return
 end
 local httpViewer = require("/FrOS/sys/httpViewer")
-if not fs.exists("FrOS/localization/neofetch.lua") then
-    httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/neofetch.lua")
+if not fs.exists("FrOS/localization/neofetch.loc") then
+    httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/neofetch.loc")
+    sleep(5)
 end
 local locLua = require("/FrOS/sys/loc")
-loc = locLua.load("FrOS/localization/neofetch.lua", "FR")
+loc = locLua.load("FrOS/localization/neofetch.loc", "FR")
 local gfrx = require("/FrOS/sys/gfrx")
 local textViewer = require("/FrOS/sys/textViewer")
 local gfx = gfrx(nil, {buffered = true})
