@@ -1,0 +1,65 @@
+[Pour la version 0.7]
+
+gfrx.new(target, opts) => self (metatable)
+Fonction pour créer un moteur gfrx.
+
+gfrx:markDirty(cx, cy)
+Désigne un pixel comme "sale" pour le raffraîchir.
+/!\ C'est déjà automatique, sauf pour certaines applications précises, ceci n'est pas utile.
+
+gfrx:markAllDirty()
+Désigne tous les pixels comme "sale" pour raffraîchir l'écran.
+
+gfrx:addBuffer(colorOn, colorOff) => id (int)
+Ajoute un buffer en 2 couleurs (la première est la plus importante, l'autre peut être noire).
+L'ordre est important car cela permet d'avoir des calques.
+
+gfrx:useBuffer(id)
+Utilise un buffer spécifique.
+
+gfrx:removeBuffer(id) => (bool)
+Retire un buffer.
+
+gfrx:clearBuffer(id) => (bool)
+Nettoie un buffer.
+
+gfrx:setDefaults(fg, bg)
+Change les valeurs par défaut du moteur. (fg = on et bg = off).
+
+gfrx:setPixel(x, y, on) => (bool)
+Affiche un pixel.
+/!\ Si on = false : retire un pixel !
+
+gfrx:getPixel(x, y) => id (int)
+Retourne l'identifiant du buffer si un pixel est trouvé.
+
+gfrx:flushCell(cx, cy)
+Raffraîchit une cellule précise.
+
+gfrx:flush()
+Raffraîchit les pixels "sales".
+
+gfrx:drawLine(x0, y0, x1, y1, on)
+Trace une ligne.
+/!\ Si on = false : retire un pixel !
+
+gfrx:drawRect(x, y, w, h, on, filled)
+Trace un rectangle.
+/!\ Si on = false : retire un pixel !
+
+gfrx:drawCircle(cx, cy, radius, on, filled)
+Trace un cercle (par rapport au centre).
+/!\ Si on = false : retire un pixel !
+
+gfrx:drawTriangle(x1,y1,x2,y2,x3,y3,on,filled)
+Trace un triangle.
+/!\ Si on = false : retire un pixel !
+
+gfrx:clearAll()
+Nettoie tous les buffers.
+
+gfrx:getResolution() => (self.width (int), self.height (int))
+Retourne la taille en pixels.
+
+gfrx:getCharSize() => (self.charWidth (int), self.charHeight (int))
+Retourne la taille en caractères.
