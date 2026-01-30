@@ -4,7 +4,9 @@ gfrx.__index = gfrx
 local DEFAULT_FG = colors.white
 local DEFAULT_BG = colors.black
 
-local loc = FrOS.sysLoc
+pcall(function (...)
+    local loc = FrOS.sysLoc
+end)
 
 local function transformToChar(value)
     local inversed = false
