@@ -1,17 +1,20 @@
 local httpViewer = {}
 local textViewer = require("/FrOS/sys/textViewer")
 
+local loc = FrOS.sysLoc
+for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
+
 function httpViewer.installGithub(url, filename)
-    print("Télécharge " .. filename .. " depuis Github.")
-    downloader = http.get(url .. filename)
+    print(loc[".installGithub.download1"] .. filename .. loc[".installGithub.download2"])
+    local downloader = http.get(url .. filename)
     if downloader then
-        input = io.open(filename, "w")
+        local input = io.open(filename, "w")
         input:write(downloader.readAll())
         input:close()
-        textViewer.cprint("Téléchargement de ".. filename .. " réussi", colors.green)
+        textViewer.cprint(loc[".installGithub.success1"] .. filename .. loc[".installGithub.success2"], colors.green)
         return true
     else
-        textViewer.eout("Erreur lors du téléchargement du fichier : " .. filename)
+        textViewer.eout(loc[".installGithub.error"] .. filename)
     end
 end
 
@@ -19,7 +22,7 @@ function httpViewer.httpBrain(url)
     local request = http.get(url)
     if request == nil then
         term.setTextColor(colors.red)
-        textViewer.eout("Erreur 404")
+        textViewer.eout(loc["error.error"] .. "404")
         term.setTextColor(colors.white)
         return false
     else

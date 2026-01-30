@@ -1,3 +1,7 @@
+0.7 :
+- ajout de error.loc et de sys.loc (le texte est désormais en anglais si l'utilisation de "loc.lua" ne marche pas)
+- implémentation de GFRX, le moteur de rendu 2D (implémenté au lancement et sur l'application "neofetch.lua")
+
 0.61 :
 - utilisation hors-ligne débuguée
 - grosse mise à jour du shell (script, sleep et echo) et utilisation correcte de l'historique (avec les flèches)

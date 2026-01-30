@@ -30,6 +30,7 @@ local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.di
 shell.setPath(shell.path() .. ":/apps")
 
 local loc = FrOS.mainLoc
+for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
 
 local criticalFiles = {
   ["FrOS"] = true,
@@ -254,7 +255,7 @@ local function mkfile(filename)
     file.close()
     textViewer.cprint(loc["mkfile.success"] .. filename, colors.green)
   else
-    textViewer.eout("Erreur : Impossible de créer le fichier.")
+    textViewer.eout("Erreur : Impossible de crï¿½er le fichier.")
   end
 end
 

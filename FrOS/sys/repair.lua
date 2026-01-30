@@ -1,16 +1,16 @@
 local repair = {}
 
 local function installGithub(filename)
-    print("Télécharge " .. filename .. " depuis Github.")
-    downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
+    print("Downloading " .. filename .. " from Github.")
+    local downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
     if downloader then
-        input = io.open(filename, "w")
+        local input = io.open(filename, "w")
         input:write(downloader.readAll())
         input:close()
-        print("Téléchargement de ".. filename .. " réussi")
+        print("The downloading of " .. filename .. " was a success.")
         return true
     else
-        print("Erreur lors du téléchargement du fichier : " .. filename)
+        print("Error while downloading the file : " .. filename)
     end
 end
 
@@ -22,13 +22,13 @@ end
 function repair.check(filename)
     if not fs.exists(filename) then 
         term.setTextColor(colors.red)
-        print("Erreur : le fichier '" .. filename .. "' est introuvable. Le système peut être instable et endommagé.")
+        print("Error : The file '" .. filename .. "' is unobtainable. The system can be unstable and damaged.")
         repair.file(filename)
         term.setTextColor(colors.white)
         return false
     else
         term.setTextColor(colors.green)
-        print("'" .. filename .. "' présent.")
+        print("'" .. filename .. "' found.")
         term.setTextColor(colors.white)
         return true
     end

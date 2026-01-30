@@ -2,3 +2,4 @@ appStore.lua
 music.lua
 compress.lua
 manuel.lua
+neofetch.lua

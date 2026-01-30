@@ -2,9 +2,27 @@ term.clear()
 term.setCursorPos(1,1)
 
 local repair = require("/FrOS/sys/repair")
+if repair.check("FrOS/sys/gfrx.lua") then
+    local gfrx = require("/FrOS/sys/gfrx")
+    local gfx = gfrx(nil, {buffered = true})
+    local _, y = term.getCursorPos()
+    y = y * 3
 
+    local buf1 = gfx:addBuffer(colors.green, colors.black)
+    gfx:useBuffer(buf1)
+    gfx:drawCircle(21, 23, 7, true, true)
+
+    local buf2 = gfx:addBuffer(colors.red, colors.black)
+    gfx:useBuffer(buf2)
+    gfx:drawTriangle(1,3, 41,3, 21,23, true, true)
+    gfx:flush()
+    term.setCursorPos(1, 13)
+end
+
+term.setTextColor(colors.white)
 print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
+print()
 
 _G.FrOS = _G.FrOS or {}
 
@@ -21,10 +39,15 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/progressBar.lua")
     repair.check("FrOS/sys/utf8.lua")
     repair.check("FrOS/sys/FZIP.lua")
+    repair.check("FrOS/localization/main.loc")
+    repair.check("FrOS/localization/error.loc")
+    repair.check("FrOS/localization/sys.loc")
     repair.check("FrOS/sys/script.lua")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
         _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
+        _G.FrOS.errorLoc = locLua.load("FrOS/localization/error.loc", "FR")
+        _G.FrOS.sysLoc = locLua.load("FrOS/localization/sys.loc", "FR")
         if FrOS.mainLoc then
             term.setTextColor(colors.green)
             print(FrOS.mainLoc[".locLoaded"])

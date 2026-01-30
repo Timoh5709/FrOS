@@ -1,0 +1,17 @@
+/error.error:FR Erreur : 
+/error.unknownDir:FR Erreur : Dossier introuvable.
+/error.unknownFile:FR Erreur : Fichier introuvable.
+/error.unknown:FR Erreur : Élément introuvable.
+/error.unreadableFile:FR Erreur : Fichier illisible.
+/error.unknownUnreadableFile:FR Erreur : Fichier introuvable ou non valide.
+/error.unspecifiedFile:FR Erreur : Aucun fichier spécifié.
+/error.unspecifiedDir:FR Erreur : Aucun dossier spécifié.
+/error.unspecifiedURL:FR Erreur : Aucune URL spécifié.
+/error.unspecified:FR Erreur : Aucun élément spécifié.
+/error.alreadyExistingDir:FR Erreur : Ce dossier existe déjà : 
+/error.alreadyExistingFile:FR Erreur : Ce fichier existe déjà : 
+/error.noDisk:FR Erreur : Aucun disque n'a été détecté.
+/error.tooManyDisks:FR Erreur : Trop de disques sont insérés.
+/error.needUpdate:FR Erreur : Veuillez mettre à jour FrOS avec 'maj'.
+/error.numVarNeed:FR  doit être un nombre 
+/error.corruptedFile:FR Erreur : Fichier corrompu : 

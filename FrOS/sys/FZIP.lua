@@ -3,6 +3,9 @@ local textViewer = require("/FrOS/sys/textViewer")
 local progressBar = require("/FrOS/sys/progressBar")
 local bit32 = bit32 or require("bit32")
 
+local loc = FrOS.sysLoc
+for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
+
 local crc32_table = {}
 for i = 0, 255 do
     local crc = i
@@ -196,7 +199,7 @@ local function lzw_decompress(data)
         elseif k == dictSize then
             entry = w .. w:sub(1,1)
         else
-            textViewer.eout(string.format("LZW décompression : code invalide %d (dictSize=%d)", k, dictSize))
+            textViewer.eout(string.format(loc["FZIP.lzw_decompress.error"], k, dictSize))
         end
 
         out[#out+1] = entry
@@ -264,7 +267,7 @@ local function extract_co(archivePath, outDir)
     local f = fs.open(archivePath, "rb")
     local header = f.read(4)
     if header ~= "FZIP" then
-        textViewer.eout("Erreur : Archive invalide.")
+        textViewer.eout(loc["FZIP.extract.archiveInvalid"])
         return
     end
 
@@ -288,7 +291,7 @@ local function extract_co(archivePath, outDir)
         local finalData = (flag == 1) and lzw_decompress(data) or data
 
         if crc ~= crc32(finalData) then
-            textViewer.eout("Erreur : Fichier corrompu : " .. relPath)
+            textViewer.eout(loc["error.corruptedFile"] .. relPath)
         end
 
         local outPath = fs.combine(outDir, relPath)

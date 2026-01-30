@@ -3,9 +3,12 @@ local textViewer = require("/FrOS/sys/textViewer")
 local bars = {}
 local nextId = 1
 
+local loc = FrOS.sysLoc
+for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
+
 function progressBar.create(max, width, y)
     if type(max) ~= "number" or max < 0 then
-        textViewer.eout("Erreur : max doit être un nombre >= 0.")
+        textViewer.eout(loc["error.error"] .. "max" .. loc["error.numVarNeed"] .. ">= 0.")
     end
 
     local id = nextId
@@ -78,7 +81,7 @@ function progressBar.render(id, width, y)
     if value >= max then
         term.setCursorPos(1, y + 1)
         term.clearLine()
-        textViewer.cprint("Terminé", colors.green)
+        textViewer.cprint(loc["progressBar.render.success"], colors.green)
     end
 end
 

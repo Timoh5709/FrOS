@@ -1,9 +1,11 @@
 local script = {}
 local textViewer = require("/FrOS/sys/textViewer")
 
+local loc = FrOS.errorLoc
+
 function script.read(path)
     if not path or not fs.exists(path) then
-        textViewer.eout("Erreur : Le fichier script fsc n'existe pas.")
+        textViewer.eout(loc["error.unknownUnreadableFile"])
         return nil
     end
 

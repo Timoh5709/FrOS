@@ -8,7 +8,7 @@ local utf8 = require("/FrOS/sys/utf8")
 -- bla bla
 function loc.decode(path, language)
     if not fs.exists(path) then
-        textViewer.eout("Erreur : Le fichier de traduction n'existe pas.")
+        textViewer.eout("Error : The localization file doesn't exist.")
         return {}
     end
 

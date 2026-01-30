@@ -69,17 +69,17 @@ term.clear()
 term.setCursorPos(1,1)
 
 fs.makeDir("FrOS")
-print("Dossier FrOS créé avec succès.")
+print("Dossier FrOS créé avec succés.")
 installGithub("FrOS/main.lua")
 installGithub("FrOS/version.txt")
 fs.makeDir("FrOS/media")
-print("Dossier FrOS/media créé avec succès.")
+print("Dossier FrOS/media créé avec succés.")
 installGithub("FrOS/media/startup.dfpwm")
 installGithub("FrOS/media/shutdown.dfpwm")
 installGithub("FrOS/media/error.dfpwm")
 installGithub("FrOS/media/ask.dfpwm")
 fs.makeDir("FrOS/sys")
-print("Dossier FrOS/sys créé avec succès.")
+print("Dossier FrOS/sys créé avec succés.")
 installGithub("FrOS/sys/textViewer.lua")
 installGithub("FrOS/sys/update.lua")
 installGithub("FrOS/sys/repair.lua")
@@ -93,13 +93,15 @@ installGithub("FrOS/sys/FZIP.lua")
 installGithub("FrOS/sys/script.lua")
 installGithub("FrOS/sys/offline-installer.lua")
 fs.makeDir("FrOS/localization")
-print("Dossier FrOS/localization créé avec succès.")
+print("Dossier FrOS/localization créé avec succés.")
 installGithub("FrOS/localization/main.loc")
+installGithub("FrOS/localization/error.loc")
+installGithub("FrOS/localization/sys.loc")
 fs.makeDir("FrOS/drivers")
-print("Dossier FrOS/drivers créé avec succès.")
+print("Dossier FrOS/drivers créé avec succés.")
 installGithub("FrOS/drivers/init.lua")
 fs.makeDir("apps")
-print("Dossier apps créé avec succès.")
+print("Dossier apps créé avec succés.")
 installGithub("apps/appStore.lua")
 installGithub("apps/manuel.lua")
 if not maj then
@@ -107,14 +109,14 @@ if not maj then
     if f then
         f.write("apps/appStore.lua\napps/manuel.lua\n")
         f.close()
-        print("Fichier FrOS/appList.txt créé avec succès.")
+        print("Fichier FrOS/appList.txt créé avec succés.")
     else
         print("Erreur : Impossible de créer le fichier FrOS/appList.txt.")
     end
     local f = fs.open("FrOS/driversList.txt", "w")
     if f then
         f.close()
-        print("Fichier FrOS/driversList.txt créé avec succès.")
+        print("Fichier FrOS/driversList.txt créé avec succés.")
     else
         print("Erreur : Impossible de créer le fichier FrOS/driversList.txt.")
     end
@@ -123,7 +125,7 @@ if not maj then
         if f then
             f.write("CraftOS|rom/startup.lua\nFrOS|FrOS/boot.lua\n")
             f.close()
-            print("Fichier boot.txt créé avec succès.")
+            print("Fichier boot.txt créé avec succés.")
         else
             print("Erreur : Impossible de créer le fichier boot.txt.")
         end
@@ -137,7 +139,7 @@ if not maj then
     end
 end
 fs.makeDir("temp")
-print("Dossier temp créé avec succès.")
+print("Dossier temp créé avec succés.")
 installGithub("FrOS/boot.lua")
 if not exBootloader then
     installGithub("startup.lua")

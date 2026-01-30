@@ -3,6 +3,8 @@ local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
 local speaker = peripheral.find("speaker")
 
+local loc = FrOS.errorLoc
+
 local function eout(text)
     term.setTextColor(colors.red)
     print(text)
@@ -21,7 +23,7 @@ function dfpwmPlayer.play(path)
                 end
             end
         else
-            eout("Erreur : Fichier introuvable.")
+            eout(loc["error.unknownFile"])
         end
     end
 end

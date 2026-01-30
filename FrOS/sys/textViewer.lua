@@ -2,6 +2,8 @@ local statusBar = require("/FrOS/sys/statusBar")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
 local textViewer = {}
 
+local loc = FrOS.sysLoc
+
 function textViewer.cprint(text, color)
   if not color then
     print(text)
@@ -74,9 +76,9 @@ function textViewer.lineViewer(lines)
     end
 
     if currentIndex + pageSize <= maxIndex then
-      print("\n-- [PG HAUT/BAS] | [Q]uitter --")
+      print("\n" .. loc["textViewer.lineViewer.middle"])
     else
-      print("\n-- Fin du texte | [PG HAUT/BAS] | [Q]uitter --")
+      print("\n" .. loc["textViewer.lineViewer.end"])
     end
 
     local event, key = os.pullEvent("key")
@@ -100,7 +102,7 @@ function textViewer.getVer()
   local file = "FrOS/version.txt"
   local handle = fs.open(file, "r")
   if not handle then
-    textViewer.eout("Erreur : Fichier 'FrOS/version.txt' illisible.")
+    textViewer.eout(loc["textViewer.getVer.error"])
     return
   end
   local ver = handle.readAll()
