@@ -409,8 +409,24 @@ local function executeLine(input)
   elseif command == "maj" then
     if param == "create" then
       update.createInstallationDisk()
+    elseif param == "old" then
+      update.oldInstall()
     else
       update.install()
+      local commands = script.read("temp/update.fsc")
+      
+      if not commands then
+        return
+      end
+
+      for i = 1, #commands do
+        local line = commands[i]
+
+        if line ~= "" and not line:match("^#") then
+          print(dossier .. "> " .. line)
+          executeLine(line)
+        end
+      end
     end
 
   elseif command == "mkfile" then

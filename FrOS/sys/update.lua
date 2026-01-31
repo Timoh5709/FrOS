@@ -6,7 +6,69 @@ local fzip = require("/FrOS/sys/FZIP")
 local loc = FrOS.sysLoc
 for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
 
+local function installGithub(oFilename, filename)
+    local url = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
+    print(loc[".installGithub.download1"] .. oFilename .. loc[".installGithub.download2"])
+    local downloader = http.get(url .. oFilename)
+    if downloader then
+        local input = io.open(filename, "w")
+        input:write(downloader.readAll())
+        input:close()
+        textViewer.cprint(loc[".installGithub.success1"] .. oFilename .. loc[".installGithub.success2"], colors.green)
+        return true
+    else
+        textViewer.eout(loc[".installGithub.error"] .. oFilename)
+    end
+end
+
 function update.install()
+    term.setCursorPos(1,1)
+    term.setBackgroundColor(colors.blue)
+    term.clear()
+    installGithub("FrOS/updateList.txt", "temp/updateList.txt")
+    if fs.exists("temp/updateList.txt") and fs.exists("FrOS/updateList.txt") then
+        local tLignes = {}
+        local temp = fs.open("temp/updateList.txt", "r")
+        if not temp then
+            textViewer.eout(loc["error.unreadableFile"])
+            return
+        end
+        while true do
+            local line = temp.readLine()
+            if not line then break end
+            table.insert(tLignes, line)
+        end
+        temp.close()
+        local lLignes = {}
+        local localFile = fs.open("FrOS/updateList.txt", "r")
+        if not localFile then
+            textViewer.eout(loc["error.unreadableFile"])
+            return
+        end
+        while true do
+            local line = localFile.readLine()
+            if not line then break end
+            lLignes[line] = true
+        end
+        localFile.close()
+        if #tLignes ~= #lLignes then
+            local updateScript = fs.open("temp/update.fsc", "w")
+            for k, v in pairs(tLignes) do
+                if lLignes[v] == nil then
+                    print(loc[".installGithub.download1"] .. v .. loc[".installGithub.download2"])
+                    installGithub("updates/" .. v .. ".lua", "temp/updates/" .. v .. ".lua")
+                    updateScript.writeLine("exec temp/updates/" .. v .. ".lua")
+                end
+            end
+            updateScript.writeLine("reboot")
+            updateScript.close()
+        else
+            textViewer.cprint(loc["update.install.updated"], colors.green)
+        end
+    end
+end
+
+function update.oldInstall()
     term.setCursorPos(1,1)
     term.setBackgroundColor(colors.blue)
     term.clear()
@@ -23,21 +85,6 @@ function update.install()
     else
         textViewer.eout(loc["update.install.error"])
         os.reboot()
-    end
-end
-
-local function installGithub(oFilename, filename)
-    local url = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
-    print(loc[".installGithub.download2"] .. oFilename .. loc[".installGithub.download1"])
-    local downloader = http.get(url .. oFilename)
-    if downloader then
-        local input = io.open(filename, "w")
-        input:write(downloader.readAll())
-        input:close()
-        textViewer.cprint(loc[".installGithub.success1"] .. oFilename .. loc[".installGithub.success2"], colors.green)
-        return true
-    else
-        textViewer.eout(loc[".installGithub.error"] .. oFilename)
     end
 end
 
@@ -86,6 +133,7 @@ function update.createInstallationDisk()
         installGithub("FrOS/localization/main.loc", "temp/install/FrOS/localization/main.loc")
         installGithub("FrOS/localization/error.loc", "temp/install/FrOS/localization/error.loc")
         installGithub("FrOS/localization/sys.loc", "temp/install/FrOS/localization/sys.loc")
+        installGithub("FrOS/localization/update.loc", "temp/install/FrOS/localization/update.loc")
         fs.makeDir("temp/install/FrOS/drivers")
         print(loc["update.createInstallationDisk.directory1"] .. "temp/install/FrOS/drivers" .. loc["update.createInstallationDisk.directory2"])
         installGithub("FrOS/drivers/init.lua", "temp/install/FrOS/drivers/init.lua")

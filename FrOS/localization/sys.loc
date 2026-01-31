@@ -6,6 +6,7 @@
 /update.createInstallationDisk.directory1:FR Dossier 
 /update.createInstallationDisk.directory2:FR  créé avec succès.
 /update.createInstallationDisk.success:FR Disque d'installation hors-ligne créé avec succès.
+/update.install.updated:FR Vous êtes déjà à jour !
 
 /textViewer.lineViewer.middle:FR -- [PG HAUT/BAS] | [Q]uitter --
 /textViewer.lineViewer.end:FR -- Fin du texte | [PG HAUT/BAS] | [Q]uitter --

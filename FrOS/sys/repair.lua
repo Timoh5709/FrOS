@@ -17,6 +17,7 @@ end
 function repair.file(filename)
     term.setTextColor(colors.red)
     installGithub(filename)
+    term.setTextColor(colors.white)
 end
 
 function repair.check(filename)

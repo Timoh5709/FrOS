@@ -43,11 +43,13 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/localization/main.loc")
     repair.check("FrOS/localization/error.loc")
     repair.check("FrOS/localization/sys.loc")
+    repair.check("FrOS/localization/update.loc")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
         _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
         _G.FrOS.errorLoc = locLua.load("FrOS/localization/error.loc", "FR")
         _G.FrOS.sysLoc = locLua.load("FrOS/localization/sys.loc", "FR")
+        _G.FrOS.updateLoc = locLua.load("FrOS/localization/update.loc", "FR")
         if FrOS.mainLoc then
             term.setTextColor(colors.green)
             print(FrOS.mainLoc[".locLoaded"])

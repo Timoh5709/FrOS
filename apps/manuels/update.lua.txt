@@ -1,7 +1,11 @@
-[Pour la version 0.6]
+[Pour la version 0.71]
 
 update.install()
-Permet de télécharger le système d'installation autonome pour mettre à jour FrOS.
+Permet de télécharger les mises à jour non installées.
+
+update.oldInstall()
+Télécharge l'assistant d'installation de FrOS.
+/!\ Cette fonction peut ne plus fonctionner dans le futur, elle permet de réinstaller tous les fichiers.
 
 update.check()
 Vérifie si la version correspond à la dernière version disponible.
