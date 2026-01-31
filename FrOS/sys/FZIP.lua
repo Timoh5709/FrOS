@@ -49,39 +49,6 @@ local function listFilesRecursive(basePath)
     return results
 end
 
-local function rle_compress(data)
-    if #data == 0 then return "" end
-    local out = {}
-    local count = 1
-    local prev = data:sub(1,1)
-    for i = 2, #data do
-        local ch = data:sub(i,i)
-        if ch == prev and count < 255 then
-            count = count + 1
-        else
-            out[#out+1] = string.char(count)
-            out[#out+1] = prev
-            prev = ch
-            count = 1
-        end
-    end
-    out[#out+1] = string.char(count)
-    out[#out+1] = prev
-    return table.concat(out)
-end
-
-local function rle_decompress(data)
-    local out = {}
-    for i = 1, #data, 2 do
-        local count = string.byte(data, i) or 0
-        local ch = data:sub(i+1, i+1) or ""
-        if count > 0 and ch ~= "" then
-            out[#out+1] = ch:rep(count)
-        end
-    end
-    return table.concat(out)
-end
-
 local CODE_BITS = 12
 local MAX_CODES = 2 ^ CODE_BITS
 local INITIAL_DICT_SIZE = 256
@@ -142,7 +109,6 @@ local function makeBitReader(data)
 end
 
 local function lzw_compress(input)
-    input = rle_compress(input)
     if not input or #input == 0 then return "" end
 
     local writeBits, finish = makeBitWriter()
@@ -213,7 +179,6 @@ local function lzw_decompress(data)
     end
 
     local result = table.concat(out)
-    result = rle_decompress(result)
     return result
 end
 
@@ -221,7 +186,7 @@ local function create_co(archivePath, inputs)
     local _, y = term.getCursorPos()
     local pb = progressBar.create(2, 20, y)
     local f = fs.open(archivePath, "wb")
-    f.write("FZIP\1")
+    f.write("FZIP\2")
 
     local allFiles = {}
     for _, input in ipairs(inputs) do

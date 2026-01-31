@@ -1,5 +1,5 @@
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.6)
+local running = update.appCheck(0.72)
 if not running then
     return
 end
@@ -23,7 +23,7 @@ if mode == "-c" then
         textViewer.eout("Erreur : Extension invalide.")
     end
     print("Compresse " .. inPath .. " -> " .. outPath)
-    fzip.create(outPath, inPath)
+    fzip.create(outPath, { inPath })
 elseif mode == "-d" then
     if not inPath:endswith(".fzip") then
         textViewer.eout("Erreur : Extension invalide.")
