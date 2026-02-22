@@ -1,50 +1,100 @@
 /.locLoaded:FR Fichier de traduction chargé avec succès !
+/.locLoaded:EN Localization file loaded with success!
 /.newVersion1:FR La version 
+/.newVersion1:EN The version 
 /.newVersion2:FR  est disponible, faites 'maj' pour l'installer !
+/.newVersion2:EN  is available, do 'maj' to install it!
 
 /main.quitCommand:FR Fermeture de FrOS...
+/main.quitCommand:EN Leaving FrOS...
 /main.rebootCommand:FR Redémarrage de FrOS...
+/main.rebootCommand:EN Rebooting FrOS...
 /main.infosysCommand:FR Informations système :
+/main.infosysCommand:EN System informations :
 /main.versionInfosys:FR Version de FrOS : 
+/main.versionInfosys:EN FrOS' version : 
 /main.nameInfosys:FR Nom de l'ordinateur : 
+/main.nameInfosys:EN Computer name : 
 /main.freeSpaceInfosys:FR Espace libre dans le répertoire actuel : 
+/main.freeSpaceInfosys:EN Free space in the current directory : 
 /main.clockInfosys:FR Heure actuelle : 
+/main.clockInfosys:EN Current time : 
 /main.aideCommand:FR Commandes disponibles :
+/main.aideCommand:EN Available commands :
 /main.aideAide:FR aide - Affiche cette aide
+/main.aideAide:EN aide - Displays this list
 /main.quitAide:FR quit - Quitte FrOS
+/main.quitAide:EN quit - Leaves FrOS
 /main.rebootAide:FR reboot - Redémarre FrOS
+/main.rebootAide:EN reboot - Reboots FrOS
 /main.lsAide:FR ls OU dir - Liste les fichiers
-/main.goAide:FR go OU cd <dossier> - Change de dossier
+/main.lsAide:EN ls OR dir - Lists the files
+/main.goAide:FR go OU cd <dossier> - Change de dossier (.. pour retourner en arrière)
+/main.goAide:EN go OR cd <directory> - Goes to a directory (.. to go back)
 /main.mkdirAide:FR mkdir <nom> - Crée un dossier
+/main.mkdirAide:EN mkdir <name> - Creates a directory
 /main.delAide:FR del OU rm <nom> - Supprime un fichier ou un dossier
+/main.delAide:EN del OU rm <path> - Deletes a file or a directory
 /main.historyAide:FR history - Affiche l'historique des commandes
+/main.historyAide:EN history - Displays the commands history
 /main.infosysAide:FR infosys - Affiche des informations sur le système
+/main.infosysAide:EN infosys - Displays informations about the system
 /main.lireAide:FR lire <nom> - Lit le fichier
+/main.lireAide:EN lire <path> - Reads the file
 /main.clsAide:FR cls - Nettoie le terminal
+/main.clsAide:EN cls - Clears the terminal
 /main.majAide:FR maj <create | optionnel> <old | optionnel> - Met à jour OU crée un disque d'installation hors-ligne sur une diskette OU met à jour en utilisant l'assistant d'installation de FrOS
+/main.majAide:EN maj <create | optionnal> <old | optionnal> - Updates OR creates an offline installation disk OR updates using the FrOS' installation utility
 /main.mkfileAide:FR mkfile <nom> - Crée un fichier
+/main.mkfileAide:EN mkfile <name> - Creates a file
 /main.execAide:FR exec <nom> - Exécute un fichier lua
+/main.execAide:EN exec <path> - Launches a lua file
 /main.nomAide:FR nom <nom> - Renomme l'ordinateur
+/main.nomAide:EN nom <name> - Renames the computer
 /main.httpAide:FR http <url> - Affiche le contenu d'une page http
+/main.httpAide:EN http <url> - Displays the content of a http page
 /main.scriptAide:FR script <script fsc> - Exécute les commandes dans l'ordre du fichier
+/main.scriptAide:EN script <fsc script> - Executes the commands in the order of the file
 /main.sleepAide:FR sleep <secondes> - Met en pause toute les commandes pendant quelques secondes
+/main.sleepAide:EN sleep <seconds> - Pauses all commands for some seconds
 /main.echoAide:FR echo <texte> - Affiche du texte
+/main.echoAide:EN echo <text> - Displays some text
+/main.stgAide:FR stg <clé> <valeur> - Définit un paramètre système
+/main.stgAide:EN stg <key> <value> - Sets a system setting
 /main.unknownCommand:FR Commande inconnue : 
+/main.unknownCommand:EN Unknown command : 
 /main.noCommand:FR Veuillez rentrer une commande.
+/main.noCommand:EN Please enter a command.
 
 /listFiles.emptyDir:FR Le répertoire est vide.
+/listFiles.emptyDir:EN The directory is empty.
 
 /makeDir.success:FR Dossier créé : 
+/makeDir.success:EN Directory made : 
 
 /removeFileOrDir.canceled:FR Suppression annulée.
+/removeFileOrDir.canceled:EN Deletion canceled.
 /removeFileOrDir.critical1:FR Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.
+/removeFileOrDir.critical1:EN Warning : You are trying to delete a system file or a system directory.
 /removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)
+/removeFileOrDir.critical2:EN This could impact the comportment of the system. Do you still want to delete it ? (yes/no)
 /removeFileOrDir.confirmation1:FR Êtes-vous sur de vouloir supprimer 
+/removeFileOrDir.confirmation1:EN Are you sure you want to delete 
 /removeFileOrDir.confirmation2:FR  ? (oui/non)
+/removeFileOrDir.confirmation2:EN  ? (yes/no)
 /removeFileOrDir.success:FR Supprimé : 
+/removeFileOrDir.success:EN Deleted : 
 
 /showHistory.command:FR Historique des commandes :
+/showHistory.command:EN Commands history :
 
 /mkfile.success:FR Fichier créé : 
+/mkfile.success:EN File made : 
 
 /rename.success:FR Nom de l'ordinateur défini sur : 
+/rename.success:EN Computer name set to : 
+
+/stg_set.success1:FR Le paramètre 
+/stg_set.success1:EN The setting 
+/stg_set.success2:FR  a été défini sur 
+/stg_set.success2:EN  is set to 

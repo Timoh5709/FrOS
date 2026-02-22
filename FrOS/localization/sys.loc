@@ -1,28 +1,50 @@
 /update.install.download:FR Télécharge temp/install.lua depuis Github.
+/update.install.download:EN Downloading temp/install.lua from Github.
 /update.install.success1:FR Téléchargement de temp/install.lua réussi.
+/update.install.success1:EN Downloaded temp/install.lua.
 /update.install.success2:FR Le système d'installation autonome a été installé. Votre ordinateur va redémarrer.
-/update.install.error:FR Erreur lors du téléchargement du fichier : temp/install.lua depuis Github le système va redémarrer.
+/update.install.success2:EN The stand-alone installation system is downloaded. Your computer will reboot.
+/update.install.error:FR Erreur lors du téléchargement du fichier : temp/install.lua depuis Github, le système va redémarrer.
+/update.install.error:EN There was an error while downloading the file : temp/install.lua from Github, the computer will reboot.
 
 /update.createInstallationDisk.directory1:FR Dossier 
+/update.createInstallationDisk.directory1:EN Directory 
 /update.createInstallationDisk.directory2:FR  créé avec succès.
+/update.createInstallationDisk.directory2:EN  successfully created.
 /update.createInstallationDisk.success:FR Disque d'installation hors-ligne créé avec succès.
+/update.createInstallationDisk.success:EN Offline installation disk successfully created.
 /update.install.updated:FR Vous êtes déjà à jour !
+/update.install.updated:EN You are already up to date !
 
 /textViewer.lineViewer.middle:FR -- [PG HAUT/BAS] | [Q]uitter --
+/textViewer.lineViewer.middle:EN -- [PG UP/DOWN] | [Q] Leave --
 /textViewer.lineViewer.end:FR -- Fin du texte | [PG HAUT/BAS] | [Q]uitter --
+/textViewer.lineViewer.end:EN -- End of the text | [PG UP/DOWN] | [Q] Leave --
 /textViewer.getVer.error:FR Erreur : Fichier 'FrOS/version.txt' illisible.
+/textViewer.getVer.error:EN Error : The file 'FrOS/version.txt' is unreadable.
 
 /progressBar.render.success:FR Terminé
+/progressBar.render.success:EN Finished
 
 /FZIP.lzw_decompress.error:FR LZW décompression : code invalide %d (dictSize=%d)
+/FZIP.lzw_decompress.error:EN LZW decompressions : invalid code %d (dictSize=%d)
 /FZIP.extract.archiveInvalid:FR Erreur : Archive invalide.
+/FZIP.extract.archiveInvalid:EN Error : Invalid archive.
 
 /gfrx.new.wrapError:FR Erreur : gfrx impossible de wrapper le périphérique '
-/gfrx.useBuffer.error:FR Erreur : useBuffer id invalide
+/gfrx.new.wrapError:EN Error : gfrx impossible to wrap the peripheral '
+/gfrx.useBuffer.error:FR Erreur : useBuffer id invalide.
+/gfrx.useBuffer.error:EN Error : useBuffer invalid id.
 /gfrx.setPixel.error:FR Erreur : Aucun buffer actif : créez en un avec 'addBuffer()'
+/gfrx.setPixel.error:EN Error : No active buffer : make one with 'addBuffer()'
 
 /.installGithub.download1:FR Télécharge 
+/.installGithub.download1:EN Downloading 
 /.installGithub.download2:FR  depuis Github.
+/.installGithub.download2:EN  from Github.
 /.installGithub.success1:FR Téléchargement de 
+/.installGithub.success1:EN Downloaded 
 /.installGithub.success2:FR  réussi.
+/.installGithub.success2:EN .
 /.installGithub.error:FR Erreur lors du téléchargement du fichier : 
+/.installGithub.error:EN There was an error while downloading the file : 

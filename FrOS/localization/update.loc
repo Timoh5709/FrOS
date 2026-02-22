@@ -1,5 +1,10 @@
 /welcome:FR Bienvenue dans le système de mise à jour amélioré.
+/welcome:EN Welcome to the upgraded update system.
 /code:FR Code de mise à jour : 
+/code:EN Update code : 
 /warning:FR Veuillez ne pas éteindre votre ordinateur lors de la mise à jour.
+/warning:EN Please don't turn off your computer while updating.
 /success1:FR La mise à jour 
+/success1:EN The update 
 /success2:FR  a correctement été installée.
+/success2:EN  is successfully installed.

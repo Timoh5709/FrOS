@@ -8,7 +8,10 @@ if not fs.exists("FrOS/localization/neofetch.loc") then
     httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/neofetch.loc")
 end
 local locLua = require("/FrOS/sys/loc")
-loc = locLua.load("FrOS/localization/neofetch.loc", "FR")
+local stg = _G.FrOS.stg
+local language = "FR"
+language = stg["language"]
+local loc = locLua.load("FrOS/localization/neofetch.loc", language)
 local gfrx = require("/FrOS/sys/gfrx")
 local textViewer = require("/FrOS/sys/textViewer")
 local gfx = gfrx(nil, {buffered = true})
@@ -41,7 +44,12 @@ term.setCursorPos(27, y + 2)
 term.setTextColor(colors.blue)
 write(loc["neofetch.name"])
 term.setTextColor(colors.white)
-write(os.getComputerLabel())
+name = os.getComputerLabel()
+if name then
+    write(name)
+else
+    write("FrOS-" .. os.getComputerID())
+end
 term.setCursorPos(27, y + 3)
 term.setTextColor(colors.blue)
 write(loc["neofetch.freeSpace"])

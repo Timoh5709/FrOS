@@ -7,6 +7,7 @@ local httpViewer
 local dfpwmPlayer
 local fzip
 local script
+local stg
 local statusBar = require("/FrOS/sys/statusBar")
 if fs.exists("FrOS/sys/textViewer.lua") then
   textViewer = require("/FrOS/sys/textViewer")
@@ -25,6 +26,9 @@ if fs.exists("FrOS/sys/FZIP.lua") then
 end
 if fs.exists("FrOS/sys/script.lua") then
   script = require("/FrOS/sys/script")
+end
+if fs.exists("FrOS/sys/stg.lua") then
+  stg = require("/FrOS/sys/stg")
 end
 local dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
 shell.setPath(shell.path() .. ":/apps")
@@ -296,6 +300,11 @@ local function http(url)
   textViewer.lineViewer(httpViewer.readUrl(url))
 end
 
+local function stg_set(key, value)
+  stg.set("FrOS/config.stg", key, value)
+  print(loc["stg_set.success1"] .. key .. loc["stg_set.success2"] .. value)
+end
+
 local function executeLine(input)
   if not input or input == "" then
     textViewer.eout(loc["main.noCommand"])
@@ -363,7 +372,8 @@ local function executeLine(input)
       loc["main.httpAide"],
       loc["main.scriptAide"],
       loc["main.sleepAide"],
-      loc["main.echoAide"]
+      loc["main.echoAide"],
+      loc["main.stgAide"]
     }
 
     textViewer.lineViewer(aides)
@@ -462,6 +472,9 @@ local function executeLine(input)
   
   elseif command == "echo" then
     print(paramexec)
+
+  elseif command == "stg" then
+    stg_set(param, args[3])
 
   elseif command ~= nil then
     textViewer.eout(loc["main.unknownCommand"] .. command)

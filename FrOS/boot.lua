@@ -2,6 +2,13 @@ term.clear()
 term.setCursorPos(1,1)
 
 local repair = require("/FrOS/sys/repair")
+_G.FrOS = _G.FrOS or {}
+
+if repair.check("FrOS/sys/stg.lua") then
+    local stgLua = require("/FrOS/sys/stg")
+    _G.FrOS.stg = stgLua.read("FrOS/config.stg")
+end
+
 if repair.check("FrOS/sys/gfrx.lua") then
     local gfrx = require("/FrOS/sys/gfrx")
     local gfx = gfrx(nil, {buffered = true})
@@ -24,12 +31,6 @@ print("Bienvenue sur FrOS")
 print("Tapez 'aide' pour voir les commandes disponibles.")
 print()
 
-_G.FrOS = _G.FrOS or {}
-
-if repair.check("FrOS/drivers/init.lua") then
-    shell.run("FrOS/drivers/init.lua")
-end
-
 if repair.check("FrOS/main.lua") then
     repair.check("FrOS/sys/textViewer.lua")
     repair.check("FrOS/sys/update.lua")
@@ -46,10 +47,15 @@ if repair.check("FrOS/main.lua") then
     repair.check("FrOS/localization/update.loc")
     if repair.check("FrOS/sys/loc.lua") then
         local locLua = require("/FrOS/sys/loc")
-        _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", "FR")
-        _G.FrOS.errorLoc = locLua.load("FrOS/localization/error.loc", "FR")
-        _G.FrOS.sysLoc = locLua.load("FrOS/localization/sys.loc", "FR")
-        _G.FrOS.updateLoc = locLua.load("FrOS/localization/update.loc", "FR")
+        local stg = _G.FrOS.stg
+        local language = "FR"
+        if stg then
+            language = stg["language"]
+        end
+        _G.FrOS.mainLoc = locLua.load("FrOS/localization/main.loc", language)
+        _G.FrOS.errorLoc = locLua.load("FrOS/localization/error.loc", language)
+        _G.FrOS.sysLoc = locLua.load("FrOS/localization/sys.loc", language)
+        _G.FrOS.updateLoc = locLua.load("FrOS/localization/update.loc", language)
         if FrOS.mainLoc then
             term.setTextColor(colors.green)
             print(FrOS.mainLoc[".locLoaded"])
@@ -59,6 +65,9 @@ if repair.check("FrOS/main.lua") then
             print("Error : The localization file for the shell wasn't loaded properly, please contact FrOS' developer team.")
             term.setTextColor(colors.white)
         end
+    end
+    if repair.check("FrOS/drivers/init.lua") then
+        shell.run("FrOS/drivers/init.lua")
     end
     local canPlay = false
     local dfpwmPlayer

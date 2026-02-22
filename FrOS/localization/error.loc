@@ -1,17 +1,34 @@
 /error.error:FR Erreur : 
+/error.error:EN Error : 
 /error.unknownDir:FR Erreur : Dossier introuvable.
+/error.unknownDir:EN Error : Unknown directory.
 /error.unknownFile:FR Erreur : Fichier introuvable.
+/error.unknownFile:EN Error : Unknown file.
 /error.unknown:FR Erreur : Élément introuvable.
+/error.unknown:EN Error : Unknown element.
 /error.unreadableFile:FR Erreur : Fichier illisible.
+/error.unreadableFile:EN Error : Unreadable file.
 /error.unknownUnreadableFile:FR Erreur : Fichier introuvable ou non valide.
+/error.unknownUnreadableFile:EN Error : Unknown or unreadable file.
 /error.unspecifiedFile:FR Erreur : Aucun fichier spécifié.
+/error.unspecifiedFile:EN Error : No file specified.
 /error.unspecifiedDir:FR Erreur : Aucun dossier spécifié.
+/error.unspecifiedDir:EN Error : No directory specified.
 /error.unspecifiedURL:FR Erreur : Aucune URL spécifié.
+/error.unspecifiedURL:EN Error : No URL specified.
 /error.unspecified:FR Erreur : Aucun élément spécifié.
+/error.unspecified:EN Error : No element specified.
 /error.alreadyExistingDir:FR Erreur : Ce dossier existe déjà : 
+/error.alreadyExistingDir:EN Error : This directory is already existing : 
 /error.alreadyExistingFile:FR Erreur : Ce fichier existe déjà : 
+/error.alreadyExistingFile:EN Error : This file is already existing : 
 /error.noDisk:FR Erreur : Aucun disque n'a été détecté.
+/error.noDisk:EN Error : No disk detected.
 /error.tooManyDisks:FR Erreur : Trop de disques sont insérés.
+/error.tooManyDisks:EN Error : Too many disks are present.
 /error.needUpdate:FR Erreur : Veuillez mettre à jour FrOS avec 'maj'.
+/error.needUpdate:EN Error : Please update FrOS with 'maj'.
 /error.numVarNeed:FR  doit être un nombre 
+/error.numVarNeed:EN  needs to be a number 
 /error.corruptedFile:FR Erreur : Fichier corrompu : 
+/error.corruptedFile:EN Error : Corrupted file : 

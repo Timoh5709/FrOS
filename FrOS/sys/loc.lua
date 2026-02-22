@@ -20,6 +20,8 @@ function loc.decode(path, language)
         if key and lang and value then
             if lang == language then
                 trad[key] = value
+            elseif not trad[key] then
+                trad[key] = key
             end
         end
     end

@@ -7,7 +7,8 @@ local step = 0
 
 local updateList = {
     "u071",
-    "u072"
+    "u072",
+    "u073"
 }
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -137,6 +138,7 @@ if not maj then
     else
         print("Erreur : Impossible de créer le fichier FrOS/driversList.txt.")
     end
+    installGithub("FrOS/config.stg")
     if not exBootloader then
         local f = fs.open("boot.txt", "w")
         if f then
