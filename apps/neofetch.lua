@@ -1,5 +1,5 @@
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.7)
+local running = update.appCheck(0.73)
 if not running then
     return
 end
