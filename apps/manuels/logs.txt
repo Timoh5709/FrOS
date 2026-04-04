@@ -1,3 +1,8 @@
+0.73 :
+- implémentation du fichier .stg pour charger les paramètres (comme la langue)
+- traduction intégrale en anglais des fichiers de loc
+- ajout de la commande stg pour modifier ou ajouter un paramètre
+
 0.72 :
 - suppression du RLE avant le LZW dans le FZIP (FZIP v2)
 
