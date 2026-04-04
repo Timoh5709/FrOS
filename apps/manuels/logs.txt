@@ -1,3 +1,7 @@
+0.74 :
+- suppression des "criticalFiles"
+- mise à jour du appStore
+
 0.73 :
 - implémentation du fichier .stg pour charger les paramètres (comme la langue)
 - traduction intégrale en anglais des fichiers de loc

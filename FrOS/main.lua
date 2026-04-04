@@ -36,23 +36,6 @@ shell.setPath(shell.path() .. ":/apps")
 local loc = FrOS.mainLoc
 for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
 
-local criticalFiles = {
-  ["FrOS"] = true,
-  ["boot.lua"] = true,
-  ["startup.lua"] = true,
-  ["main.lua"] = true,
-  ["sys"] = true,
-  ["textViewer.lua"] = true,
-  ["update.lua"] = true,
-  ["media"] = true,
-  ["startup.dfpwm"] = true,
-  ["disk"] = true,
-  ["rom"] = true,
-  ["httpViewer.lua"] = true,
-  ["drivers"] = true,
-  ["init.lua"] = true
-}
-
 local function listFilesRecursive(basePath)
   local results = {}
   local allSizes = 0
@@ -74,22 +57,6 @@ local function listFilesRecursive(basePath)
 
   scan(basePath, nil)
   return results, allSizes
-end
-
-local function containsCriticalFiles(path)
-  if not fs.isDir(path) then
-    return false
-  end
-
-  local files = fs.list(path)
-  for _, file in ipairs(files) do
-    
-    local fullPath = fs.combine(path, file)
-    if criticalFiles[file] or (fs.isDir(fullPath) and containsCriticalFiles(fullPath)) then
-      return true
-    end
-  end
-  return false
 end
 
 function string:endswith(suffix)
@@ -191,18 +158,6 @@ local function removeFileOrDir(target)
   local path = fs.combine(shell.dir(), target)
 
   if fs.exists(path) then
-    if criticalFiles[target] or containsCriticalFiles(path) then
-      textViewer.cprint(loc["removeFileOrDir.critical1"], colors.orange)
-      textViewer.cprint(loc["removeFileOrDir.critical2"], colors.orange)
-      dfpwmPlayer.playConfirmationSound()
-      write("? ")
-      local confirmation1 = read()
-      if confirmation1 ~= "oui" then
-        print(loc["removeFileOrDir.canceled"])
-        return
-      end
-    end
-
     textViewer.cprint(loc["removeFileOrDir.confirmation1"] .. target .. loc["removeFileOrDir.confirmation2"], colors.orange)
     dfpwmPlayer.playConfirmationSound()
     write("? ")

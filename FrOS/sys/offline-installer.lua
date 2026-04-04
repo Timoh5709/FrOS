@@ -7,6 +7,13 @@ local maj = false
 local exBootloader = false
 local step = 0
 
+local updateList = {
+    "u071",
+    "u072",
+    "u073",
+    "u074"
+}
+
 print("Ce programme va bien installer les fichiers pour FrOS.")
 print("Veuillez ne pas éteindre votre ordinateur lors de l'installation.")
 if fs.exists("/FrOS/boot.lua") then
@@ -215,6 +222,17 @@ fs.copy("temp/install/FrOS", "FrOS")
 print("Dossier FrOS copié avec succès.")
 fs.copy("temp/install/apps", "apps")
 print("Dossier apps copié avec succès.")
+
+local f = fs.open("FrOS/updateList.txt", "w")
+if f then
+    for k, v in pairs(updateList) do
+        f.writeLine(v)
+    end
+    f.close()
+    print("Fichier FrOS/updateList.txt créé avec succès.")
+else
+    print("Erreur : Impossible de créer le fichier FrOS/updateList.txt.")
+end
 if not maj then
     local f = fs.open("FrOS/appList.txt", "w")
     if f then

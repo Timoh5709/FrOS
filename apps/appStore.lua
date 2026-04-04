@@ -1,6 +1,6 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.51)
+local running = update.appCheck(0.74)
 local httpViewer = require("/FrOS/sys/httpViewer")
 local statusBar = require("/FrOS/sys/statusBar")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
@@ -133,19 +133,17 @@ local function checkAndInstallDriver(driver)
     end
 end
 
-local exArgs = {...}
-local installerTheme = exArgs[1]
-if #exArgs > 0 then
-    if installerTheme == "-install" then
-        term.setBackgroundColor(colors.blue)
-        term.setTextColor(colors.white)
-    end
-end
-
 local function main()
     local dossier = "appStore.lua"
     write(dossier .. "$ ")
-    if not installerTheme == "-install" then
+    
+    local stg = _G.FrOS.stg
+    local oobe = 1
+    oobe = stg["oobe"]
+    if oobe == "1" then
+        term.setBackgroundColor(colors.blue)
+        term.setTextColor(colors.white)
+    else
         statusBar.draw(dossier)
     end
     local input = read()

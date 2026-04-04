@@ -6,6 +6,7 @@ _G.FrOS = _G.FrOS or {}
 
 if repair.check("FrOS/sys/stg.lua") then
     local stgLua = require("/FrOS/sys/stg")
+    stgLua.set("FrOS/config.stg", "oobe", "0")
     _G.FrOS.stg = stgLua.read("FrOS/config.stg")
 end
 

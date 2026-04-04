@@ -8,7 +8,8 @@ local step = 0
 local updateList = {
     "u071",
     "u072",
-    "u073"
+    "u073",
+    "u074"
 }
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -98,6 +99,7 @@ installGithub("FrOS/sys/loc.lua")
 installGithub("FrOS/sys/FZIP.lua")
 installGithub("FrOS/sys/script.lua")
 installGithub("FrOS/sys/gfrx.lua")
+installGithub("FrOS/sys/stg.lua")
 installGithub("FrOS/sys/offline-installer.lua")
 fs.makeDir("FrOS/localization")
 print("Dossier FrOS/localization créé avec succès.")
@@ -154,7 +156,7 @@ if not maj then
     local choix = read()
     if choix == "oui" then
         print("Pour regarder la liste des drivers, faites 'liste ndrivers' et installez les avec 'driver <nom du driver>'.")
-        shell.run("/apps/appStore.lua -install")
+        shell.run("/apps/appStore.lua")
     end
 end
 fs.makeDir("temp")
