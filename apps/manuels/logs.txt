@@ -1,3 +1,6 @@
+0.75 :
+- mise à jour de l'OOBE
+
 0.74 :
 - suppression des "criticalFiles"
 - mise à jour du appStore

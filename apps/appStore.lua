@@ -140,10 +140,7 @@ local function main()
     local stg = _G.FrOS.stg
     local oobe = 1
     oobe = stg["oobe"]
-    if oobe == "1" then
-        term.setBackgroundColor(colors.blue)
-        term.setTextColor(colors.white)
-    else
+    if oobe == "0" then
         statusBar.draw(dossier)
     end
     local input = read()

@@ -3,11 +3,14 @@ term.setCursorPos(1,1)
 
 local repair = require("/FrOS/sys/repair")
 _G.FrOS = _G.FrOS or {}
+OOBE = false
 
 if repair.check("FrOS/sys/stg.lua") then
     local stgLua = require("/FrOS/sys/stg")
-    stgLua.set("FrOS/config.stg", "oobe", "0")
     _G.FrOS.stg = stgLua.read("FrOS/config.stg")
+    if FrOS.stg["oobe"] == "1" then
+        OOBE = true
+    end
 end
 
 if repair.check("FrOS/sys/gfrx.lua") then
@@ -29,6 +32,9 @@ end
 
 term.setTextColor(colors.white)
 print("Bienvenue sur FrOS")
+if OOBE then
+    print("Vous allez rentrer dans l'OOBE !")
+end
 print("Tapez 'aide' pour voir les commandes disponibles.")
 print()
 
@@ -88,5 +94,31 @@ if repair.check("FrOS/main.lua") then
     fs.delete("temp")
     fs.makeDir("temp")
     textutils.slowPrint("-------------------------------------------------")
-    shell.run("FrOS/main.lua")
+    if OOBE then
+        local stgLua = require("/FrOS/sys/stg")
+        local choixLangue = true
+
+        while choixLangue do
+            print("Choisissez votre langue/Choose your language (FR/EN)")
+            write("? ")
+            local choix = read()
+            if choix == "FR" or choix == "EN" then
+                choixLangue = false
+                stgLua.set("FrOS/config.stg", "language", choix)
+            end
+        end
+
+        print("Voulez-vous installer des drivers ? (oui/non)")
+        write("? ")
+        local choix = read()
+        if choix == "oui" then
+            print("Pour regarder la liste des drivers, faites 'liste ndrivers' et installez les avec 'driver <nom du driver>'.")
+            shell.run("/apps/appStore.lua")
+        end
+        
+        stgLua.set("FrOS/config.stg", "oobe", "0")
+        os.reboot()
+    else
+        shell.run("FrOS/main.lua")
+    end
 end

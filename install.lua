@@ -9,7 +9,8 @@ local updateList = {
     "u071",
     "u072",
     "u073",
-    "u074"
+    "u074",
+    "u075"
 }
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -150,13 +151,6 @@ if not maj then
         else
             print("Erreur : Impossible de créer le fichier boot.txt.")
         end
-    end
-    print("Voulez-vous installer des drivers ? (oui/non)")
-    write("? ")
-    local choix = read()
-    if choix == "oui" then
-        print("Pour regarder la liste des drivers, faites 'liste ndrivers' et installez les avec 'driver <nom du driver>'.")
-        shell.run("/apps/appStore.lua")
     end
 end
 fs.makeDir("temp")
