@@ -7,7 +7,10 @@ local httpV = require("/FrOS/sys/httpViewer")
 print("This update needs a loc update.")
 
 httpV.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/update.loc")
-local language = FrOS.stg["language"]
+local language = "EN"
+if FrOS.stg then
+    language = FrOS.stg["language"]
+end
 FrOS.updateLoc = locLua.load("FrOS/localization/update.loc", language)
 
 local loc = FrOS.sysLoc
