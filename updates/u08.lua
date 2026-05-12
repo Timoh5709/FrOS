@@ -1,25 +1,13 @@
 term.clear()
 term.setCursorPos(1,1)
 local updateCode = "u08"
-
-local function installGithub(filename)
-    print(loc[".installGithub.download1"] .. filename .. loc[".installGithub.download2"])
-    local downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
-    if downloader then
-        local input = io.open(filename, "w")
-        input:write(downloader.readAll())
-        input:close()
-		print(loc[".installGithub.success1"] .. filename .. loc[".installGithub.success2"])
-        return true
-    else
-        print(loc[".installGithub.error"] .. filename)
-    end
-end
+local locLua = require("/FrOS/sys/loc")
+local httpV = require("/FrOS/sys/httpViewer")
 
 print("This update needs a loc update.")
 
-installGithub("FrOS/localization/update.loc")
-language = FrOS.stg["language"]
+httpV.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/update.loc")
+local language = FrOS.stg["language"]
 FrOS.updateLoc = locLua.load("FrOS/localization/update.loc", language)
 
 local loc = FrOS.sysLoc
@@ -34,13 +22,27 @@ local exBootloader = false
 while true do
     print(loc["confirmBootloader"])
     write("? ")
-    choix = read()
+    local choix = read()
     if choix == loc["yes"] then
         exBootloader = false
-        return
+        break
     elseif choix == loc["no"] then
         exBootloader = true
-        return
+        break
+    end
+end
+
+local function installGithub(filename)
+    print(loc[".installGithub.download1"] .. filename .. loc[".installGithub.download2"])
+    local downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
+    if downloader then
+        local input = io.open(filename, "w")
+        input:write(downloader.readAll())
+        input:close()
+		print(loc[".installGithub.success1"] .. filename .. loc[".installGithub.success2"])
+        return true
+    else
+        print(loc[".installGithub.error"] .. filename)
     end
 end
 

@@ -36,7 +36,7 @@ end
 while step == 1 do
     print("Utilisez-vous un bootloader ? (oui/non)")
     write("? ")
-    choix = read()
+    local choix = read()
     if choix == "oui" then
         step = step + 1
         exBootloader = true
