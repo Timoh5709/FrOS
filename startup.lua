@@ -15,7 +15,7 @@ local function lineViewer(lines)
       print(lines[i])
     end
 
-    print("\n-- Veuillez sélectionner un OS --")
+    print("\n-- Select your OS/lua script --")
 
     return
   end
@@ -23,51 +23,50 @@ end
 
 local function addBoot(name, loc)
     if not name then
-        print("Erreur : Aucun nom d'OS spécifié.")
-        print("Utilisation : add <nom> <fichier boot>")
+        print("Error : No OS name was specified.")
+        print("Use : add <nom> <fichier boot>")
         return
     elseif not loc then
-        print("Erreur : Aucun fichier lua spécifié.")
-        print("Utilisation : add <nom> <fichier boot>")
+        print("Error : No lua file was specified.")
+        print("Use : add <nom> <fichier boot>")
         return
     elseif not fs.exists(loc) then
-        print("Erreur : Le fichier '" .. loc .. "' n'existe pas.")
-        print("Exemple : add FrOS FrOS/boot.lua")
+        print("Error : The file '" .. loc .. "' doesn't exist.")
+        print("Example : add FrOS FrOS/boot.lua")
         return
-    -- TODO : Ajouter si name existe
     end
     if not fs.exists("boot.txt") then
         local f = fs.open("boot.txt", "w")
         if f then
             f.write(name .. "|" .. loc .. "\n")
             f.close()
-            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements 'reboot'.")
+            print(name .. " was added to the list, reboot to apply with 'reboot'.")
         else
-            print("Erreur : Impossible de créer le fichier 'boot.txt'.")
+            print("Error : The file 'boot.txt' can't be created.")
         end
     else
         local f = fs.open("boot.txt", "a")
         if f then
             f.write(name .. "|" .. loc .. "\n")
             f.close()
-            print(name .. " a bien été ajouté à la liste, veuillez redémarrer pour appliquer les changements 'reboot'.")
+            print(name .. " was added to the list, reboot to apply with 'reboot'.")
         else
-            print("Erreur : Impossible d'ajouter au fichier 'boot.txt'.")
+            print("Error : The boot can't be added to 'boot.txt'.")
         end
     end
 end
 
 local function removeBoot(name)
     if not name then
-        print("Erreur : Aucun nom d'OS spécifié.")
-        print("Utilisation : remove <nom>")
+        print("Error : No OS/lua script was specified.")
+        print("Use : remove <nom>")
         return
     end
     if fs.exists("boot.txt") then
         local lignes = {}
         local handle = fs.open("boot.txt", "r")
         if not handle then
-            print("Erreur : Fichier illisible.")
+            print("Error : Unreadable file.")
             return
         end
         
@@ -93,12 +92,12 @@ local function removeBoot(name)
         handle.close()
 
         if fnd then
-            print(name .. " a bien été supprimé de la liste, veuillez redémarrer pour appliquer les changements 'reboot'.")
+            print(name .. " was removed to the list, reboot to apply with 'reboot'.")
         else
-            print("Erreur : Vous ne pouvez pas supprimer " .. name .. " car il n'est pas accessible.")
+            print("Error : You can't remove " .. name .. " because it's not accessible.")
         end
     else
-        print("Erreur : Vous ne pouvez pas supprimer " .. name .. " car il n'est pas accessible.")
+        print("Error : You can't remove " .. name .. " because it's not accessible.")
     end
 end
 
@@ -139,7 +138,7 @@ local function readBoot()
         end
         f.close()
     else
-        print("Erreur : Fichier boot.txt manquant, veuillez ajoutez les boots avec la commande 'add'.")
+        print("Error : The file 'boot.txt' is missing, add OS/lua script with the 'add' command.")
     end
 
     for idx, f in ipairs(allFiles) do
@@ -162,7 +161,7 @@ function table_contains(tbl, x)
     return found, idx
 end
 
-print("Bienvenue sur le bootloader FrOS.")
+print("Bootloader FrOS :")
 
 readBoot()
 
@@ -186,7 +185,7 @@ while running do
     if idx and idx >= 1 and idx <= #allFiles then
         local _, height = term.getSize()
         term.setCursorPos(1, height)
-        write("Lancement de " .. names[idx])
+        write("Starting " .. names[idx])
         if files[allFiles[idx]] == "CraftOS" then
             term.clear()
             term.setCursorPos(1,1)
@@ -201,6 +200,6 @@ while running do
     elseif command == "reboot" then
         os.reboot()
     else
-        print("Erreur : OS introuvable : " .. input)
+        print("Error : Unknown OS/lua file : " .. input)
     end
 end
