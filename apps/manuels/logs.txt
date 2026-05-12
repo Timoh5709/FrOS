@@ -1,3 +1,11 @@
+0.8 :
+- les textes lus par tous les utilisateurs ont été traduits en anglais
+- les commandes exec, nom, http et script ne sont plus buggées
+- les scripts peuvent être plus pratiques avec l'ajout des instructions "@"
+- le shell est désormais global
+- les applications sont désormais toutes bilingues
+- l'historique des commandes est plus long, plus lisible avec textViewer et sauvegardé à chaque fois
+
 0.75 :
 - mise à jour de l'OOBE
 

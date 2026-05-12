@@ -30,12 +30,23 @@ if repair.check("FrOS/sys/gfrx.lua") then
     term.setCursorPos(1, 13)
 end
 
-term.setTextColor(colors.white)
-print("Bienvenue sur FrOS")
-if OOBE then
-    print("Vous allez rentrer dans l'OOBE !")
+local function getVer()
+    local file = "FrOS/version.txt"
+    local handle = fs.open(file, "r")
+    if not handle then
+        return "ERROR"
+    end
+    local ver = handle.readAll()
+    handle.close()
+    return ver
 end
-print("Tapez 'aide' pour voir les commandes disponibles.")
+
+term.setTextColor(colors.white)
+print("FrOS " .. getVer())
+if OOBE then
+    print("You will be redirected to the OOBE")
+end
+print("Use 'aide' to show available commands.")
 print()
 
 if repair.check("FrOS/main.lua") then
@@ -108,11 +119,12 @@ if repair.check("FrOS/main.lua") then
             end
         end
 
-        print("Voulez-vous installer des drivers ? (oui/non)")
+        print("Voulez-vous installer des drivers ? (o/n)/Do you want to install drivers? (y/n)")
         write("? ")
         local choix = read()
-        if choix == "oui" then
+        if choix == "o" or choix == "y" then
             print("Pour regarder la liste des drivers, faites 'liste ndrivers' et installez les avec 'driver <nom du driver>'.")
+            print("To read the drivers list, use 'list ndrivers' and install them with 'driver <name of the driver>'.")
             shell.run("/apps/appStore.lua")
         end
         

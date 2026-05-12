@@ -21,9 +21,7 @@ end
 function httpViewer.httpBrain(url)
     local request = http.get(url)
     if request == nil then
-        term.setTextColor(colors.red)
         textViewer.eout(loc["error.error"] .. "404")
-        term.setTextColor(colors.white)
         return false
     else
         return request.readAll()
@@ -37,6 +35,10 @@ end
 function httpViewer.getLines(url)
     local text = httpViewer.httpBrain(url)
     local lignes = {}
+    if text == false then
+        table.insert(lignes, loc["error.error"] .. "404")
+        return lignes
+    end
     for ligne in string.gmatch(text, "([^\n]*)\n?") do
         table.insert(lignes, ligne)
     end

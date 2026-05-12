@@ -1,0 +1,7 @@
+/main.stop:FR La musique a été interrompue.
+/main.stop:EN The music was stopped.
+/main.playing:FR Joue actuellement : 
+/main.playing:EN Playing : 
+
+/error.noSpeaker:FR Erreur : Aucun haut-parleur détécté.
+/error.noSpeaker:EN Error : No speaker was found.

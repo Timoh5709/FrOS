@@ -15,7 +15,6 @@ local loc = locLua.load("FrOS/localization/neofetch.loc", language)
 local gfrx = require("/FrOS/sys/gfrx")
 local textViewer = require("/FrOS/sys/textViewer")
 local gfx = gfrx(nil, {buffered = true})
-
 print()
 local _, y = term.getCursorPos()
 local _, h = term.getSize()
@@ -44,7 +43,7 @@ term.setCursorPos(27, y + 2)
 term.setTextColor(colors.blue)
 write(loc["neofetch.name"])
 term.setTextColor(colors.white)
-name = os.getComputerLabel()
+local name = os.getComputerLabel()
 if name then
     write(name)
 else

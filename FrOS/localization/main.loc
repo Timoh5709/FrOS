@@ -35,8 +35,8 @@
 /main.mkdirAide:EN mkdir <name> - Creates a directory
 /main.delAide:FR del OU rm <nom> - Supprime un fichier ou un dossier
 /main.delAide:EN del OU rm <path> - Deletes a file or a directory
-/main.historyAide:FR history - Affiche l'historique des commandes
-/main.historyAide:EN history - Displays the commands history
+/main.historyAide:FR history <remove|optionnel> - Affiche l'historique des commandes OU supprime l'historique des commandes
+/main.historyAide:EN history <remove|optionnal> - Displays the command history OR deletes the command history
 /main.infosysAide:FR infosys - Affiche des informations sur le système
 /main.infosysAide:EN infosys - Displays informations about the system
 /main.lireAide:FR lire <nom> - Lit le fichier
@@ -76,12 +76,8 @@
 /removeFileOrDir.canceled:EN Deletion canceled.
 /removeFileOrDir.critical1:FR Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.
 /removeFileOrDir.critical1:EN Warning : You are trying to delete a system file or a system directory.
-/removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (oui/non)
-/removeFileOrDir.critical2:EN This could impact the comportment of the system. Do you still want to delete it ? (yes/no)
-/removeFileOrDir.confirmation1:FR Êtes-vous sur de vouloir supprimer 
-/removeFileOrDir.confirmation1:EN Are you sure you want to delete 
-/removeFileOrDir.confirmation2:FR  ? (oui/non)
-/removeFileOrDir.confirmation2:EN  ? (yes/no)
+/removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (o/n)
+/removeFileOrDir.critical2:EN This could impact the comportment of the system. Do you still want to delete it? (y/n)
 /removeFileOrDir.success:FR Supprimé : 
 /removeFileOrDir.success:EN Deleted : 
 
@@ -98,3 +94,8 @@
 /stg_set.success1:EN The setting 
 /stg_set.success2:FR  a été défini sur 
 /stg_set.success2:EN  is set to 
+
+/error.historyCreate:FR Erreur : Le fichier 'history.txt' ne peut pas être créé.
+/error.historyCreate:EN Error : The file 'history.txt' can't be created.
+/error.historyUpdate:FR Erreur : La commande ne peut pas être ajoutée à 'history.txt'.
+/error.historyUpdate:EN Error : The input can't be added to 'history.txt'.

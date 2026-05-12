@@ -13,6 +13,8 @@
 /update.createInstallationDisk.directory2:EN  successfully created.
 /update.createInstallationDisk.success:FR Disque d'installation hors-ligne créé avec succès.
 /update.createInstallationDisk.success:EN Offline installation disk successfully created.
+/update.install.confirmUpdateScript:FR Ce script va exécuter les fichiers de mise à jour téléchargés.
+/update.install.confirmUpdateScript:EN This script will run the downloaded update files.
 /update.install.updated:FR Vous êtes déjà à jour !
 /update.install.updated:EN You are already up to date !
 
@@ -37,6 +39,15 @@
 /gfrx.useBuffer.error:EN Error : useBuffer invalid id.
 /gfrx.setPixel.error:FR Erreur : Aucun buffer actif : créez en un avec 'addBuffer()'
 /gfrx.setPixel.error:EN Error : No active buffer : make one with 'addBuffer()'
+
+/script.confirmation:FR Confirmez-vous cette action ? (o/n)
+/script.confirmation:EN Do you confirm this action? (y/n)
+/script.yes:FR o
+/script.yes:EN y
+/script.no:FR n
+/script.no:EN n
+/script.pause:FR Appuyez sur "Entrée".
+/script.pause:EN Press "Enter".
 
 /.installGithub.download1:FR Télécharge 
 /.installGithub.download1:EN Downloading 

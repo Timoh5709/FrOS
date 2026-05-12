@@ -158,11 +158,7 @@ local function removeFileOrDir(target)
   local path = fs.combine(shell.dir(), target)
 
   if fs.exists(path) then
-    textViewer.cprint(loc["removeFileOrDir.confirmation1"] .. target .. loc["removeFileOrDir.confirmation2"], colors.orange)
-    dfpwmPlayer.playConfirmationSound()
-    write("? ")
-    local confirmation2 = read()
-    if confirmation2 == "oui" then
+    if script.confirmation() then
       fs.delete(path)
       textViewer.cprint(loc["removeFileOrDir.success"] .. path, colors.green)
     else
@@ -175,9 +171,11 @@ end
 
 local function showHistory()
   print(loc["showHistory.command"])
+  local lignes = {}
   for i = 1, #history do
-    print(i .. ": " .. history[i])
+    table.insert(lignes, i .. ": " .. history[i])
   end
+  textViewer.lineViewer(lignes)
 end
 
 local function readAllText(path)
@@ -219,12 +217,13 @@ local function mkfile(filename)
 end
 
 local function exec(filename, param)
-  if not filename then
-    textViewer.eout(loc["error.unspecifiedFile"])
+  local resolved = shell.resolveProgram(filename)
+  if not resolved then
+    textViewer.eout(loc["error.unknownFile"])
     return
   end
+  local path2 = "/" .. resolved
 
-  local path2 = "/" .. shell.resolveProgram(filename)
   if path2 == nil then
     path2 = "nil"
     textViewer.eout(loc["error.unknownUnreadableFile"])
@@ -242,6 +241,10 @@ local function exec(filename, param)
 end
 
 local function rename(value)
+  if not value then
+    textViewer.eout(loc["error.unspecified"])
+    return
+  end
   os.setComputerLabel(value)
   textViewer.cprint(loc["rename.success"] .. value, colors.green)
 end
@@ -252,15 +255,19 @@ local function http(url)
     return
   end
 
-  textViewer.lineViewer(httpViewer.readUrl(url))
+  textViewer.lineViewer(httpViewer.getLines(url))
 end
 
 local function stg_set(key, value)
+  if not key or not value then
+    textViewer.eout(loc["error.unspecified"])
+    return
+  end
   stg.set("FrOS/config.stg", key, value)
   print(loc["stg_set.success1"] .. key .. loc["stg_set.success2"] .. value)
 end
 
-local function executeLine(input)
+function FrOS.executeLine(input)
   if not input or input == "" then
     textViewer.eout(loc["main.noCommand"])
     return
@@ -358,7 +365,17 @@ local function executeLine(input)
     end
 
   elseif command == "history" then
-    showHistory()
+    if param == "remove" then
+      if script.confirmation() then
+        history = {}
+        fs.delete("/FrOS/history.txt")
+        textViewer.cprint(loc["removeFileOrDir.success"] .. "/FrOS/history.txt", colors.green)
+      else
+        print(loc["removeFileOrDir.canceled"])
+      end
+    else
+      showHistory()
+    end
 
   elseif command == "lire" then
     if param then
@@ -379,25 +396,18 @@ local function executeLine(input)
     else
       update.install()
       local commands = script.read("temp/update.fsc")
-      
-      if not commands then
-        return
-      end
-
-      for i = 1, #commands do
-        local line = commands[i]
-
-        if line ~= "" and not line:match("^#") then
-          print(dossier .. "> " .. line)
-          executeLine(line)
-        end
-      end
+      local parsed = script.parse(commands)
+      script.run(parsed, dossier)
     end
 
   elseif command == "mkfile" then
     mkfile(param)
 
   elseif command == "exec" then
+    if not param then
+      textViewer.eout(loc["error.unspecifiedFile"])
+      return
+    end
     exec(param, string.sub(paramexec, string.len(param) + 1))
 
   elseif command == "nom" then
@@ -408,19 +418,8 @@ local function executeLine(input)
 
   elseif command == "script" then
     local commands = script.read(param)
-    
-    if not commands then
-      return
-    end
-
-    for i = 1, #commands do
-      local line = commands[i]
-
-      if line ~= "" and not line:match("^#") then
-        print(dossier .. "> " .. line)
-        executeLine(line)
-      end
-    end
+    local parsed = script.parse(commands)
+    script.run(parsed, dossier)
 
   elseif command == "sleep" then
     sleep(tonumber(param))
@@ -446,20 +445,47 @@ local function main()
 
   local input = read(nil, history)
 
-  if input then
+  if input and input ~= "" then
     table.insert(history, input)
     
-    if #history > 64 then
+    if #history > (2 ^ 16) then
       table.remove(history, 1)
     end
 
-    executeLine(input)
+    if not fs.exists("/FrOS/history.txt") then
+      local f = fs.open("/FrOS/history.txt", "w")
+      if f then
+        f.write(input .. "\n")
+        f.close()
+      else
+        textViewer.eout(loc["error.historyCreate"])
+      end
+    else
+      local f = fs.open("/FrOS/history.txt", "a")
+      if f then
+        f.write(input .. "\n")
+        f.close()
+      else
+        textViewer.eout(loc["error.historyUpdate"])
+      end
+    end
+
+    FrOS.executeLine(input)
   end
 end
 
 local needUpdate, oVer = update.check()
 if needUpdate then
   print(loc[".newVersion1"] .. oVer .. loc[".newVersion2"])
+end
+
+if fs.exists("/FrOS/history.txt") then
+  local f = fs.open("/FrOS/history.txt", "r")
+  while true do
+    local ligne = f.readLine()
+    if not ligne then break end
+    table.insert(history, ligne)
+  end
 end
 
 while running do

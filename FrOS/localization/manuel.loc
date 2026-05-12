@@ -1,0 +1,14 @@
+/main.quit:FR Fermeture de appStore.lua...
+/main.quit:EN Leaving appStore.lua...
+/main.aideCommand:FR Commandes disponibles :
+/main.aideAide:FR aide - Affiche cet aide
+/main.aideQuit:FR quit - Quitte l'application
+/main.aideLire:FR lire <nom d'un fichier lua OU logs> - Affiche la documentation en ligne d'un programme ou d'une librairie
+/main.aideCommand:EN Available commands :
+/main.aideAide:EN aide - Displays this list
+/main.aideQuit:EN quit - Leaves the app
+/main.aideLire:EN lire <name of a lua file OR logs> - Displays the online documentation of a program or a library
+/main.unknownCommand:FR Commande inconnue : 
+/main.unknownCommand:EN Unknown command : 
+/main.noCommand:FR Veuillez rentrer une commande.
+/main.noCommand:EN Please enter a command.

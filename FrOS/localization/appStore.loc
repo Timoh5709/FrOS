@@ -1,0 +1,51 @@
+/setList.success:FR  a bien été défini comme liste par défaut.
+/setList.success:EN  was defined as the default list.
+/resetList.success:FR Liste officielle de FrOS sélectionnée par défaut.
+/resetList.success:EN Official FrOS list is selected as the default list.
+/checkAndInstall.successU:FR  a bien été mis à jour.
+/checkAndInstall.successU:EN  is updated.
+/checkAndInstall.successI:FR  a bien été installé.
+/checkAndInstall.successI:EN  is installed.
+/main.quit:FR Fermeture de appStore.lua...
+/main.quit:EN Leaving appStore.lua...
+/main.aideCommand:FR Commandes disponibles :
+/main.aideAide:FR aide - Affiche cet aide
+/main.aideQuit:FR quit - Quitte l'application
+/main.aideList:FR liste OU list <napps OU apps OU ndrivers OU drivers> - Liste les applications disponibles OU installée OU les drivers disponibles OU installés
+/main.aideSet:FR set <URL du fichier raw de 'appList.txt' sur Github> - Définit la liste 'napps' sur une nouvelle URL, les applications devront être dans le même dossier de la liste
+/main.aideReset:FR reset - Réinitialise l'URL de la liste
+/main.aideGet:FR installer OU get <app> - Installe la dernière version d'une application
+/main.aideDriver:FR driver <driver> - Installe la dernière version d'un driver
+/main.aideCommand:EN Available commands :
+/main.aideAide:EN aide - Displays this list
+/main.aideQuit:EN quit - Leaves the app
+/main.aideList:EN liste OR list <napps OR apps OR ndrivers OR drivers> - Lists the disponible apps OR installed OR the disponible driver OR installed
+/main.aideSet:EN set <URL of the rax file 'appList.txt' on Github> - Sets the 'napps' list on a new URL, the apps need to be in the same directory of the list
+/main.aideReset:EN reset - Reset the list URL
+/main.aideGet:EN get OR installer <app> - Installs the last version of an app
+/main.aideDriver:EN driver <driver> - Installs the last version of a driver
+/main.unknownCommand:FR Commande inconnue : 
+/main.unknownCommand:EN Unknown command : 
+/main.noCommand:FR Veuillez rentrer une commande.
+/main.noCommand:EN Please enter a command.
+
+/error.createListFile:FR Erreur : Impossible de créer le fichier 'appListUrl.txt'.
+/error.createListFile:EN Error : The file 'appListUrl.txt' can't be created.
+/error.invalidURL1:FR Erreur : Le lien 
+/error.invalidURL1:EN Error : The link 
+/error.invalidURL2:FR  est incorrect.
+/error.invalidURL2:EN  is invalid.
+/error.noURL:FR Erreur : Aucun lien Github spécifié.
+/error.noURL:EN Error : No Github link was specified.
+/error.alreadySelected:FR Erreur : Liste déjà par défaut.
+/error.alreadySelected:EN Error : This is already the default list.
+/error.cantInstallApp:FR Erreur : L'application 
+/error.cantInstallApp:EN Error : The app 
+/error.cantInstall2:FR  ne peut pas être installée.
+/error.cantInstall2:EN  can't be installed.
+/error.unknownWebFile:FR  est introuvable en ligne.
+/error.unknownWebFile:EN  can't be found online.
+/error.cantInstallDriver:FR Erreur : Le driver 
+/error.cantInstallDriver:EN Error : The driver 
+/error.noList:FR Erreur : Aucune liste selectionnée.
+/error.noList:EN Error : No list is selected.

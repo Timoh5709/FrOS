@@ -4,6 +4,12 @@
 /code:EN Update code : 
 /warning:FR Veuillez ne pas éteindre votre ordinateur lors de la mise à jour.
 /warning:EN Please don't turn off your computer while updating.
+/confirmBootloader:FR Utilisez-vous le bootloader FrOS ? (o/n)
+/confirmBootloader:EN Do you use the FrOS bootloader? (y/n)
+/yes:FR o
+/yes:EN y
+/no:FR n
+/no:EN n
 /success1:FR La mise à jour 
 /success1:EN The update 
 /success2:FR  a correctement été installée.

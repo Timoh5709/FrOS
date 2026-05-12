@@ -1,8 +1,16 @@
 local textViewer = require("/FrOS/sys/textViewer")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.43)
+local running = update.appCheck(0.73)
 local statusBar = require("/FrOS/sys/statusBar")
 local httpViewer = require("/FrOS/sys/httpViewer")
+if not fs.exists("FrOS/localization/neofetch.loc") then
+    httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/manuel.loc")
+end
+local locLua = require("/FrOS/sys/loc")
+local stg = _G.FrOS.stg
+local language = "FR"
+language = stg["language"]
+local loc = locLua.load("FrOS/localization/manuel.loc", language)
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
 
 local function lire(nom)
@@ -27,23 +35,23 @@ local function main()
     local param = args[2]
 
     if command == "quit" then
-        print("Fermeture de manuel.lua...")
+        print(loc["main.quit"])
         running = false
         return
     elseif command == "aide" then
         local aides = {
-            "Commandes disponibles :",
-            "aide - Affiche cet aide",
-            "quit - Quitte l'application",
-            "lire <nom d'un fichier lua> - Affiche la documentation en ligne d'un programme ou d'une librairie"
+            loc["main.aideCommand"],
+            loc["main.aideAide"],
+            loc["main.aideQuit"],
+            loc["main.aideLire"]
         }
         textViewer.lineViewer(aides)
     elseif command == "lire" then
         lire(param)
     elseif command ~= nil then
-        textViewer.eout("Commande inconnue : " .. command)
+        textViewer.eout(loc["main.unknownCommand"] .. command)
     else
-        textViewer.eout("Veuillez rentrer une commande.")
+        textViewer.eout(loc["main.noCommand"])
     end
 end
 

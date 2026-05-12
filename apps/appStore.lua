@@ -2,6 +2,15 @@ local textViewer = require("/FrOS/sys/textViewer")
 local update = require("/FrOS/sys/update")
 local running = update.appCheck(0.74)
 local httpViewer = require("/FrOS/sys/httpViewer")
+if not fs.exists("FrOS/localization/neofetch.loc") then
+    httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/appStore.loc")
+end
+local locLua = require("/FrOS/sys/loc")
+local stg = _G.FrOS.stg
+local language = "FR"
+language = stg["language"]
+local loc = locLua.load("FrOS/localization/appStore.loc", language)
+for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
 local statusBar = require("/FrOS/sys/statusBar")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
 local appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
@@ -19,15 +28,15 @@ local function setList(url)
                 appListUrl = url
                 appsUrl = string.sub(appListUrl, 1, #appListUrl - 11)
                 isFrOSList = false
-                textViewer.cprint(url .. "a bien été défini comme liste par défaut.")
+                textViewer.cprint(url .. loc["setList.success"])
             else
-                print("Erreur : Impossible de créer le fichier 'boot.txt'.")
+                print(loc["error.createListFile"])
             end
         else
-            textViewer.eout("Erreur : Le lien " .. url .. " est incorrect.")
+            textViewer.eout(loc["error.invalidURL1"] .. url .. loc["error.invalidURL2"])
         end
     else
-        textViewer.eout("Erreur : Aucun lien Github spécifié")
+        textViewer.eout(loc["error.noURL"])
     end
 end
 
@@ -37,9 +46,9 @@ local function resetList()
         appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
         appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
         isFrOSList = true
-        textViewer.cprint("Liste officielle de FrOS sélectionnée par défaut")
+        textViewer.cprint(loc["resetList.success"])
     else
-        textViewer.eout("Erreur : Liste déjà par défaut.")
+        textViewer.eout(loc["error.alreadySelected"])
     end
 end
 
@@ -58,7 +67,7 @@ local function readAllText(path)
     local file = fs.combine(shell.dir(), path)
     local handle = fs.open(file, "r")
     if not handle then
-        textViewer.eout("Erreur : Fichier illisible.")
+        textViewer.eout(loc["error.unreadableFile"])
         return
     end
     while true do
@@ -83,7 +92,7 @@ local function checkAndInstallApp(app)
         end
         if not httpViewer.installGithub(appsUrl, app) then
             if not httpViewer.installGithub(appsUrl, app .. ".lua") then
-                textViewer.eout("Erreur : L'application " .. appfilename .. " ne peut pas être installée.")
+                textViewer.eout(loc["error.cantInstallApp"] .. appfilename .. loc["error.cantInstall2"])
             else
                 appfilename = app .. ".lua"
                 isInstalled = true
@@ -93,16 +102,16 @@ local function checkAndInstallApp(app)
         end
         if isInstalled then
             if string.find(ftexte, appfilename) then
-                textViewer.cprint(appfilename .. " a bien été mis à jour.", colors.green)
+                textViewer.cprint(appfilename .. loc["checkAndInstall.successU"], colors.green)
             else
                 f = fs.open("/FrOS/appList.txt", "a")
                 f.write(appfilename .. "\n")
                 f.close()
-                textViewer.cprint(appfilename .. " a bien été installé.", colors.green)
+                textViewer.cprint(appfilename .. loc["checkAndInstall.successI"], colors.green)
             end
         end
     else
-        textViewer.eout("Erreur : L'application " .. appfilename .. " est introuvable en ligne.")
+        textViewer.eout(loc["error.cantInstallApp"] .. appfilename .. loc["error.unknownWebFile"])
     end
 end
 
@@ -115,21 +124,21 @@ local function checkAndInstallDriver(driver)
         f.close()
         if not httpViewer.installGithub(driversUrl, "FrOS/drivers/" .. driver) then
             if not httpViewer.installGithub(driversUrl, "FrOS/drivers/" .. driver .. ".lua") then
-                textViewer.eout("Erreur : Le driver " .. driverfilename .. " ne peut pas être installé.")
+                textViewer.eout(loc["error.cantInstallDriver"] .. driverfilename .. loc["error.cantInstall2"])
             else
                 driverfilename = driver .. ".lua"
             end
         end
         if string.find(ftexte, driverfilename) then
-            textViewer.cprint(driverfilename .. " a bien été mis à jour.", colors.green)
+            textViewer.cprint(driverfilename .. loc["checkAndInstall.successU"], colors.green)
         else
             f = fs.open("/FrOS/driversList.txt", "a")
             f.write(driverfilename .. "\n")
             f.close()
-            textViewer.cprint(driverfilename .. " a bien été installé.", colors.green)
+            textViewer.cprint(driverfilename .. loc["checkAndInstall.successI"], colors.green)
         end
     else
-        textViewer.eout("Erreur : Driver introuvable en ligne.")
+        textViewer.eout(loc["error.cantInstallDriver"] .. driverfilename .. loc["error.unknownWebFile"])
     end
 end
 
@@ -137,7 +146,6 @@ local function main()
     local dossier = "appStore.lua"
     write(dossier .. "$ ")
     
-    local stg = _G.FrOS.stg
     local oobe = 1
     oobe = stg["oobe"]
     if oobe == "0" then
@@ -154,19 +162,19 @@ local function main()
     local param = args[2]
 
     if command == "quit" then
-        print("Fermeture de appStore.lua...")
+        print(loc["main.quit"])
         running = false
         return
     elseif command == "aide" then
         local aides = {
-            "Commandes disponibles :",
-            "aide - Affiche cet aide",
-            "quit - Quitte l'application",
-            "liste OU list <napps OU apps OU ndrivers OU drivers> - Liste les applications disponibles OU installée OU les drivers disponibles OU les drivers installés",
-            "set <url du fichier raw de 'appList.txt' sur Github> - Définit la liste 'napps' sur une nouvelle url, les applications devront être dans le même dossier du repo Github",
-            "reset - Réinitialise la liste",
-            "installer OU get <app> - Installe la dernière version d'une application",
-            "driver <driver> - Installe la dernière version d'un driver"
+            loc["main.aideCommand"],
+            loc["main.aideAide"],
+            loc["main.aideQuit"],
+            loc["main.aideList"],
+            loc["main.aideSet"],
+            loc["main.aideReset"],
+            loc["main.aideGet"],
+            loc["main.aideDriver"]
         }
         textViewer.lineViewer(aides)
     elseif command == "liste" or command == "list" then
@@ -179,7 +187,7 @@ local function main()
         elseif param == "drivers" then
             readAllText("/FrOS/driversList.txt")
         else
-            textViewer.eout("Erreur : Aucune liste selectionnée.")
+            textViewer.eout(loc["error.noList"])
         end
     elseif command == "set" then
         setList(param)
@@ -190,9 +198,9 @@ local function main()
     elseif command == "driver" then
         checkAndInstallDriver(param)
     elseif command ~= nil then
-        textViewer.eout("Commande inconnue : " .. command)
+        textViewer.eout(loc["main.unknownCommand"] .. command)
     else
-        textViewer.eout("Veuillez rentrer une commande.")
+        textViewer.eout(loc["main.noCommand"])
     end
 end
 

@@ -32,3 +32,5 @@
 /error.numVarNeed:EN  needs to be a number 
 /error.corruptedFile:FR Erreur : Fichier corrompu : 
 /error.corruptedFile:EN Error : Corrupted file : 
+/error.invalidExpression:FR Erreur : Expression invalide.
+/error.invalidExpression:EN Error : Invalid expression.

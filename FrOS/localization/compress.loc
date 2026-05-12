@@ -1,0 +1,11 @@
+/main.howToUse:FR Utilisation : -c OU -d input output
+/main.howToUse:EN Use : -c OR -d input output
+/main.packing:FR Compresse 
+/main.packing:EN Packing 
+/main.unpacking:FR Décompresse 
+/main.unpacking:EN Unpacking 
+
+/error.invalidExtension:FR Erreur : Extension invalide.
+/error.invalidExtension:EN Error : Invalid extension.
+/error.unknownMode:FR Erreur : Mode inconnu 
+/error.unknownMode:EN Error : Unknown mode 

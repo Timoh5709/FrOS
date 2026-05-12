@@ -53,6 +53,9 @@ function update.install()
         localFile.close()
         if #tLignes ~= #lLignes then
             local updateScript = fs.open("temp/update.fsc", "w")
+            updateScript.writeLine("@silent")
+            updateScript.writeLine("echo " .. loc["update.install.confirmUpdateScript"])
+            updateScript.writeLine("@confirm")
             for k, v in pairs(tLignes) do
                 if lLignes[v] == nil then
                     print(loc[".installGithub.download1"] .. v .. loc[".installGithub.download2"])
@@ -136,6 +139,8 @@ function update.createInstallationDisk()
         installGithub("FrOS/localization/error.loc", "temp/install/FrOS/localization/error.loc")
         installGithub("FrOS/localization/sys.loc", "temp/install/FrOS/localization/sys.loc")
         installGithub("FrOS/localization/update.loc", "temp/install/FrOS/localization/update.loc")
+        installGithub("FrOS/localization/appStore.loc", "temp/install/FrOS/localization/appStore.loc")
+        installGithub("FrOS/localization/manuel.loc", "temp/install/FrOS/localization/manuel.loc")
         fs.makeDir("temp/install/FrOS/drivers")
         print(loc["update.createInstallationDisk.directory1"] .. "temp/install/FrOS/drivers" .. loc["update.createInstallationDisk.directory2"])
         installGithub("FrOS/drivers/init.lua", "temp/install/FrOS/drivers/init.lua")

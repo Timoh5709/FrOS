@@ -10,7 +10,8 @@ local updateList = {
     "u072",
     "u073",
     "u074",
-    "u075"
+    "u075",
+    "u08"
 }
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -108,6 +109,8 @@ installGithub("FrOS/localization/main.loc")
 installGithub("FrOS/localization/error.loc")
 installGithub("FrOS/localization/sys.loc")
 installGithub("FrOS/localization/update.loc")
+installGithub("FrOS/localization/appStore.loc")
+installGithub("FrOS/localization/manuel.loc")
 fs.makeDir("FrOS/drivers")
 print("Dossier FrOS/drivers créé avec succès.")
 installGithub("FrOS/drivers/init.lua")

@@ -1,6 +1,36 @@
-[Pour la version 0.61]
+[Pour la version 0.8]
 
-script.read(path)
+script.read(path) => table
 Fonction principale de script.lua permettant d'extraire simplement les commandes du fichier fsc.
 Facilement accessible dans le shell avec la commande script.
 Il y a aussi la possibilité de mettre des commentaires à l'aide du # en début de ligne.
+
+script.pause()
+Met en pause l'exécution du script pour attendre l'appui sur la touche "Entrée".
+
+script.confirmation() => boolean
+Demande à l'utilisateur de poursuivre ou non.
+
+script.parse(commands) => table
+Sépare les commandes shell des instructions "@".
+
+script.run(parsed, dosser)
+Exécute les commandes shell et les directives.
+
+Voici la liste des directives :
+- @silent : Enlève les print des commandes shell
+- @loud : Remet les print des commandes shell
+- @stop : Arrête le script
+- @pause : Demande à l'utilisateur d'appuyer sur "Entrée"
+- @confirm : Demande à l'utilisateur de poursuivre ou non
+- @set VARNAME:VARTYPE=VARVALUE (VARTYPE pouvant être "str" ou "int") : Enregistre une variable script
+- @calc VARNAME:VARTYPE=VAREXPRESSION (VARTYPE pouvant être "int") : Calcule quelque chose (avec les opérations basiques) et l'enregistre dans la variable
+- @input VARNAME:VARTYPE (VARTYPE pouvant être "str" ou "int") : Laisse l'utilisateur rentrer une valeur et l'enregistre dans la variable
+- @minver VERSION : Vérifie la version de l'OS
+
+Voici la liste des variables spéciales :
+- %_OSVERSION% : La version de l'OS (str)
+- %_EXECDATE% : La date à laquelle le script a été lancé (str)
+- %_CURDIR% : Le dossier actuel (str)
+- %_COMPUTERNAME% : Le nom de l'ordinateur (str)
+- %_COMPUTERID% : L'ID de l'ordinateur (int)
