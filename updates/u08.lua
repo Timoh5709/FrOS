@@ -2,6 +2,20 @@ term.clear()
 term.setCursorPos(1,1)
 local updateCode = "u08"
 
+local function installGithub(filename)
+    print(loc[".installGithub.download1"] .. filename .. loc[".installGithub.download2"])
+    local downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
+    if downloader then
+        local input = io.open(filename, "w")
+        input:write(downloader.readAll())
+        input:close()
+		print(loc[".installGithub.success1"] .. filename .. loc[".installGithub.success2"])
+        return true
+    else
+        print(loc[".installGithub.error"] .. filename)
+    end
+end
+
 print("This update needs a loc update.")
 
 installGithub("FrOS/localization/update.loc")
@@ -31,20 +45,6 @@ while true do
 end
 
 textutils.slowPrint("-------------------------------------------------")
-
-local function installGithub(filename)
-    print(loc[".installGithub.download1"] .. filename .. loc[".installGithub.download2"])
-    local downloader = http.get("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/" .. filename)
-    if downloader then
-        local input = io.open(filename, "w")
-        input:write(downloader.readAll())
-        input:close()
-		print(loc[".installGithub.success1"] .. filename .. loc[".installGithub.success2"])
-        return true
-    else
-        print(loc[".installGithub.error"] .. filename)
-    end
-end
 
 term.setBackgroundColor(colors.blue)
 term.clear()
