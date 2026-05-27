@@ -1,7 +1,10 @@
-[Pour la version 0.7]
+[Pour la version 0.81]
 
-gfrx.new(target, opts) => self (metatable)
+gfrx.new(target, opts {buffered,oldColorSystem}) => self (metatable)
 Fonction pour créer un moteur gfrx.
+opts :
+- buffered = true : fonctionne avec des buffers ;
+- oldColorSystem = true : fonctionne avec les anciennes couleurs.
 
 gfrx:markDirty(cx, cy)
 Désigne un pixel comme "sale" pour le raffraîchir.
@@ -10,8 +13,17 @@ Désigne un pixel comme "sale" pour le raffraîchir.
 gfrx:markAllDirty()
 Désigne tous les pixels comme "sale" pour raffraîchir l'écran.
 
+gfrx:unmarkDirty(cx, cy)
+Retire un pixel des pixels "sales".
+
+gfrx:isDirty(cx, cy) => (bool)
+Vérifie si un pixel est "sale".
+
+gfrx:unmarkAllDirty()
+Retire tous les pixels "sales".
+
 gfrx:addBuffer(colorOn, colorOff) => id (int)
-Ajoute un buffer en 2 couleurs (la première est la plus importante, l'autre peut être noire).
+Ajoute un buffer en 2 couleurs (la première est la plus importante, l'autre peut être noire) (les couleurs (or oldColorSystem) peuvent être en hexadécimal).
 L'ordre est important car cela permet d'avoir des calques.
 
 gfrx:useBuffer(id)
@@ -57,6 +69,12 @@ Trace un triangle.
 
 gfrx:clearAll()
 Nettoie tous les buffers.
+
+gfrx:resetColors()
+Réinitialise les couleurs du moteur gfrx et du terminal.
+
+gfrx:replaceColor(colorA, colorB)
+Remplace une couleur utilisée par une autre couleur.
 
 gfrx:getResolution() => (self.width (int), self.height (int))
 Retourne la taille en pixels.

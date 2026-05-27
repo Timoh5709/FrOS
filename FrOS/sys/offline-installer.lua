@@ -13,7 +13,8 @@ local updateList = {
     "u073",
     "u074",
     "u075",
-    "u08"
+    "u08",
+    "u081"
 }
 
 print("Ce programme va bien installer les fichiers pour FrOS.")

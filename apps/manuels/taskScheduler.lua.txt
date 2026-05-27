@@ -1,0 +1,39 @@
+[Pour la version 0.81]
+
+taskScheduler.spawn(name, func, options {background, receiveEvents, filter, id}, ...) =>  id (int)
+Crée une tâche avec un nom spécifique, une fonction et des arguments, et la met en premier plan.
+options :
+- background = true : la tâche n'a pas de fenêtre ;
+- receiveEvents = true : la tâche reçoit les évènements systèmes ;
+- filter = {liste d'évènements} : la tâche ne recevra que ces évènements ;
+- id = (int) : la tâche essaiera de se mettre à l'identifiant attribué.
+
+taskScheduler.getTask(id) => task (dict)
+Retourne une tâche depuis son identifiant.
+
+taskScheduler.getId(name) => id (int)
+Retourne un identifiant depuis son nom.
+
+taskScheduler.pause(id) => (bool)
+Met en pause une tâche.
+
+taskScheduler.resume(id) => (bool)
+Dépause une tâche.
+
+taskScheduler.focus(id) => (bool)
+Met une tâche en premier plan.
+
+taskScheduler.kill(id) => (bool)
+Tue une tâche.
+
+taskScheduler.list() => (dict)
+Retourne un dictionnaire des tâches actives.
+
+taskScheduler.print()
+Affiche les tâches actives.
+
+taskScheduler.run()
+Lance le taskScheduler.
+
+taskScheduler.stop()
+Arrête le taskScheduler

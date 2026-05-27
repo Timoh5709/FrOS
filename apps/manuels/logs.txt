@@ -1,4 +1,15 @@
-0.8 :
+0.81 (Multitasking Update) :
+- GFRX a reçu une grande mise à jour : désormais il est possible d'avoir des couleurs en hexadécimal et les changer. De plus, on peut "démarquer" des cellules sales (utile notamment pour neofetch)
+/!\ Si vous souhaitez utiliser l'ancien système de couleur, il faut ajouter l'option "oldColorSystem" lors de la création du GFRX.
+- le multitasking est enfin disponible : les applications avec le tag "-- @fullscreen" se démarrent dans une nouvelle fenêtre tandis que celles avec le tag "-- @background" s'exécutent en fond, faites des tests avec la commande "task"
+- la statusBar sert (avec la souris) de gestionnaire des tâches : clic gauche = sélectionne une tâche à mettre en focus ; clic droit = pause/dépause une tâche ; clic molette = tue une tâche
+- lors du premier démarrage sur CraftOS-PC avec emuSpeaker, le son de démarrage se lance
+- les bugs de téléchargement infini du fichier de loc dans les applications ont été réglés
+- une nouvelle application de musique en fond a été créée (bgmusic.lua <path>)
+- manuel.lua ne bug plus quand on entre un manuel qui n'existe pas
+- textViewer.lua affiche désormais les sauts de ligne
+
+0.8 (2nd Shell Update) :
 - les textes lus par tous les utilisateurs ont été traduits en anglais
 - les commandes exec, nom, http et script ne sont plus buggées
 - les scripts peuvent être plus pratiques avec l'ajout des instructions "@"
@@ -6,73 +17,73 @@
 - les applications sont désormais toutes bilingues
 - l'historique des commandes est plus long, plus lisible avec textViewer et sauvegardé à chaque fois
 
-0.75 :
+0.75 (OOBE Update) :
 - mise à jour de l'OOBE
 
-0.74 :
+0.74 (Clean up Update) :
 - suppression des "criticalFiles"
 - mise à jour du appStore
 
-0.73 :
+0.73 (Settings Update) :
 - implémentation du fichier .stg pour charger les paramètres (comme la langue)
 - traduction intégrale en anglais des fichiers de loc
 - ajout de la commande stg pour modifier ou ajouter un paramètre
 
-0.72 :
+0.72 (FZIP v2 Update) :
 - suppression du RLE avant le LZW dans le FZIP (FZIP v2)
 
-0.71 :
+0.71 (2nd Updates Update) :
 - implémentation du nouveau système de mise à jour
 
-0.7 :
+0.7 (English and Grafrix Update) :
 - ajout de error.loc et de sys.loc (le texte est désormais en anglais si l'utilisation de "loc.lua" ne marche pas)
 - implémentation de GFRX, le moteur de rendu 2D (implémenté au lancement et sur l'application "neofetch.lua")
 
-0.61 :
+0.61 (Shell Update) :
 - utilisation hors-ligne débuguée
 - grosse mise à jour du shell (script, sleep et echo) et utilisation correcte de l'historique (avec les flèches)
 - implémentation du format FSC (en gros un fichier bat)
 - ajout de la commande "reboot" dans le bootloader
 
-0.6 :
+0.6 (FZIP Update) :
 - implémentation du format FZIP
 - correction de quelques bugs
 - mise à jour de l'installeur
 - possibilité de créer des disques d'installation hors-ligne
 
-0.51 :
+0.51 (Sounds Update) :
 - mise à jour des sons
 - mise à jour importante du bootloader avec la possibilité de supprimer des boots
 
-0.5 :
+0.5 (English Update) :
 - implémentation de l'utf8 et de loc
 - main.lua totalement traduit
 
-0.43 :
+0.43 (TextViewer Update) :
 - correction du textViewer
 - ajout des logs (dans manuel : "lire logs")
 
-0.42 :
+0.42 (Bug fix Update) :
 - correction de bugs
 
-0.41 :
+0.41 (Updates Update) :
 - nouveau driver pour les moniteurs
 - message de mise à jour
 
-0.4 :
+0.4 (Libraries Update) :
 - centralisation des installations Github sur httpViewer
 - implémentation des progressBar
 - simplification de la statusBar + correction de la position de l'horloge
 - possibilité de choisir une liste sur l'appStore
 
-0.32 :
+0.32 (Color Update) :
 - mise à jour des couleurs
 
-0.31 :
+0.31 (Bootloader Update) :
 - check de version pour les applications officielles
 - nouveau bootloader customisable
 
-OS_HDD_3 :
+OS_HDD_3 (3rd Legacy Update) :
 - implémentation du bootloader
 - réorganisation des fichiers
 - bootloader intacte lors d'une mise à jour
@@ -81,7 +92,7 @@ OS_HDD_3 :
 - allègement du boot de FrOS
 - nouvelle application : manuel
 
-OS_HDD_2 :
+OS_HDD_2 (2nd Legacy Update) :
 - implémentation de repair
 - utilisation de la variable shell.path()
 - création du programme statusBar + horloge réelle
@@ -93,7 +104,7 @@ OS_HDD_2 :
 - nouvelles applications : music et compress (pas efficace)
 - encodage en Windows 1252 pour avoir des accents
 
-OS_HDD_1 :
+OS_HDD_1 (1st Legacy Update) :
 - implémentation du shell
 - implémentation du startup
 - implémentation de textViewer et d'update

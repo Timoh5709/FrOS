@@ -1,8 +1,8 @@
 local gfrx = {}
 gfrx.__index = gfrx
 
-local DEFAULT_FG = colors.white
-local DEFAULT_BG = colors.black
+local DEFAULT_FG = 0x1
+local DEFAULT_BG = 0x8000
 
 pcall(function (...)
     local loc = FrOS.sysLoc
@@ -35,6 +35,27 @@ local function writeAt(dev, isMonitor, cx, cy, txt)
         term.setCursorPos(cx, cy)
         write(txt)
     end
+end
+
+local function isColor(x)
+    for i=0, 15 do
+        if x == 2^i then
+            return true
+        end
+    end
+    return false
+end
+
+local function table_contains(tbl, x)
+    local found = false
+    local idx = 1
+    for k, v in pairs(tbl) do
+        if v == x then 
+            found = true 
+            return found, k
+        end
+    end
+    return found, nil
 end
 
 function gfrx.new(target, opts)
@@ -82,6 +103,13 @@ function gfrx.new(target, opts)
     self.dirtyCount = 0
 
     self.buffered = (opts.buffered == nil) and true or opts.buffered
+    self.oldColorSystem = (opts.oldColorSystem == nil) and false or opts.oldColorSystem
+    
+    self.usedColors = {
+        [0x1] = (opts.oldColorSystem == nil) and 0xffffff or opts.oldColorSystem and 0xffffff,
+        [0x8000] = (opts.oldColorSystem == nil) and 0x000000 or opts.oldColorSystem and 0x000000
+    }
+    self.idxColor = 2
 
     self.defaultForeground = DEFAULT_FG
     self.defaultBackground = DEFAULT_BG
@@ -104,7 +132,6 @@ end
 function gfrx:markAllDirty()
     for cx = 1, self.charWidth do
         for cy = 1, self.charHeight do
-            self.markDirty = self.markDirty
             self.dirty[cx] = self.dirty[cx] or {}
             self.dirty[cx][cy] = true
         end
@@ -112,11 +139,78 @@ function gfrx:markAllDirty()
     self.dirtyCount = self.charWidth * self.charHeight
 end
 
+function gfrx:unmarkDirty(cx, cy)
+    local row = self.dirty[cx]
+    if not row or not row[cy] then
+        return
+    end
+    row[cy] = nil
+    self.dirtyCount = self.dirtyCount - 1
+    if next(row) == nil then
+        self.dirty[cx] = nil
+    end
+end
+
+function gfrx:isDirty(cx, cy)
+    local row = self.dirty[cx]
+    return row and row[cy] or false
+end
+
+function gfrx:unmarkAllDirty()
+    self.dirty = {}
+    self.dirtyCount = 0
+end
+
 function gfrx:addBuffer(colorOn, colorOff)
+    local idxOn, idxOff = colorOn, colorOff
+    if not self.oldColorSystem then
+        if isColor(colorOn) then
+            local hexOn = colors.packRGB(term.nativePaletteColor(colorOn))
+            local isAlreadyUsed, pos = table_contains(self.usedColors, hexOn)
+            if isAlreadyUsed then
+                idxOn = pos
+            else
+                self.usedColors[self.idxColor] = hexOn
+                idxOn = self.idxColor
+                self.idxColor = self.idxColor * 2
+            end
+        else
+            local hexOn = colorOn
+            local isAlreadyUsed, pos = table_contains(self.usedColors, hexOn)
+            if isAlreadyUsed then
+                idxOn = pos
+            else
+                self.usedColors[self.idxColor] = hexOn
+                idxOn = self.idxColor
+                self.idxColor = self.idxColor * 2
+            end
+        end
+        if isColor(colorOff) then
+            local hexOff = colors.packRGB(term.nativePaletteColor(colorOff))
+            local isAlreadyUsed, pos = table_contains(self.usedColors, hexOff)
+            if isAlreadyUsed then
+                idxOff = pos
+            else
+                self.usedColors[self.idxColor] = hexOff
+                idxOff = self.idxColor
+                self.idxColor = self.idxColor * 2
+            end
+        else
+            local hexOff = colorOff
+            local isAlreadyUsed, pos = table_contains(self.usedColors, hexOff)
+            if isAlreadyUsed then
+                idxOff = pos
+            else
+                self.usedColors[self.idxColor] = hexOff
+                idxOff = self.idxColor
+                self.idxColor = self.idxColor * 2
+            end
+        end
+    end
     local buf = {
         pixels = {},
-        colorOn = colorOn or DEFAULT_FG,
-        colorOff = colorOff or DEFAULT_BG,
+        colorOn = idxOn or DEFAULT_FG,
+        colorOff = idxOff or DEFAULT_BG,
     }
     table.insert(self.buffers, buf)
     local id = #self.buffers
@@ -278,6 +372,11 @@ function gfrx:flushCell(cx, cy)
 end
 
 function gfrx:flush()
+    if not self.oldColorSystem then
+        for k,v in pairs(self.usedColors) do
+            term.setPaletteColor(k, v)
+        end
+    end
     if self.dirtyCount == 0 then return end
     for cx, col in pairs(self.dirty) do
         for cy, _ in pairs(col) do
@@ -416,6 +515,29 @@ function gfrx:clearAll()
         end
     end
     self:markAllDirty()
+end
+
+function gfrx:resetColors()
+    self.usedColors = {
+        [0x1] = 0xffffff,
+        [0x8000] = 0x000000
+    }
+    self.idxColor = 2
+    for i=0, 15 do
+        term.setPaletteColor(2^i, term.nativePaletteColor(2^i))
+    end
+    term.setTextColor(colors.white)
+    term.setBackgroundColor(colors.black)
+end
+
+function gfrx:replaceColor(colorA, colorB)
+    local used, pos = table_contains(self.usedColors, colorA)
+    if used then
+        self.usedColors[pos] = colorB
+        for k,v in pairs(self.usedColors) do
+            term.setPaletteColor(k, v)
+        end
+    end
 end
 
 function gfrx:getResolution() return self.width, self.height end

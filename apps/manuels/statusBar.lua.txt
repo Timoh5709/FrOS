@@ -1,4 +1,10 @@
-[Pour la version 0.4]
+[Pour la version 0.81]
 
-statusBar.draw(dossier)
-De base cette fonction servait uniquement au shell pour afficher le dossier en cours, mais il peut être utilisé dans certaines applications pour indiquer l'application en cours (si ça termine avec ".lua", la statusBar affichera "> " à la place du "/").
+statusBar.draw()
+Affiche la statusBar.
+
+statusBar.updateDossier(newDossier)
+Change le dossier en cours ou l'application.
+
+statusBar.handleMouse(button, x, y)
+Fonction utilisée par le taskScheduler pour gérer les tâches avec la souris.

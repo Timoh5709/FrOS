@@ -1,7 +1,6 @@
 local dfpwmPlayer = {}
 local dfpwm = require("cc.audio.dfpwm")
 local decoder = dfpwm.make_decoder()
-local speaker = peripheral.find("speaker")
 
 local loc = FrOS.errorLoc
 
@@ -12,7 +11,12 @@ local function eout(text)
     dfpwmPlayer.playErrorSound()
 end
 
+local function getSpeaker()
+    return peripheral.find("speaker")
+end
+
 function dfpwmPlayer.play(path)
+    local speaker = getSpeaker()
     if speaker ~= nil then
         if fs.exists(path) then
             for chunk in io.lines(path, 16 * 1024) do
@@ -29,6 +33,7 @@ function dfpwmPlayer.play(path)
 end
 
 function dfpwmPlayer.playStartupSound()
+    local speaker = getSpeaker()
     if speaker ~= nil then
         local co = coroutine.create(function ()
             dfpwmPlayer.play("FrOS/media/startup.dfpwm")
@@ -38,6 +43,7 @@ function dfpwmPlayer.playStartupSound()
 end
 
 function dfpwmPlayer.playShutdownSound()
+    local speaker = getSpeaker()
     if speaker ~= nil then
         dfpwmPlayer.play("FrOS/media/shutdown.dfpwm")
         os.sleep(2.15)
@@ -45,6 +51,7 @@ function dfpwmPlayer.playShutdownSound()
 end
 
 function dfpwmPlayer.playErrorSound()
+    local speaker = getSpeaker()
     if speaker ~= nil then
         local co = coroutine.create(function ()
             dfpwmPlayer.play("FrOS/media/error.dfpwm")
@@ -54,6 +61,7 @@ function dfpwmPlayer.playErrorSound()
 end
 
 function dfpwmPlayer.playConfirmationSound()
+    local speaker = getSpeaker()
     if speaker ~= nil then
         local co = coroutine.create(function ()
             dfpwmPlayer.play("FrOS/media/ask.dfpwm")

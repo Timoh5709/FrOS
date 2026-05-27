@@ -1,8 +1,9 @@
+-- @fullscreen
 local textViewer = require("/FrOS/sys/textViewer")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.74)
+local running = update.appCheck(0.81)
 local httpViewer = require("/FrOS/sys/httpViewer")
-if not fs.exists("FrOS/localization/neofetch.loc") then
+if not fs.exists("FrOS/localization/appStore.loc") then
     httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/appStore.loc")
 end
 local locLua = require("/FrOS/sys/loc")
@@ -11,7 +12,6 @@ local language = "FR"
 language = stg["language"]
 local loc = locLua.load("FrOS/localization/appStore.loc", language)
 for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
-local statusBar = require("/FrOS/sys/statusBar")
 local appListUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/FrOS/appList.txt"
 local appsUrl = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/"
 local isFrOSList = true
@@ -144,13 +144,9 @@ end
 
 local function main()
     local dossier = "appStore.lua"
+    FrOS.statusBar.updateDossier(dossier)
     write(dossier .. "$ ")
-    
-    local oobe = 1
-    oobe = stg["oobe"]
-    if oobe == "0" then
-        statusBar.draw(dossier)
-    end
+
     local input = read()
 
     local args = {}

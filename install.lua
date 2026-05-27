@@ -11,7 +11,8 @@ local updateList = {
     "u073",
     "u074",
     "u075",
-    "u08"
+    "u08",
+    "u081"
 }
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -102,6 +103,7 @@ installGithub("FrOS/sys/FZIP.lua")
 installGithub("FrOS/sys/script.lua")
 installGithub("FrOS/sys/gfrx.lua")
 installGithub("FrOS/sys/stg.lua")
+installGithub("FrOS/sys/taskScheduler.lua")
 installGithub("FrOS/sys/offline-installer.lua")
 fs.makeDir("FrOS/localization")
 print("Dossier FrOS/localization créé avec succès.")

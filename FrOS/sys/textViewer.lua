@@ -1,5 +1,5 @@
-local statusBar = require("/FrOS/sys/statusBar")
 local dfpwmPlayer = require("/FrOS/sys/dfpwmPlayer")
+local ts = require("/FrOS/sys/taskScheduler")
 local textViewer = {}
 
 local loc = FrOS.sysLoc
@@ -42,7 +42,7 @@ local function wrapLine(line, width)
     end
   end
 
-  if current ~= "" then
+  if current then
     table.insert(res, current)
   end
 
@@ -50,9 +50,12 @@ local function wrapLine(line, width)
 end
 
 function textViewer.lineViewer(lines)
+  term.clear()
+  FrOS.statusBar.updateDossier("textViewer.lua")
   local width, height = term.getSize()
   local currentIndex = 1
-  local pageSize = height - 5
+  local needUpdate = true
+  local pageSize = height - 4
 
   local wrapLines = {}
   for _, line in ipairs(lines) do
@@ -62,35 +65,48 @@ function textViewer.lineViewer(lines)
     end
   end
 
+  if wrapLines[#wrapLines] == "" then
+    table.remove(wrapLines, #wrapLines)
+  end
+
   lines = wrapLines
   local maxIndex = #lines
 
   while true do
-    term.clear()
-    local dossier = "textViewer.lua"
-    statusBar.draw(dossier)
-    term.setCursorPos(1, 2)
+    if needUpdate then
+      term.setCursorPos(1, 1)
 
-    for i = currentIndex, math.min(currentIndex + pageSize - 1, maxIndex) do
-      print(lines[i])
-    end
+      for i = currentIndex, math.min(currentIndex + pageSize - 1, maxIndex) do
+        print(lines[i])
+      end
 
-    if currentIndex + pageSize <= maxIndex then
-      print("\n" .. loc["textViewer.lineViewer.middle"])
-    else
-      print("\n" .. loc["textViewer.lineViewer.end"])
+      if currentIndex + pageSize <= maxIndex then
+        print("\n" .. loc["textViewer.lineViewer.middle"])
+      else
+        print("\n" .. loc["textViewer.lineViewer.end"])
+      end
+      needUpdate = false
     end
 
     local event, key = os.pullEvent("key")
     if key == keys.pageDown then
       if currentIndex + pageSize <= maxIndex then
+        needUpdate = true
         currentIndex = currentIndex + pageSize
+        term.clear()
+        sleep(0.2)
       end
     elseif key == keys.pageUp then
       if currentIndex - pageSize > 0 then
+        needUpdate = true
         currentIndex = currentIndex - pageSize
+        term.clear()
+        sleep(0.2)
       else
+        needUpdate = true
         currentIndex = 1
+        term.clear()
+        sleep(0.2)
       end
     elseif key == keys.q then
       break

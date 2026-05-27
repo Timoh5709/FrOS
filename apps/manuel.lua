@@ -1,9 +1,9 @@
+-- @fullscreen
 local textViewer = require("/FrOS/sys/textViewer")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.73)
-local statusBar = require("/FrOS/sys/statusBar")
+local running = update.appCheck(0.81)
 local httpViewer = require("/FrOS/sys/httpViewer")
-if not fs.exists("FrOS/localization/neofetch.loc") then
+if not fs.exists("FrOS/localization/manuel.loc") then
     httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/manuel.loc")
 end
 local locLua = require("/FrOS/sys/loc")
@@ -11,19 +11,22 @@ local stg = _G.FrOS.stg
 local language = "FR"
 language = stg["language"]
 local loc = locLua.load("FrOS/localization/manuel.loc", language)
+for k,v in pairs(FrOS.errorLoc) do loc[k] = v end
 local manuelsLoc = "https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/apps/manuels/"
 
 local function lire(nom)
-    if httpViewer.httpBrain(manuelsLoc .. nom .. ".txt") ~= false then
-        local lignes = httpViewer.getLines(manuelsLoc .. nom .. ".txt")
-        textViewer.lineViewer(lignes)
+    if not nom then
+        textViewer.eout(loc["error.unspecifiedURL"])
+        return
     end
+
+    textViewer.lineViewer(httpViewer.getLines(manuelsLoc .. nom .. ".txt"))
 end
 
 local function main()
     local dossier = "manuel.lua"
+    FrOS.statusBar.updateDossier(dossier)
     write(dossier .. "? ")
-    statusBar.draw(dossier)
     local input = read()
 
     local args = {}

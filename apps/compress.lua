@@ -4,7 +4,7 @@ if not running then
     return
 end
 local httpViewer = require("/FrOS/sys/httpViewer")
-if not fs.exists("FrOS/localization/neofetch.loc") then
+if not fs.exists("FrOS/localization/compress.loc") then
     httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/compress.loc")
 end
 local locLua = require("/FrOS/sys/loc")

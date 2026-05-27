@@ -3,3 +3,4 @@ music.lua
 compress.lua
 manuel.lua
 neofetch.lua
+bgmusic.lua

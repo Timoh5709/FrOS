@@ -34,3 +34,5 @@
 /error.corruptedFile:EN Error : Corrupted file : 
 /error.invalidExpression:FR Erreur : Expression invalide.
 /error.invalidExpression:EN Error : Invalid expression.
+/error.doesNotExist:FR  n'existe pas.
+/error.doesNotExist:EN  doesn't exist.

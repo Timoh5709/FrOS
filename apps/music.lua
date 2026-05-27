@@ -1,12 +1,13 @@
+-- @fullscreen
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.73)
+local running = update.appCheck(0.81)
 if not running then
     return
 end
 local httpViewer = require("/FrOS/sys/httpViewer")
-if not fs.exists("FrOS/localization/neofetch.loc") then
+if not fs.exists("FrOS/localization/music.loc") then
     httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/music.loc")
 end
 local locLua = require("/FrOS/sys/loc")
@@ -16,7 +17,6 @@ language = stg["language"]
 local loc = locLua.load("FrOS/localization/music.loc", language)
 local textViewer = require("/FrOS/sys/textViewer")
 local decoder = dfpwm.make_decoder()
-local statusBar = require("/FrOS/sys/statusBar")
 
 local function player(filename)
   for chunk in io.lines(filename, 16 * 1024) do
@@ -38,8 +38,8 @@ end
 
 local function main()
   local dossier = "music.lua"
+  FrOS.statusBar.updateDossier(dossier)
   write(dossier .. "& ")
-  statusBar.draw(dossier)
   local input = read()
   
   if fs.exists(input) then

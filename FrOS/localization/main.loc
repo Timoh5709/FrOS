@@ -61,6 +61,10 @@
 /main.echoAide:EN echo <text> - Displays some text
 /main.stgAide:FR stg <clé> <valeur> - Définit un paramètre système
 /main.stgAide:EN stg <key> <value> - Sets a system setting
+/main.stgAide:FR task <remove | optionnel> <pause | optionnel> <resume | optionnel> <clear | optionnel> <statusBar | optionnel> <taskId | optionnel> - Affiche les tâches en cours OU tue une tâche (+ taskId) OU met en pause une tâche (+ taskId) OU reprend une tâche (+ taskId) OU tue toutes les tâches OU relance la tâche du StatusBar
+/main.stgAide:EN task <remove | optionnal> <pause | optionnal> <resume | optionnal> <clear | optionnal> <statusBar | optionnal> <taskId | optionnal> - Displays active tasks OR kills a task (+ taskId) OR pauses a task (+ taskId) OR resumes a task (+ taskId) OR kills every tasks OR launches again the StatusBar's task
+/main.taskCommandDone:FR Fait.
+/main.taskCommandDone:EN Done.
 /main.unknownCommand:FR Commande inconnue : 
 /main.unknownCommand:EN Unknown command : 
 /main.noCommand:FR Veuillez rentrer une commande.

@@ -1,5 +1,6 @@
 local running = true
 term.clear()
+term.setCursorPos(1, 2)
 local history = {}
 local textViewer
 local update
@@ -9,6 +10,9 @@ local fzip
 local script
 local stg
 local statusBar = require("/FrOS/sys/statusBar")
+FrOS.statusBar = statusBar
+local ts = require("/FrOS/sys/taskScheduler")
+FrOS.ts = ts
 if fs.exists("FrOS/sys/textViewer.lua") then
   textViewer = require("/FrOS/sys/textViewer")
 end
@@ -208,12 +212,8 @@ local function mkfile(filename)
   end
 
   local file = fs.open(path, "w")
-  if file then
-    file.close()
-    textViewer.cprint(loc["mkfile.success"] .. filename, colors.green)
-  else
-    textViewer.eout("Erreur : Impossible de cr�er le fichier.")
-  end
+  file.close()
+  textViewer.cprint(loc["mkfile.success"] .. filename, colors.green)
 end
 
 local function exec(filename, param)
@@ -230,10 +230,47 @@ local function exec(filename, param)
     return
   end
   if fs.exists(path2) then
-    if param then
-      shell.run(path2 .. param)
+    local f = fs.open(path2, "r")
+    local firstLine = f.readLine()
+    if firstLine == "-- @fullscreen" then
+      local mainId = ts.getId("FrOS/main.lua")
+      local oldDossier = dossier
+      local appId
+      if param then
+        appId = ts.spawn(path2, function ()
+          shell.run(path2 .. param)
+          ts.resume(mainId)
+          ts.focus(mainId)
+          FrOS.statusBar.updateDossier(oldDossier)
+        end, {receiveEvents = true, background = false})
+      else
+        appId = ts.spawn(path2, function ()
+          shell.run(path2)
+          ts.resume(mainId)
+          ts.focus(mainId)
+          FrOS.statusBar.updateDossier(oldDossier)
+        end, {receiveEvents = true, background = false})
+      end
+
+      ts.pause(ts.getId("FrOS/main.lua"))
+      ts.focus(appId)
+    elseif firstLine == "-- @background" then
+      if param then
+        ts.spawn(path2, function ()
+          shell.run(path2 .. param)
+        end, {receiveEvents = true, background = true})
+      else
+        ts.spawn(path2, function ()
+          shell.run(path2)
+        end, {receiveEvents = true, background = true})
+      end
     else
-      shell.run(path2)
+      statusBar.updateDossier(path2)
+      if param then
+        shell.run(path2 .. param)
+      else
+        shell.run(path2)
+      end
     end
   else
     textViewer.eout(loc["error.unknownUnreadableFile"])
@@ -267,12 +304,20 @@ local function stg_set(key, value)
   print(loc["stg_set.success1"] .. key .. loc["stg_set.success2"] .. value)
 end
 
+local function clearTasks()
+  for k, t in ipairs(ts.list()) do
+    if t.name ~= "FrOS/main.lua" and t.name ~= "FrOS/sys/statusBar.lua" then
+      ts.kill(t.id)
+    end
+  end
+end
+
 function FrOS.executeLine(input)
   if not input or input == "" then
     textViewer.eout(loc["main.noCommand"])
     return
   end
-  
+
   local args = {}
   for word in string.gmatch(input, "%S+") do
     table.insert(args, word)
@@ -289,11 +334,13 @@ function FrOS.executeLine(input)
   if command == "quit" then
     print(loc["main.quitCommand"])
     dfpwmPlayer.playShutdownSound()
+    clearTasks()
     os.shutdown()
 
   elseif command == "reboot" then
     print(loc["main.rebootCommand"])
     dfpwmPlayer.playShutdownSound()
+    clearTasks()
     os.reboot()
 
   elseif command == "infosys" then
@@ -335,9 +382,9 @@ function FrOS.executeLine(input)
       loc["main.scriptAide"],
       loc["main.sleepAide"],
       loc["main.echoAide"],
-      loc["main.stgAide"]
+      loc["main.stgAide"],
+      loc["main.taskAide"]
     }
-
     textViewer.lineViewer(aides)
 
   elseif command == "ls" or command == "dir" then
@@ -386,7 +433,7 @@ function FrOS.executeLine(input)
 
   elseif command == "cls" then
     term.clear()
-    term.setCursorPos(1, 2)
+    term.setCursorPos(1, 1)
 
   elseif command == "maj" then
     if param == "create" then
@@ -423,12 +470,57 @@ function FrOS.executeLine(input)
 
   elseif command == "sleep" then
     sleep(tonumber(param))
-  
+
   elseif command == "echo" then
     print(paramexec)
 
   elseif command == "stg" then
     stg_set(param, args[3])
+-- NOUVEAU
+  elseif command == "task" then
+    if not param then
+      ts.print()
+    else
+      if args[3] then
+        local targetId = tonumber(args[3])
+        if targetId ~= ts.getId("FrOS/main.lua") then
+          if param == "remove" then
+            if ts.kill(targetId) then
+              print(loc["main.taskCommandDone"])
+            else
+              textViewer.eout(loc["error.error"] .. targetId .. loc["error.doesNotExist"])
+            end
+          elseif param == "pause" then
+            if ts.pause(targetId) then
+              print(loc["main.taskCommandDone"])
+            else
+              textViewer.eout(loc["error.error"] .. targetId .. loc["error.doesNotExist"])
+            end
+          elseif param == "resume" then
+            if ts.resume(targetId) then
+              print(loc["main.taskCommandDone"])
+            else
+              textViewer.eout(loc["error.error"] .. targetId .. loc["error.doesNotExist"])
+            end
+          end
+        end
+      else
+        if param == "statusBar" then
+          if ts.getId("FrOS/sys/statusBar.lua") == nil then
+            ts.spawn("FrOS/sys/statusBar.lua", function ()
+              while true do
+                statusBar.draw()
+                sleep(0.1)
+              end
+            end, {receiveEvents = true, background = false, y = 1, h = 1, id = 1})
+            ts.focus(ts.getId("FrOS/main.lua"))
+            print(loc["main.taskCommandDone"])
+          end
+        elseif param == "clear" then
+          clearTasks()
+        end
+      end
+    end
 
   elseif command ~= nil then
     textViewer.eout(loc["main.unknownCommand"] .. command)
@@ -441,13 +533,13 @@ end
 local function main()
   dossier = (shell.dir() == "" or shell.dir() == "/") and "root" or shell.dir()
   write(dossier .. "> ")
-  statusBar.draw(dossier)
+  statusBar.updateDossier(dossier)
 
   local input = read(nil, history)
 
   if input and input ~= "" then
     table.insert(history, input)
-    
+
     if #history > (2 ^ 16) then
       table.remove(history, 1)
     end
@@ -474,11 +566,6 @@ local function main()
   end
 end
 
-local needUpdate, oVer = update.check()
-if needUpdate then
-  print(loc[".newVersion1"] .. oVer .. loc[".newVersion2"])
-end
-
 if fs.exists("/FrOS/history.txt") then
   local f = fs.open("/FrOS/history.txt", "r")
   while true do
@@ -488,6 +575,22 @@ if fs.exists("/FrOS/history.txt") then
   end
 end
 
-while running do
-  main()
-end
+ts.spawn("FrOS/sys/statusBar.lua", function ()
+  while true do
+    statusBar.draw()
+    sleep(0.1)
+  end
+end, {receiveEvents = true, background = false, y = 1, h = 1})
+
+ts.spawn("FrOS/main.lua", function ()
+  local needUpdate, oVer = update.check()
+  if needUpdate then
+    print(loc[".newVersion1"] .. oVer .. loc[".newVersion2"])
+  end
+
+  while running do
+    main()
+  end
+end, {receiveEvents = true, background = false})
+
+ts.run()
