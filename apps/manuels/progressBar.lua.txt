@@ -1,6 +1,6 @@
 [Pour la version 0.4]
 
-progressBar.create(max, width, y)
+progressBar.create(max, width, y) => id (int)
 Retourne l'identifiant de la barre de progression créée.
 
 progressBar.inc(id)
@@ -15,7 +15,7 @@ Remet à 0 la barre de progression avec, ou non, un nouveau seuil. L'affiche aprè
 progressBar.remove(id)
 Supprime la barre de progression de la mémoire. L'ID ne fonctionnera plus.
 
-progressBar.get(id)
+progressBar.get(id) => (bar.value, bar.max, bar.width, bar.y) (int, int, int ,int)
 Retourne toutes les informations de la barre de progression :
 - la valeur ;
 - le maximum ;

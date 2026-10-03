@@ -1,5 +1,7 @@
 [Pour la version 0.81]
 
+/!\ Pour les développeurs : utilisez 3dgfrx.lua !
+
 gfrx.new(target, opts {buffered,oldColorSystem}) => self (metatable)
 Fonction pour créer un moteur gfrx.
 opts :
@@ -11,7 +13,7 @@ Désigne un pixel comme "sale" pour le raffraîchir.
 /!\ C'est déjà automatique, sauf pour certaines applications précises, ceci n'est pas utile.
 
 gfrx:markAllDirty()
-Désigne tous les pixels comme "sale" pour raffraîchir l'écran.
+Désigne tous les pixels comme "sales" pour raffraîchir l'écran.
 
 gfrx:unmarkDirty(cx, cy)
 Retire un pixel des pixels "sales".

@@ -36,3 +36,21 @@
 /error.invalidExpression:EN Error : Invalid expression.
 /error.doesNotExist:FR  n'existe pas.
 /error.doesNotExist:EN  doesn't exist.
+/error.lowSpace:FR Erreur : Espace disque manquant.
+/error.lowSpace:EN Error : Disk is low on space.
+/error.noAccess:FR Erreur : Accès refusé.
+/error.noAccess:EN Error : Access denied.
+/error.isDirNotFile:FR Erreur : Ne peut pas ouvrir un dossier.
+/error.isDirNotFile:EN Error : Cannot open a directory.
+/error.noPrinter:FR : Erreur : Aucune imprimante n'est attachée.
+/error.noPrinter:EN Error : No printer attached.
+/error.noInk:FR Erreur : L'imprimante n'a plus d'encre.
+/error.noInk:EN Error : Printer out of ink.
+/error.noPaper:FR Erreur : L'imprimante n'a plus de papier.
+/error.noPaper:EN Error : Printer out of paper.
+/error.outputFull:FR Erreur : Le bac de sortie de l'imprimante est plein.
+/error.outputFull:EN Error : Printer output tray full.
+/error.pleaseRefill:FR  Veuillez remplir.
+/error.pleaseRefill:EN  Please refill.
+/error.pleaseEmpty:FR  Veuillez vider.
+/error.pleaseEmpty:EN  Please empty.

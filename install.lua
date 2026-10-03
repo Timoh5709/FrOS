@@ -12,7 +12,8 @@ local updateList = {
     "u074",
     "u075",
     "u08",
-    "u081"
+    "u081",
+    "u082"
 }
 
 print("Ce programme va bien télécharger et installer les fichiers pour FrOS.")
@@ -88,6 +89,8 @@ installGithub("FrOS/media/startup.dfpwm")
 installGithub("FrOS/media/shutdown.dfpwm")
 installGithub("FrOS/media/error.dfpwm")
 installGithub("FrOS/media/ask.dfpwm")
+installGithub("FrOS/media/FrOS_b.obj")
+installGithub("FrOS/media/FrOS_t.obj")
 fs.makeDir("FrOS/sys")
 print("Dossier FrOS/sys créé avec succès.")
 installGithub("FrOS/sys/textViewer.lua")
@@ -104,6 +107,8 @@ installGithub("FrOS/sys/script.lua")
 installGithub("FrOS/sys/gfrx.lua")
 installGithub("FrOS/sys/stg.lua")
 installGithub("FrOS/sys/taskScheduler.lua")
+installGithub("FrOS/sys/theme.lua")
+installGithub("FrOS/sys/3dgfrx.lua")
 installGithub("FrOS/sys/offline-installer.lua")
 fs.makeDir("FrOS/localization")
 print("Dossier FrOS/localization créé avec succès.")
@@ -113,6 +118,7 @@ installGithub("FrOS/localization/sys.loc")
 installGithub("FrOS/localization/update.loc")
 installGithub("FrOS/localization/appStore.loc")
 installGithub("FrOS/localization/manuel.loc")
+installGithub("FrOS/localization/notes.loc")
 fs.makeDir("FrOS/drivers")
 print("Dossier FrOS/drivers créé avec succès.")
 installGithub("FrOS/drivers/init.lua")
@@ -120,6 +126,8 @@ fs.makeDir("apps")
 print("Dossier apps créé avec succès.")
 installGithub("apps/appStore.lua")
 installGithub("apps/manuel.lua")
+installGithub("apps/notes.lua")
+installGithub("apps/render.lua")
 local f = fs.open("FrOS/updateList.txt", "w")
 if f then
     for k, v in pairs(updateList) do
@@ -133,7 +141,7 @@ end
 if not maj then
     local f = fs.open("FrOS/appList.txt", "w")
     if f then
-        f.write("apps/appStore.lua\napps/manuel.lua\n")
+        f.write("apps/appStore.lua\napps/manuel.lua\napps/notes.lua\napps/render.lua\n")
         f.close()
         print("Fichier FrOS/appList.txt créé avec succès.")
     else

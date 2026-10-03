@@ -5,125 +5,127 @@ local textViewer = {}
 local loc = FrOS.sysLoc
 
 function textViewer.cprint(text, color)
-  if not color then
-    print(text)
-  else
-    local prev = term.getTextColor()
-    term.setTextColor(color)
-    print(text)
-    term.setTextColor(prev)
-  end
+    if not color then
+        print(text)
+    else
+        local prev = term.getTextColor()
+        term.setTextColor(color)
+        print(text)
+        term.setTextColor(prev)
+    end
 end
 
 function textViewer.eout(text)
-  textViewer.cprint(text, colors.red)
-  dfpwmPlayer.playErrorSound()
+    textViewer.cprint(text, colors.red)
+    dfpwmPlayer.playErrorSound()
 end
 
 local function wrapLine(line, width)
-  local res, current = {}, ""
+    local res, current = {}, ""
 
-  for token in string.gmatch(line, "([%S]+[%s]*)") do
-    if token:find("\n") then
-      if current ~= "" then
-        table.insert(res, current)
-        current = ""
-      end
-      for _ in token:gmatch("\n") do
-        table.insert(res, "")
-      end
-    else
-      if #current + #token <= width then
-        current = current .. token
-      else
-        table.insert(res, current)
-        current = token
-      end
+    for token in string.gmatch(line, "([%S]+[%s]*)") do
+        if token:find("\n") then
+            if current ~= "" then
+                table.insert(res, current)
+                current = ""
+            end
+            for _ in token:gmatch("\n") do
+                table.insert(res, "")
+            end
+        else
+            if #current + #token <= width then
+                current = current .. token
+            else
+                table.insert(res, current)
+                current = token
+            end
+        end
     end
-  end
 
-  if current then
-    table.insert(res, current)
-  end
+    if current then
+        table.insert(res, current)
+    end
 
-  return res
+    return res
 end
 
 function textViewer.lineViewer(lines)
-  term.clear()
-  FrOS.statusBar.updateDossier("textViewer.lua")
-  local width, height = term.getSize()
-  local currentIndex = 1
-  local needUpdate = true
-  local pageSize = height - 4
-
-  local wrapLines = {}
-  for _, line in ipairs(lines) do
-    local parts = wrapLine(line, width)
-    for _, part in ipairs(parts) do
-      table.insert(wrapLines, part)
+    term.clear()
+    if FrOS.stg["oobe"] == 0 then
+        FrOS.statusBar.updateDossier("textViewer.lua")
     end
-  end
+    local width, height = term.getSize()
+    local currentIndex = 1
+    local needUpdate = true
+    local pageSize = height - 4
 
-  if wrapLines[#wrapLines] == "" then
-    table.remove(wrapLines, #wrapLines)
-  end
-
-  lines = wrapLines
-  local maxIndex = #lines
-
-  while true do
-    if needUpdate then
-      term.setCursorPos(1, 1)
-
-      for i = currentIndex, math.min(currentIndex + pageSize - 1, maxIndex) do
-        print(lines[i])
-      end
-
-      if currentIndex + pageSize <= maxIndex then
-        print("\n" .. loc["textViewer.lineViewer.middle"])
-      else
-        print("\n" .. loc["textViewer.lineViewer.end"])
-      end
-      needUpdate = false
+    local wrapLines = {}
+    for _, line in ipairs(lines) do
+        local parts = wrapLine(line, width)
+        for _, part in ipairs(parts) do
+            table.insert(wrapLines, part)
+        end
     end
 
-    local event, key = os.pullEvent("key")
-    if key == keys.pageDown then
-      if currentIndex + pageSize <= maxIndex then
-        needUpdate = true
-        currentIndex = currentIndex + pageSize
-        term.clear()
-        sleep(0.2)
-      end
-    elseif key == keys.pageUp then
-      if currentIndex - pageSize > 0 then
-        needUpdate = true
-        currentIndex = currentIndex - pageSize
-        term.clear()
-        sleep(0.2)
-      else
-        needUpdate = true
-        currentIndex = 1
-        term.clear()
-        sleep(0.2)
-      end
-    elseif key == keys.q then
-      break
+    if wrapLines[#wrapLines] == "" then
+        table.remove(wrapLines, #wrapLines)
     end
-  end
+
+    lines = wrapLines
+    local maxIndex = #lines
+
+    while true do
+        if needUpdate then
+            term.setCursorPos(1, 1)
+
+            for i = currentIndex, math.min(currentIndex + pageSize - 1, maxIndex) do
+                print(lines[i])
+            end
+
+            if currentIndex + pageSize <= maxIndex then
+                print("\n" .. loc["textViewer.lineViewer.middle"])
+            else
+                print("\n" .. loc["textViewer.lineViewer.end"])
+            end
+            needUpdate = false
+        end
+
+        local event, key = os.pullEvent("key")
+        if key == keys.pageDown then
+            if currentIndex + pageSize <= maxIndex then
+                needUpdate = true
+                currentIndex = currentIndex + pageSize
+                term.clear()
+                sleep(0.2)
+            end
+        elseif key == keys.pageUp then
+            if currentIndex - pageSize > 0 then
+                needUpdate = true
+                currentIndex = currentIndex - pageSize
+                term.clear()
+                sleep(0.2)
+            else
+                needUpdate = true
+                currentIndex = 1
+                term.clear()
+                sleep(0.2)
+            end
+        elseif key == keys.q then
+            break
+        end
+    end
 end
 
 function textViewer.getVer()
-  local file = "FrOS/version.txt"
-  local handle = fs.open(file, "r")
-  if not handle then
-    textViewer.eout(loc["textViewer.getVer.error"])
-    return
-  end
-  local ver = handle.readAll()
-  handle.close()
-  return ver
+    local file = "FrOS/version.txt"
+    local handle = fs.open(file, "r")
+    if not handle then
+        textViewer.eout(loc["textViewer.getVer.error"])
+        return
+    end
+    local ver = handle.readAll()
+    handle.close()
+    return ver
 end
 
 return textViewer

@@ -4,5 +4,5 @@ repair.file(filename)
 Télécharge à nouveau un fichier depuis Github.
 /!\ ATTENTION : il ne sert en aucun cas à télécharger depuis Github, ça reste une fonction d'urgence. Pour les développeurs perdus, regardez le manuel de "httpViewer.lua".
 
-repair.check(filename)
+repair.check(filename) => true/false
 Permet de vérifier si un fichier existe. Il ne check en aucun cas le contenu. Si un fichier n'existe pas, il appelle repair.file(filename)

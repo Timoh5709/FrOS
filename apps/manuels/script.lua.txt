@@ -1,6 +1,6 @@
 [Pour la version 0.8]
 
-script.read(path) => table
+script.read(path) => lines/nil (table)
 Fonction principale de script.lua permettant d'extraire simplement les commandes du fichier fsc.
 Facilement accessible dans le shell avec la commande script.
 Il y a aussi la possibilité de mettre des commentaires à l'aide du # en début de ligne.
@@ -8,10 +8,10 @@ Il y a aussi la possibilité de mettre des commentaires à l'aide du # en début de
 script.pause()
 Met en pause l'exécution du script pour attendre l'appui sur la touche "Entrée".
 
-script.confirmation() => boolean
+script.confirmation() => true/false
 Demande à l'utilisateur de poursuivre ou non.
 
-script.parse(commands) => table
+script.parse(commands) => parsed (table)
 Sépare les commandes shell des instructions "@".
 
 script.run(parsed, dosser)

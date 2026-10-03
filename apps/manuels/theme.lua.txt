@@ -1,0 +1,7 @@
+[Pour la version 0.82]
+
+theme.refresh() => (bg, fg) (hex, hex)
+Renvoie les valeurs de bg et fg de config.stg en plus de les appliquer sur le terminal.
+
+theme.refreshBar() => (bgBar, fgBar) (hex, hex)
+Renvoie les valeurs de bgBar et fgBar de config.stg.

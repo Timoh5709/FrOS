@@ -1,0 +1,45 @@
+/menuItems.save:FR Sauvegarder
+/menuItems.save:EN Save
+/menuItems.new:FR Nouveau
+/menuItems.new:EN New
+/menuItems.open:FR Ouvrir
+/menuItems.open:EN Open
+/menuItems.print:FR Imprimer
+/menuItems.print:EN Print
+/menuItems.exit:FR Quitter
+/menuItems.exit:EN Exit
+
+/status.clickable:FR Appuyez sur Ctrl ou cliquez ici pour accéder au menu
+/status.clickable:EN Press Ctrl or click here to access menu
+/status.normal:FR Appuyez sur Ctrl pour accéder au menu
+/status.normal:EN Press Ctrl to access menu
+/status.short:FR [Ctrl] pour le menu
+/status.short:EN [Ctrl] for menu
+
+/prompt.saveAs:FR Sauvegarder en tant que : 
+/prompt.saveAs:EN Save as : 
+/prompt.newFile:FR Nouveau fichier : 
+/prompt.newFile:EN New file : 
+/prompt.openFile:FR Ouvrir le fichier : 
+/prompt.openFile:EN Open file : 
+/prompt.cancelled:FR Action annulée.
+/prompt.cancelled:EN Action cancelled.
+
+/menuFunctions.saved:FR Sauvegardé : 
+/menuFunctions.saved:EN Saved : 
+/menuFunctions.new:FR Édite le nouveau fichier : 
+/menuFunctions.new:EN Editing new file : 
+/menuFunctions.opened:FR Édite le fichier ouvert : 
+/menuFunctions.opened:EN Editing opened file : 
+
+/print.pageID:FR  (page 
+/print.pageID:EN  (page 
+/print.printed1:FR Imprimé : 
+/print.printed1:EN Printed 
+/print.printed2a:FR  pages.
+/print.printed2a:EN  pages.
+/print.printed2b:FR  page.
+/print.printed2b:EN  page.
+
+/untitled.name:FR sans_nom.txt
+/untitled.name:EN untitled.txt

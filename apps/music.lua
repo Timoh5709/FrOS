@@ -2,15 +2,16 @@
 local speaker = peripheral.find("speaker")
 local dfpwm = require("cc.audio.dfpwm")
 local update = require("/FrOS/sys/update")
-local running = update.appCheck(0.81)
+local running = update.appCheck(0.82)
 if not running then
     return
 end
 local httpViewer = require("/FrOS/sys/httpViewer")
-if not fs.exists("FrOS/localization/music.loc") then
+if not fs.exists("FrOS/localization/neofetch.loc") then
     httpViewer.installGithub("https://raw.githubusercontent.com/Timoh5709/FrOS/refs/heads/main/", "FrOS/localization/music.loc")
 end
 local locLua = require("/FrOS/sys/loc")
+local theme = require("/FrOS/sys/theme")
 local stg = _G.FrOS.stg
 local language = "FR"
 language = stg["language"]
@@ -38,7 +39,6 @@ end
 
 local function main()
   local dossier = "music.lua"
-  FrOS.statusBar.updateDossier(dossier)
   write(dossier .. "& ")
   local input = read()
   
@@ -47,6 +47,10 @@ local function main()
     player(input)
   end
 end
+
+theme.refresh()
+term.clear()
+term.setCursorPos(1, 1)
 
 if speaker ~= nil then
   main()

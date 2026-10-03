@@ -1,2 +1,8 @@
 language=FR
 oobe=1
+defaultTextExt=txt
+autoPause=1
+bg=black
+fg=white
+bgBar=gray
+fgBar=white

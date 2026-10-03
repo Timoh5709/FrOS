@@ -1,0 +1,76 @@
+[Pour la version 0.82]
+
+/!\ Bien que le fichier s'appelle "3dgfrx.lua", il ne s'agit que d'une nouvelle version de gfrx. Par conséquent, les fonctions et variables globales commencent par "gfrx".
+
+gfrx.PALETTES = {
+    grayscale, => Uniquement des nuances gris
+    vibrant16, => Les couleurs de base de CC mais en plus saturées
+    rgb_shades, => Uniquement des nuances de rouge, vert, bleu et gris
+    basic8, => Des nuances de rouge, vert, bleu, rose, jaune, mauve, marron, noir/blanc
+    classic => Les couleurs de base de CC
+}
+
+gfrx.new(target, opts {/}) => self (metatable)
+Fonction pour créer un moteur gfrx.
+
+gfrx:markDirty(cy)
+Désigne une ligne comme "sale" pour la raffraîchir.
+/!\ C'est déjà automatique, sauf pour certaines applications précises, ceci n'est pas utile.
+
+gfrx:markAllDirty()
+Désigne tous les pixels comme "sales" pour raffraîchir l'écran.
+
+gfrx:unmarkDirty(cy)
+Retire une ligne des pixels "sales".
+
+gfrx:isDirty(cy) => true/false
+Vérifie si une ligne est "sale".
+
+gfrx:unmarkAllDirty()
+Retire tous les pixels "sales".
+
+gfrx:setPalette(pal)
+Sélectionne la palette à utiliser (parmi gfrx.PALETTES ou une autre contenant 16 couleurs hexadécimales).
+/!\ Cela désigne tous les pixels comme "sales" !
+
+gfrx:getClosestCCTermColor(rgb) => char (string)
+Retourne le caractère associé à une couleur (entre 0 et f) le plus proche de la couleur demandée dans la palette actuelle.
+
+gfrx:clear(color)
+Retire tous les pixels et définie une nouvelle couleur de fond ou pas.
+
+gfrx:clearAll(color)
+Appelle gfrx:clear(color).
+
+gfrx:setPixel(x, y, color) => true/false
+Met un pixel à une certaine couleur.
+
+gfrx:getPixel(x, y) => color (hex)
+Retourne la couleur du pixel.
+
+gfrx:renderCell(cx, cy) => (char, bgHex, fgHex) (string, hex, hex)
+Calcule la meilleure combinaison de couleurs avec les caractères spéciaux.
+
+gfrx:flush()
+Raffraîchit les pixels "sales".
+
+gfrx:drawLine(x0, y0, x1, y1, color)
+Trace une ligne.
+
+gfrx:drawRect(x, y, w, h, color, filled)
+Trace un rectangle.
+
+gfrx:drawCircle(cx, cy, radius, color, filled)
+Trace un cercle (par rapport au centre).
+
+gfrx:drawTriangle(x1, y1, x2, y2, x3, y3, color, filled)
+Trace un triangle.
+
+gfrx:resetColors()
+Réinitialise les couleurs du moteur gfrx et du terminal.
+
+gfrx:getResolution() => (self.width (int), self.height (int))
+Retourne la taille en pixels.
+
+gfrx:getCharSize() => (self.charWidth (int), self.charHeight (int))
+Retourne la taille en caractères.

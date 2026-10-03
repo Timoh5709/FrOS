@@ -33,6 +33,10 @@
 /main.goAide:EN go OR cd <directory> - Goes to a directory (.. to go back)
 /main.mkdirAide:FR mkdir <nom> - Crée un dossier
 /main.mkdirAide:EN mkdir <name> - Creates a directory
+/main.moveAide:FR move OU mv <source> <destination> - Déplace un fichier ou un dossier (relatif)
+/main.moveAide:EN move OR mv <source> <destination> - Moves a file or a directory (relative)
+/main.copyAide:FR copy OU cp <source> <destination> - Copie un fichier ou un dossier (relatif)
+/main.copyAide:EN copy OU cp <source> <destination> - Copies a file or a directory (relative)
 /main.delAide:FR del OU rm <nom> - Supprime un fichier ou un dossier
 /main.delAide:EN del OU rm <path> - Deletes a file or a directory
 /main.historyAide:FR history <remove|optionnel> - Affiche l'historique des commandes OU supprime l'historique des commandes
@@ -59,10 +63,10 @@
 /main.sleepAide:EN sleep <seconds> - Pauses all commands for some seconds
 /main.echoAide:FR echo <texte> - Affiche du texte
 /main.echoAide:EN echo <text> - Displays some text
-/main.stgAide:FR stg <clé> <valeur> - Définit un paramètre système
-/main.stgAide:EN stg <key> <value> - Sets a system setting
-/main.stgAide:FR task <remove | optionnel> <pause | optionnel> <resume | optionnel> <clear | optionnel> <statusBar | optionnel> <taskId | optionnel> - Affiche les tâches en cours OU tue une tâche (+ taskId) OU met en pause une tâche (+ taskId) OU reprend une tâche (+ taskId) OU tue toutes les tâches OU relance la tâche du StatusBar
-/main.stgAide:EN task <remove | optionnal> <pause | optionnal> <resume | optionnal> <clear | optionnal> <statusBar | optionnal> <taskId | optionnal> - Displays active tasks OR kills a task (+ taskId) OR pauses a task (+ taskId) OR resumes a task (+ taskId) OR kills every tasks OR launches again the StatusBar's task
+/main.stgAide:FR stg <clé | optionnel> <valeur | optionnel> - Liste les paramètres (avec rien) OU affiche la valeur d'un paramètre (avec une clé uniquement) OU définit un paramètre système
+/main.stgAide:EN stg <key | optionnal> <value | optionnal> - Lists the settings (w/ nothing) OR displays the value of a setting (w/ only the key) OR sets a system setting
+/main.taskAide:FR task <remove | optionnel> <pause | optionnel> <resume | optionnel> <clear | optionnel> <statusBar | optionnel> <taskId | optionnel> - Affiche les tâches en cours OU tue une tâche (+ taskId) OU met en pause une tâche (+ taskId) OU reprend une tâche (+ taskId) OU tue toutes les tâches OU relance la tâche du StatusBar
+/main.taskAide:EN task <remove | optionnal> <pause | optionnal> <resume | optionnal> <clear | optionnal> <statusBar | optionnal> <taskId | optionnal> - Displays active tasks OR kills a task (+ taskId) OR pauses a task (+ taskId) OR resumes a task (+ taskId) OR kills every tasks OR launches again the StatusBar's task
 /main.taskCommandDone:FR Fait.
 /main.taskCommandDone:EN Done.
 /main.unknownCommand:FR Commande inconnue : 
@@ -76,8 +80,17 @@
 /makeDir.success:FR Dossier créé : 
 /makeDir.success:EN Directory made : 
 
-/removeFileOrDir.canceled:FR Suppression annulée.
-/removeFileOrDir.canceled:EN Deletion canceled.
+/copy.success:FR Copié : 
+/copy.success:EN Copied : 
+/copy.cancelled:FR Copiage annulé.
+/copy.cancelled:EN File copy cancelled.
+/move.success:FR Déplacé : 
+/move.success:EN Moved : 
+/move.cancelled:FR Déplacement annulé.
+/move.cancelled:EN File move cancelled.
+
+/removeFileOrDir.cancelled:FR Suppression annulée.
+/removeFileOrDir.cancelled:EN Deletion cancelled.
 /removeFileOrDir.critical1:FR Avertissement : Vous tentez de supprimer un fichier ou un dossier critique.
 /removeFileOrDir.critical1:EN Warning : You are trying to delete a system file or a system directory.
 /removeFileOrDir.critical2:FR Cela pourrait affecter le fonctionnement du système. Voulez-vous continuer ? (o/n)

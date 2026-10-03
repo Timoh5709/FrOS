@@ -1,4 +1,5 @@
 local ts = require("/FrOS/sys/taskScheduler")
+local theme = require("/FrOS/sys/theme")
 local statusBar = {}
 local dossier = "root"
 
@@ -6,9 +7,10 @@ statusBar.clickableAreas = {}
 
 function statusBar.draw()
     local clock = textutils.formatTime(os.time("local"), true)
+    local bgBarColor, fgBarColor = theme.refreshBar()
     term.setCursorPos(1, 1)
-    term.setBackgroundColor(colors.gray)
-    term.setTextColor(colors.white)
+    term.setBackgroundColor(bgBarColor)
+    term.setTextColor(fgBarColor)
     term.clearLine()
 
     local _, ending = string.find(dossier, ".lua")
@@ -21,7 +23,7 @@ function statusBar.draw()
     statusBar.clickableAreas = {}
 
     for _, t in ipairs(ts.list()) do
-        term.setBackgroundColor(colors.gray)
+        term.setBackgroundColor(bgBarColor)
         if t.status == "running" then
             term.setTextColor(colors.green)
         elseif t.status == "paused" then
@@ -49,8 +51,8 @@ function statusBar.draw()
         })
     end
 
-    term.setBackgroundColor(colors.gray)
-    term.setTextColor(colors.white)
+    term.setBackgroundColor(bgBarColor)
+    term.setTextColor(fgBarColor)
     local w, _ = term.getSize()
     term.setCursorPos(w - #clock + 1, 1)
     term.write(clock)
@@ -66,6 +68,15 @@ function statusBar.handleMouse(button, x, y)
     for _, area in ipairs(statusBar.clickableAreas) do
         if x >= area.xMin and x <= area.xMax then
             if button == 1 then
+                if area.task.background == true then
+                    return
+                end
+                if FrOS.stg["autoPause"] == "1" then
+                    local curApp = ts.getFocused()
+                    if curApp ~= ts.getId("FrOS/sys/statusBar.lua") then
+                        ts.pause(curApp)
+                    end
+                end
                 ts.focus(area.id)
                 if area.task.status == "paused" then
                     ts.resume(area.id)

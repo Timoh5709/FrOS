@@ -4,3 +4,5 @@ compress.lua
 manuel.lua
 neofetch.lua
 bgmusic.lua
+notes.lua
+render.lua

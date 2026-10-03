@@ -1,4 +1,4 @@
-[Pour la version 0.73]
+[Pour la version 0.82]
 
 stg.read(path)
 Fonction principale de stg.lua permettant d'extraire simplement les paramètres.
@@ -7,4 +7,4 @@ Fonction principale de stg.lua permettant d'extraire simplement les paramètres.
 - pour que ça fonctionne, il faut suivre ce modèle : "[paramètre]=[valeur]".
 
 stg.set(path, key, value)
-Fonction utile pour changer ou ajouter un paramètre. Comme pour stg.read(path), il faut un fichier avec l'extension .stg.
+Fonction utile pour changer ou ajouter un paramètre. Comme pour stg.read(path), il faut un fichier avec l'extension .stg. Retourne la valeur.

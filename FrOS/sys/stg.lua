@@ -56,6 +56,8 @@ function stg.set(path, key, value)
         f.writeLine(line)
     end
     f.close()
+
+    return stg.read(path)
 end
 
 return stg

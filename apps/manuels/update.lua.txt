@@ -7,10 +7,10 @@ update.oldInstall()
 Télécharge l'assistant d'installation de FrOS.
 /!\ Cette fonction peut ne plus fonctionner dans le futur, elle permet de réinstaller tous les fichiers.
 
-update.check()
+update.check() => true/false
 Vérifie si la version correspond à la dernière version disponible.
 
-update.appCheck(ver)
+update.appCheck(ver) => (true/false)
 Une fonction pour vérifier si la version correspond à celle attendue par l'application. Permet d'éviter des problèmes d'incompatibilité avec des fonctions pas implémentées à cause d'une version trop vieille.
 
 update.createInstallationDisk()
