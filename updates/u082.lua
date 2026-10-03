@@ -51,7 +51,7 @@ installGithub("apps/notes.lua")
 installGithub("apps/render.lua")
 installGithub("FrOS/version.txt")
 
-stgLua.set("FrOS/config.stg", "oobe", "1")
+stg.set("FrOS/config.stg", "oobe", "1")
 
 local updateList = fs.open("FrOS/updateList.txt", "a")
 if updateList then
